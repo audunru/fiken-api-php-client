@@ -33,6 +33,16 @@ class FikenClient
 
     public function whoAmI()
     {
-        return $this->client->get('whoAmI', ['auth' => [$this->username, $this->password]]);
+        return $this->client->get('whoAmI', ['auth' => $this->auth()]);
+    }
+
+    public function createInvoice(FikenInvoice $invoice, $url)
+    {
+        return $this->client->request('POST', $url, ['auth' => $this->auth(), 'json' => $invoice->get()]);
+    }
+
+    private function auth()
+    {
+        return [$this->username, $this->password];
     }
 }

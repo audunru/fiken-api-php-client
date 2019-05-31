@@ -40,6 +40,13 @@ class FikenInvoiceLine
         return $this;
     }
 
+    public function comment(string $comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
     public function incomeAccount(int $incomeAccount)
     {
         $this->incomeAccount = $incomeAccount;
@@ -61,6 +68,7 @@ class FikenInvoiceLine
             'vatAmount' => $this->vatAmount,
             'grossAmount' => $this->grossAmount,
             'description' => $this->description,
+            'comment' => $this->comment,
             'vatType' => $this->vatType,
             'productUrl' => $this->productUrl,
             'incomeAccount' => $this->incomeAccount,

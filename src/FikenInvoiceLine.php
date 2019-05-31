@@ -14,7 +14,6 @@ class FikenInvoiceLine
 
     public function __construct()
     {
-        $this->vatType = 'HIGH';
     }
 
     public function price(int $netAmount, int $vatAmount, int $grossAmount)

@@ -48,7 +48,7 @@ class FikenInvoice
         return $this;
     }
 
-    public function line(FikenInvoiceLine $line)
+    public function addLine(FikenInvoiceLine $line)
     {
         $this->lines[] = $line->get();
 
@@ -59,7 +59,7 @@ class FikenInvoice
     {
         return [
             'issueDate' => $this->issueDate->format('Y-m-d'),
-            'dueDate' => $this->issueDate->format('Y-m-d'),
+            'dueDate' => $this->dueDate->format('Y-m-d'),
             'customer' => $this->customer,
             'bankAccountUrl' => $this->bankAccountUrl,
             'lines' => $this->lines,

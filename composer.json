@@ -14,5 +14,17 @@
       "email": "audun@rundberg.no"
     }
   ],
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "audunru\\FikenClient\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "audunru\\FikenClient\\FikenClientServiceProvider"
+      ]
+    }
+  }
 }

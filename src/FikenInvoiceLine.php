@@ -8,6 +8,7 @@ class FikenInvoiceLine
     private $vatAmount;
     private $grossAmount;
     private $vatType;
+    private $incomeAccount;
     private $description;
     private $productUrl;
 
@@ -39,6 +40,13 @@ class FikenInvoiceLine
         return $this;
     }
 
+    public function incomeAccount(int $incomeAccount)
+    {
+        $this->incomeAccount = $incomeAccount;
+
+        return $this;
+    }
+
     public function productUrl(string $productUrl)
     {
         $this->productUrl = $productUrl;
@@ -55,6 +63,7 @@ class FikenInvoiceLine
             'description' => $this->description,
             'vatType' => $this->vatType,
             'productUrl' => $this->productUrl,
+            'incomeAccount' => $this->incomeAccount,
       ];
     }
 }

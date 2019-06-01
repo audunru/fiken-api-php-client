@@ -70,7 +70,7 @@ class FikenInvoiceLine
             'comment' => $this->comment,
             'vatType' => $this->vatType,
             'productUrl' => $this->product ? $this->product->link() : null,
-            'incomeAccount' => $this->incomeAccount->code,
+            'incomeAccount' =>  $this->incomeAccount ? $this->incomeAccount->code : null,
       ];
     }
 }

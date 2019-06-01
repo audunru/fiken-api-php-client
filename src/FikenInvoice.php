@@ -11,6 +11,7 @@ class FikenInvoice
     protected $lines;
     protected $customer;
     protected $bankAccountUrl;
+    protected $invoiceText;
 
     public function __construct()
     {
@@ -44,6 +45,13 @@ class FikenInvoice
         return $this;
     }
 
+    public function invoiceText(string $text): FikenInvoice
+    {
+        $this->invoiceText = $text;
+
+        return $this;
+    }
+
     public function addLine(FikenInvoiceLine $line): FikenInvoice
     {
         $this->lines[] = $line->get();
@@ -60,6 +68,7 @@ class FikenInvoice
                 'url' => $this->customer->link(),
             ],
             'bankAccountUrl' => $this->bankAccount->link(),
+            'invoiceText' => $this->invoiceText,
             'lines' => $this->lines,
         ];
     }

@@ -28,6 +28,7 @@ class FikenCashSale extends FikenInvoice
                 'url' => $this->customer->link(),
             ],
             'bankAccountUrl' => $this->bankAccount->link(),
+            'invoiceText' => $this->invoiceText,
             'lines' => $this->lines,
             'cash' => $this->cash,
             'paymentAccount' => $this->paymentAccount->code,

@@ -72,7 +72,7 @@ class FikenClient
         });
     }
 
-    public function findCompanyByOrganizationNumber($organizationNumber): FikenCompany
+    public function findCompanyByOrganizationNumber(string $organizationNumber): ?FikenCompany
     {
         return $this->companies()->first(function ($company) use ($organizationNumber) {
             return $organizationNumber == $company->organizationNumber;
@@ -91,7 +91,7 @@ class FikenClient
         });
     }
 
-    public function findContactByName($name): FikenContact
+    public function findContactByName(string $name): ?FikenContact
     {
         return $this->contacts()->first(function ($contact) use ($name) {
             return $name == $contact->name;
@@ -110,7 +110,7 @@ class FikenClient
         });
     }
 
-    public function findBankAccountByName($name): FikenBankAccount
+    public function findBankAccountByName(string $name): ?FikenBankAccount
     {
         return $this->bankAccounts()->first(function ($bankAccount) use ($name) {
             return $name == $bankAccount->name;
@@ -129,7 +129,7 @@ class FikenClient
         });
     }
 
-    public function findProductByName($name): FikenProduct
+    public function findProductByName(string $name): ?FikenProduct
     {
         return $this->products()->first(function ($product) use ($name) {
             return $name == $product->name;

@@ -10,7 +10,7 @@ class FikenInvoiceLine
     private $vatType;
     private $incomeAccount;
     private $description;
-    private $productUrl;
+    private $product;
 
     public function __construct()
     {
@@ -55,7 +55,7 @@ class FikenInvoiceLine
 
     public function product(FikenProduct $product): FikenInvoiceLine
     {
-        $this->productUrl = $product->link();
+        $this->product = $product;
 
         return $this;
     }
@@ -69,7 +69,7 @@ class FikenInvoiceLine
             'description' => $this->description,
             'comment' => $this->comment,
             'vatType' => $this->vatType,
-            'productUrl' => $this->productUrl,
+            'productUrl' => $this->product ? $this->product->link() : null,
             'incomeAccount' => $this->incomeAccount,
       ];
     }

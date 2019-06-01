@@ -20,15 +20,9 @@ class FikenClient
         ]);
     }
 
-    public function username(string $username): FikenClient
+    public function authenticate(string $username, string $password): FikenClient
     {
         $this->username = $username;
-
-        return $this;
-    }
-
-    public function password(string $password): FikenClient
-    {
         $this->password = $password;
 
         return $this;

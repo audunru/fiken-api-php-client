@@ -136,11 +136,11 @@ class FikenClient
         });
     }
 
-    public function accounts(): Collection
+    public function accounts(int $year): Collection
     {
         $link = $this->company->getLink('https://fiken.no/api/v1/rel/accounts');
 
-        $body = $this->client->get($link, ['auth' => $this->auth()])->getBody();
+        $body = $this->client->get(str_replace('{year}', $year, $link), ['auth' => $this->auth()])->getBody();
         $json = json_decode($body, true);
 
         return collect($json['_embedded']['https://fiken.no/api/v1/rel/accounts'])->map(function ($data) {
@@ -148,9 +148,9 @@ class FikenClient
         });
     }
 
-    public function findAccountByCode($code): FikenAccount
+    public function findAccountByCode(string $code, int $year): FikenAccount
     {
-        return $this->accounts()->first(function ($account) use ($code) {
+        return $this->accounts($year)->first(function ($account) use ($code) {
             return $code == $account->code;
         });
     }

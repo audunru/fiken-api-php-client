@@ -46,9 +46,9 @@ class FikenInvoiceLine
         return $this;
     }
 
-    public function incomeAccount(int $incomeAccount): FikenInvoiceLine
+    public function incomeAccount(FikenAccount $account): FikenInvoiceLine
     {
-        $this->incomeAccount = $incomeAccount;
+        $this->incomeAccount = $account;
 
         return $this;
     }
@@ -70,7 +70,7 @@ class FikenInvoiceLine
             'comment' => $this->comment,
             'vatType' => $this->vatType,
             'productUrl' => $this->product ? $this->product->link() : null,
-            'incomeAccount' => $this->incomeAccount,
+            'incomeAccount' => $this->incomeAccount->code,
       ];
     }
 }

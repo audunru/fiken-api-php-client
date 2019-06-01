@@ -32,14 +32,14 @@ class FikenInvoice
 
     public function customer(FikenContact $customer): FikenInvoice
     {
-        $this->customer = ['url' => $customer->link()];
+        $this->customer = $customer;
 
         return $this;
     }
 
     public function bankAccount(FikenBankAccount $bankAccount): FikenInvoice
     {
-        $this->bankAccountUrl = $bankAccount->link();
+        $this->bankAccount = $bankAccount;
 
         return $this;
     }
@@ -56,8 +56,10 @@ class FikenInvoice
         return [
             'issueDate' => $this->issueDate->format('Y-m-d'),
             'dueDate' => $this->dueDate->format('Y-m-d'),
-            'customer' => $this->customer,
-            'bankAccountUrl' => $this->bankAccountUrl,
+            'customer' => [
+                'url' => $this->customer->link(),
+            ],
+            'bankAccountUrl' => $this->bankAccount->link(),
             'lines' => $this->lines,
         ];
     }

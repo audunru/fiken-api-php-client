@@ -6,18 +6,14 @@ use Carbon\Carbon;
 
 class FikenInvoice
 {
-    private $issueDate;
-    private $dueDate;
-    private $lines;
-    private $customer;
-    private $bankAccountUrl;
-    private $cash;
-    private $paymentAccount;
+    protected $issueDate;
+    protected $dueDate;
+    protected $lines;
+    protected $customer;
+    protected $bankAccountUrl;
 
     public function __construct()
     {
-        $this->cash = false;
-        $this->paymentAccount = null;
     }
 
     public function issueDate(Carbon $issueDate)

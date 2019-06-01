@@ -12,14 +12,14 @@ class FikenCashSale extends FikenInvoice
         $this->cash = true;
     }
 
-    public function paymentAccount(string $paymentAccount)
+    public function paymentAccount(string $paymentAccount): FikenCashSale
     {
         $this->paymentAccount = $paymentAccount;
 
         return $this;
     }
 
-    public function get()
+    public function get(): array
     {
         return [
             'issueDate' => $this->issueDate->format('Y-m-d'),

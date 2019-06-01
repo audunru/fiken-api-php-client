@@ -11,12 +11,12 @@ abstract class FikenModel
         $this->data = $data;
     }
 
-    public function getLink($type)
+    public function getLink($type): string
     {
         return $this->data['_links'][$type]['href'];
     }
 
-    public function link()
+    public function link(): string
     {
         return $this->getLink('self');
     }

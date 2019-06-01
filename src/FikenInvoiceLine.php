@@ -16,7 +16,7 @@ class FikenInvoiceLine
     {
     }
 
-    public function price(int $netAmount, int $vatAmount, int $grossAmount)
+    public function price(int $netAmount, int $vatAmount, int $grossAmount): FikenInvoiceLine
     {
         $this->netAmount = $netAmount;
         $this->vatAmount = $vatAmount;
@@ -25,42 +25,42 @@ class FikenInvoiceLine
         return $this;
     }
 
-    public function vatType(string $vatType)
+    public function vatType(string $vatType): FikenInvoiceLine
     {
         $this->vatType = $vatType;
 
         return $this;
     }
 
-    public function description(string $description)
+    public function description(string $description): FikenInvoiceLine
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function comment(string $comment)
+    public function comment(string $comment): FikenInvoiceLine
     {
         $this->comment = $comment;
 
         return $this;
     }
 
-    public function incomeAccount(int $incomeAccount)
+    public function incomeAccount(int $incomeAccount): FikenInvoiceLine
     {
         $this->incomeAccount = $incomeAccount;
 
         return $this;
     }
 
-    public function product(FikenProduct $product)
+    public function product(FikenProduct $product): FikenInvoiceLine
     {
         $this->productUrl = $product->link();
 
         return $this;
     }
 
-    public function get()
+    public function get(): array
     {
         return [
             'netAmount' => $this->netAmount,

@@ -3,6 +3,7 @@
 namespace audunru\FikenClient;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 
 class FikenClient
@@ -40,12 +41,12 @@ class FikenClient
         return $this;
     }
 
-    public function whoAmI()
+    public function whoAmI(): Response
     {
         return $this->client->get('whoAmI', ['auth' => $this->auth()]);
     }
 
-    public function createInvoice(FikenInvoice $invoice)
+    public function createInvoice(FikenInvoice $invoice): Response
     {
         $link = $this->company->getLink('https://fiken.no/api/v1/rel/create-invoice-service');
 
@@ -132,6 +133,25 @@ class FikenClient
     {
         return $this->products()->first(function ($product) use ($name) {
             return $name == $product->name;
+        });
+    }
+
+    public function accounts(): Collection
+    {
+        $link = $this->company->getLink('https://fiken.no/api/v1/rel/accounts');
+
+        $body = $this->client->get($link, ['auth' => $this->auth()])->getBody();
+        $json = json_decode($body, true);
+
+        return collect($json['_embedded']['https://fiken.no/api/v1/rel/accounts'])->map(function ($data) {
+            return new FikenAccount($data);
+        });
+    }
+
+    public function findAccountByCode($code): FikenAccount
+    {
+        return $this->accounts()->first(function ($account) use ($code) {
+            return $code == $account->code;
         });
     }
 }

@@ -34,16 +34,16 @@ class FikenInvoice
         return $this;
     }
 
-    public function customer(FikenCustomer $customer)
+    public function customer(FikenContact $customer)
     {
-        $this->customer = $customer->get();
+        $this->customer = ['url' => $customer->link()];
 
         return $this;
     }
 
-    public function bankAccountUrl(string $bankAccountUrl)
+    public function bankAccount(FikenBankAccount $bankAccount)
     {
-        $this->bankAccountUrl = $bankAccountUrl;
+        $this->bankAccountUrl = $bankAccount->link();
 
         return $this;
     }

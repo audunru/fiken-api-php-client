@@ -53,9 +53,9 @@ class FikenInvoiceLine
         return $this;
     }
 
-    public function productUrl(string $productUrl)
+    public function product(FikenProduct $product)
     {
-        $this->productUrl = $productUrl;
+        $this->productUrl = $product->link();
 
         return $this;
     }

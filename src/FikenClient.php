@@ -148,7 +148,7 @@ class FikenClient
         });
     }
 
-    public function findAccountByCode(string $code, int $year): FikenAccount
+    public function findAccountByCode(string $code, int $year): ?FikenAccount
     {
         return $this->accounts($year)->first(function ($account) use ($code) {
             return $code == $account->code;

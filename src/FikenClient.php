@@ -104,10 +104,10 @@ class FikenClient
         });
     }
 
-    public function findBankAccountByName(string $name): ?FikenBankAccount
+    public function findBankAccountByNumber(string $number): ?FikenBankAccount
     {
-        return $this->bankAccounts()->first(function ($bankAccount) use ($name) {
-            return $name == $bankAccount->name;
+        return $this->bankAccounts()->first(function ($bankAccount) use ($number) {
+            return $number == $bankAccount->number;
         });
     }
 

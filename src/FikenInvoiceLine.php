@@ -10,6 +10,7 @@ class FikenInvoiceLine
     private $vatType;
     private $incomeAccount;
     private $description;
+    private $comment;
     private $product;
 
     public function __construct()

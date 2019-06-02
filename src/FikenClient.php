@@ -148,4 +148,41 @@ class FikenClient
             return $code == $account->code;
         });
     }
+
+    // TODO: Needs refactoring
+    public function findAttachmentLinkByInvoice(string $invoice): string
+    {
+        $body = $this->client->get($invoice, ['auth' => $this->auth()])->getBody();
+        $json = json_decode($body, true);
+
+        $sale = $json['sale'];
+
+        $body = $this->client->get($sale, ['auth' => $this->auth()])->getBody();
+        $json = json_decode($body, true);
+
+        return $json['_links']['https://fiken.no/api/v1/rel/attachments']['href'];
+    }
+
+    // TODO: Needs refactoring
+    public function createAttachment(string $link, string $path, string $filename)
+    {
+        return $this->client->request('POST', $link, [
+            'auth' => $this->auth(),
+            'multipart' => [
+                [
+                    'name'     => 'AttachmentFile',
+                    'contents' => fopen($path, 'rb'),
+                    'filename' => $filename,
+                ],
+                [
+                    'name'     => 'SaleAttachment',
+                    'contents' => json_encode([
+                        'filename' => $filename,
+                        'attachToPayment' => false,
+                        'attachToSale' => true,
+                    ]),
+                ],
+            ],
+        ]);
+    }
 }

@@ -6,6 +6,8 @@ The current goal of this package is to be able to create invoices and cash sales
 
 You can use the Fiken API with demo accounts for free, otherwise there's a monthly fee per company.
 
+[Fiken API official documentation](https://fiken.no/api/doc/)
+
 I don't work for Fiken.
 
 # Installation
@@ -29,7 +31,7 @@ $ composer require audunru/fiken-api-php-client
 
 # Usage
 
-Test authentication:
+## Test authentication
 
 ```php
 use audunru\FikenClient\FikenClient;
@@ -40,7 +42,7 @@ $client->authenticate('username', 'password'); // The Fiken API uses basic authe
 $client->user();
 ```
 
-Get companies:
+## Companies
 
 ```php
 use audunru\FikenClient\FikenClient;
@@ -51,7 +53,7 @@ $client->authenticate('username', 'password');
 $client->companies();
 ```
 
-Get bank accounts, accounts, products and other resources that belong to a company.
+## Bank accounts, products and other resources that belong to a company.
 
 In order to get these resources, you need to get a company first.
 

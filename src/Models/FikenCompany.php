@@ -2,7 +2,6 @@
 
 namespace audunru\FikenClient\Models;
 
-use audunru\FikenClient\FikenClient;
 use Illuminate\Support\Collection;
 
 class FikenCompany extends FikenBaseModel
@@ -16,29 +15,30 @@ class FikenCompany extends FikenBaseModel
 
     public function contacts(): Collection
     {
-        return FikenContact::all($this->client);
+        return FikenContact::all();
     }
 
     public function bankAccounts(): Collection
     {
-        return FikenBankAccount::all($this->client);
+        return FikenBankAccount::all();
     }
 
     public function products(): Collection
     {
-        return FikenProduct::all($this->client);
+        return FikenProduct::all();
     }
 
     public function accounts(int $year): Collection
     {
-        return FikenAccount::all($this->client, ['{year}' => $year]);
+        return FikenAccount::all(['{year}' => $year]);
     }
 
     /**
      * Get all of the models from the database.
      */
-    public static function all(FikenClient $client, array $replace = null): Collection
+    public static function all(array $replace = null): Collection
     {
+        $client = resolve('audunru\FikenClient\FikenClient');
         $entry = $client->get();
         $link = $entry['_links'][static::$rel]['href'];
         $json = $client->get($link);

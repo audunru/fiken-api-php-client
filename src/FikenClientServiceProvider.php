@@ -2,7 +2,6 @@
 
 namespace audunru\FikenClient;
 
-use FikenClient;
 use Illuminate\Support\ServiceProvider;
 
 class FikenClientServiceProvider extends ServiceProvider
@@ -12,8 +11,6 @@ class FikenClientServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(FikenClient::class, function ($app) {
-            return new FikenClient();
-        });
+        $this->app->singleton('audunru\FikenClient\FikenClient');
     }
 }

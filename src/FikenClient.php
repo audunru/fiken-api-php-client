@@ -26,7 +26,7 @@ class FikenClient
 
     public function companies(): Collection
     {
-        return FikenCompany::all($this);
+        return FikenCompany::all();
     }
 
     // TODO: Needs refactoring

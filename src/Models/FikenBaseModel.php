@@ -2,7 +2,6 @@
 
 namespace audunru\FikenClient\Models;
 
-use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Traits\GuardsAttributes;
 use audunru\FikenClient\Traits\HasAttributes;
 use Illuminate\Contracts\Support\Arrayable;
@@ -15,10 +14,10 @@ abstract class FikenBaseModel implements Arrayable
     protected static $rel;
     protected $client;
 
-    public function __construct(array $attributes = [], FikenClient $client = null)
+    public function __construct(array $attributes = [])
     {
         $this->fill($attributes);
-        $this->client = $client;
+        $this->client = resolve('audunru\FikenClient\FikenClient');
     }
 
     /*
@@ -44,8 +43,9 @@ abstract class FikenBaseModel implements Arrayable
     /**
      * Get all of the models from the database.
      */
-    public static function all(FikenClient $client, array $replace = null): Collection
+    public static function all(array $replace = null): Collection
     {
+        $client = resolve('audunru\FikenClient\FikenClient');
         $link = $client->company->getRelationshipLink(static::$rel);
 
         collect($replace)->each(function ($to, $from) use (&$link) {
@@ -66,9 +66,9 @@ abstract class FikenBaseModel implements Arrayable
      *
      * @return static
      */
-    public static function where($key, $value, FikenClient $client): Collection
+    public static function where($key, $value): Collection
     {
-        return static::all($client)->filter(function ($item) use ($key, $value) {
+        return static::all()->filter(function ($item) use ($key, $value) {
             return $item->$key == $value;
         });
     }

@@ -1,11 +1,9 @@
 <?php
 
-namespace audunru\FikenClient;
+namespace audunru\FikenClient\Models;
 
 class FikenCashSale extends FikenInvoice
 {
-    protected $cash;
-
     public function __construct()
     {
         parent::__construct();

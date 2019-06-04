@@ -2,23 +2,18 @@
 
 namespace audunru\FikenClient;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
+use audunru\FikenClient\Models\FikenCompany;
+use audunru\FikenClient\Traits\FetchesFromFiken;
 use Illuminate\Support\Collection;
 
 class FikenClient
 {
-    private $client;
+    use FetchesFromFiken;
+
+    private $guzzle;
     private $username;
     private $password;
-    private $company;
-
-    public function __construct()
-    {
-        $this->client = new Client([
-            'base_uri' => 'https://fiken.no/api/v1/',
-        ]);
-    }
+    public $company;
 
     public function authenticate(string $username, string $password): FikenClient
     {
@@ -28,137 +23,29 @@ class FikenClient
         return $this;
     }
 
-    public function company(FikenCompany $company): FikenClient
+    public function company(string $organizationNumber): FikenCompany
     {
-        $this->company = $company;
+        $this->company = FikenCompany::where('organizationNumber', $organizationNumber, $this)->first();
 
-        return $this;
+        return $this->company;
     }
 
-    public function whoAmI(): Response
+    public function user(): array
     {
-        return $this->client->get('whoAmI', ['auth' => $this->auth()]);
-    }
-
-    public function createInvoice(FikenInvoice $invoice): Response
-    {
-        $link = $this->company->getLink('https://fiken.no/api/v1/rel/create-invoice-service');
-
-        return $this->client->request('POST', $link, ['auth' => $this->auth(), 'json' => $invoice->get()]);
-    }
-
-    private function auth(): array
-    {
-        return [$this->username, $this->password];
+        return $this->get('whoAmI');
     }
 
     public function companies(): Collection
     {
-        $body = $this->client->get('', ['auth' => $this->auth()])->getBody();
-        $json = json_decode($body, true);
-        $link = $json['_links']['https://fiken.no/api/v1/rel/companies']['href'];
-
-        $body = $this->client->get($link, ['auth' => $this->auth()])->getBody();
-        $json = json_decode($body, true);
-
-        return collect($json['_embedded']['https://fiken.no/api/v1/rel/companies'])->map(function ($data) {
-            return new FikenCompany($data);
-        });
-    }
-
-    public function findCompanyByOrganizationNumber(string $organizationNumber): ?FikenCompany
-    {
-        return $this->companies()->first(function ($company) use ($organizationNumber) {
-            return $organizationNumber == $company->organizationNumber;
-        });
-    }
-
-    public function contacts(): Collection
-    {
-        $link = $this->company->getLink('https://fiken.no/api/v1/rel/contacts');
-
-        $body = $this->client->get($link, ['auth' => $this->auth()])->getBody();
-        $json = json_decode($body, true);
-
-        return collect($json['_embedded']['https://fiken.no/api/v1/rel/contacts'])->map(function ($data) {
-            return new FikenContact($data);
-        });
-    }
-
-    public function findContactByName(string $name): ?FikenContact
-    {
-        return $this->contacts()->first(function ($contact) use ($name) {
-            return $name == $contact->name;
-        });
-    }
-
-    public function bankAccounts(): Collection
-    {
-        $link = $this->company->getLink('https://fiken.no/api/v1/rel/bank-accounts');
-
-        $body = $this->client->get($link, ['auth' => $this->auth()])->getBody();
-        $json = json_decode($body, true);
-
-        return collect($json['_embedded']['https://fiken.no/api/v1/rel/bank-accounts'])->map(function ($data) {
-            return new FikenBankAccount($data);
-        });
-    }
-
-    public function findBankAccountByNumber(string $number): ?FikenBankAccount
-    {
-        return $this->bankAccounts()->first(function ($bankAccount) use ($number) {
-            return $number == $bankAccount->number;
-        });
-    }
-
-    public function products(): Collection
-    {
-        $link = $this->company->getLink('https://fiken.no/api/v1/rel/products');
-
-        $body = $this->client->get($link, ['auth' => $this->auth()])->getBody();
-        $json = json_decode($body, true);
-
-        return collect($json['_embedded']['https://fiken.no/api/v1/rel/products'])->map(function ($data) {
-            return new FikenProduct($data);
-        });
-    }
-
-    public function findProductByName(string $name): ?FikenProduct
-    {
-        return $this->products()->first(function ($product) use ($name) {
-            return $name == $product->name;
-        });
-    }
-
-    public function accounts(int $year): Collection
-    {
-        $link = $this->company->getLink('https://fiken.no/api/v1/rel/accounts');
-
-        $body = $this->client->get(str_replace('{year}', $year, $link), ['auth' => $this->auth()])->getBody();
-        $json = json_decode($body, true);
-
-        return collect($json['_embedded']['https://fiken.no/api/v1/rel/accounts'])->map(function ($data) {
-            return new FikenAccount($data);
-        });
-    }
-
-    public function findAccountByCode(string $code, int $year): ?FikenAccount
-    {
-        return $this->accounts($year)->first(function ($account) use ($code) {
-            return $code == $account->code;
-        });
+        return FikenCompany::all($this);
     }
 
     // TODO: Needs refactoring
     public function findAttachmentLinkByInvoice(string $invoice): string
     {
-        $body = $this->client->get($invoice, ['auth' => $this->auth()])->getBody();
-        $json = json_decode($body, true);
-
+        $json = $this->get($invoice);
         $sale = $json['sale'];
-
-        $body = $this->client->get($sale, ['auth' => $this->auth()])->getBody();
-        $json = json_decode($body, true);
+        $json = $this->get($sale);
 
         return $json['_links']['https://fiken.no/api/v1/rel/attachments']['href'];
     }
@@ -166,8 +53,8 @@ class FikenClient
     // TODO: Needs refactoring
     public function createAttachment(string $link, string $path, string $filename)
     {
-        return $this->client->request('POST', $link, [
-            'auth' => $this->auth(),
+        return $this->post($link, [
+            'auth' => [$this->username, $this->password],
             'multipart' => [
                 [
                     'name'     => 'AttachmentFile',

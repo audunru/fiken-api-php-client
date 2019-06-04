@@ -1,21 +1,12 @@
 <?php
 
-namespace audunru\FikenClient;
+namespace audunru\FikenClient\Models;
 
 use Carbon\Carbon;
 
-class FikenInvoice
+class FikenInvoice extends FikenBaseModel
 {
-    protected $issueDate;
-    protected $dueDate;
-    protected $lines;
-    protected $customer;
-    protected $bankAccountUrl;
-    protected $invoiceText;
-
-    public function __construct()
-    {
-    }
+    protected static $rel = 'https://fiken.no/api/v1/rel/invoices';
 
     public function issueDate(Carbon $issueDate): FikenInvoice
     {
@@ -45,13 +36,6 @@ class FikenInvoice
         return $this;
     }
 
-    public function invoiceText(string $text): FikenInvoice
-    {
-        $this->invoiceText = $text;
-
-        return $this;
-    }
-
     public function addLine(FikenInvoiceLine $line): FikenInvoice
     {
         $this->lines[] = $line->get();
@@ -71,5 +55,12 @@ class FikenInvoice
             'invoiceText' => $this->invoiceText,
             'lines' => $this->lines,
         ];
+    }
+
+    public function save(): array
+    {
+        $link = $this->client->company->getLink('https://fiken.no/api/v1/rel/create-invoice-service');
+
+        return $this->client->post($link, $this->get());
     }
 }

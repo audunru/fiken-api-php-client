@@ -3,6 +3,7 @@
 namespace audunru\FikenClient\Models;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 
 class FikenCompany extends FikenBaseModel
 {
@@ -38,7 +39,7 @@ class FikenCompany extends FikenBaseModel
      */
     public static function all(array $replace = null): Collection
     {
-        $client = resolve('audunru\FikenClient\FikenClient');
+        $client = App::make('audunru\FikenClient\FikenClient');
         $entry = $client->get();
         $link = $entry['_links'][static::$rel]['href'];
         $json = $client->get($link);

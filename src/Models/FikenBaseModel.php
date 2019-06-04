@@ -6,6 +6,7 @@ use audunru\FikenClient\Traits\GuardsAttributes;
 use audunru\FikenClient\Traits\HasAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 
 abstract class FikenBaseModel implements Arrayable
 {
@@ -17,7 +18,7 @@ abstract class FikenBaseModel implements Arrayable
     public function __construct(array $attributes = [])
     {
         $this->fill($attributes);
-        $this->client = resolve('audunru\FikenClient\FikenClient');
+        $this->client = App::make('audunru\FikenClient\FikenClient');
     }
 
     /*
@@ -45,7 +46,7 @@ abstract class FikenBaseModel implements Arrayable
      */
     public static function all(array $replace = null): Collection
     {
-        $client = resolve('audunru\FikenClient\FikenClient');
+        $client = App::make('audunru\FikenClient\FikenClient');
         $link = $client->company->getRelationshipLink(static::$rel);
 
         collect($replace)->each(function ($to, $from) use (&$link) {

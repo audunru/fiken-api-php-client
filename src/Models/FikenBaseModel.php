@@ -2,13 +2,16 @@
 
 namespace audunru\FikenClient\Models;
 
+use ArrayAccess;
 use audunru\FikenClient\Traits\GuardsAttributes;
 use audunru\FikenClient\Traits\HasAttributes;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
+use JsonSerializable;
 
-abstract class FikenBaseModel implements Arrayable
+abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
 {
     use GuardsAttributes, HasAttributes;
 
@@ -56,21 +59,6 @@ abstract class FikenBaseModel implements Arrayable
 
         return collect($json['_embedded'][static::$rel])->map(function ($data) use ($client) {
             return new static($data, $client);
-        });
-    }
-
-    /**
-     * Filter items by the given key value pair.
-     *
-     * @param string $key
-     * @param mixed  $value
-     *
-     * @return static
-     */
-    public static function where($key, $value): Collection
-    {
-        return static::all()->filter(function ($item) use ($key, $value) {
-            return $item->$key == $value;
         });
     }
 
@@ -147,5 +135,111 @@ abstract class FikenBaseModel implements Arrayable
     public function toArray()
     {
         return $this->attributesToArray();
+    }
+
+    /**
+     * Convert the model instance to JSON.
+     *
+     * @param int $options
+     *
+     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
+     *
+     * @return string
+     */
+    public function toJson($options = 0)
+    {
+        $json = json_encode($this->jsonSerialize(), $options);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw JsonEncodingException::forModel($this, json_last_error_msg());
+        }
+
+        return $json;
+    }
+
+    /**
+     * Convert the object into something JSON serializable.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the model to its string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * Determine if the given attribute exists.
+     *
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return ! is_null($this->getAttribute($offset));
+    }
+
+    /**
+     * Get the value for a given offset.
+     *
+     * @param mixed $offset
+     *
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->getAttribute($offset);
+    }
+
+    /**
+     * Set the value for a given offset.
+     *
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->setAttribute($offset, $value);
+    }
+
+    /**
+     * Unset the value for a given offset.
+     *
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->attributes[$offset]);
+    }
+
+    /**
+     * Determine if an attribute or relation exists on the model.
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return $this->offsetExists($key);
+    }
+
+    /**
+     * Unset an attribute on the model.
+     *
+     * @param string $key
+     */
+    public function __unset($key)
+    {
+        $this->offsetUnset($key);
     }
 }

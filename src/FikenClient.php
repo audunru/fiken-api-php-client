@@ -14,7 +14,7 @@ class FikenClient
 
     public function company(string $organizationNumber): FikenCompany
     {
-        $this->company = FikenCompany::where('organizationNumber', $organizationNumber, $this)->first();
+        $this->company = $this->companies()->firstWhere('organizationNumber', $organizationNumber);
 
         return $this->company;
     }

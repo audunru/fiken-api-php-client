@@ -2,9 +2,15 @@
 
 Fiken.no is an online accounting system aimed at making accounting easy for small businesses.
 
+The current goal of this package is to be able to create invoices and cash sales through the Fiken API.
+
+You can use the Fiken API with demo accounts for free, otherwise there's a monthly fee per company.
+
+I don't work for Fiken.
+
 # Installation
 
-The package is not published on packagist.org yet, so for now you need to add the following to your `composer.json`:
+The package is not published on packagist.org yet, so for now you need to add the following to your `composer.json` before you can install it:
 
 ```json
   "repositories": [
@@ -18,7 +24,7 @@ The package is not published on packagist.org yet, so for now you need to add th
 Afterwards, run this command:
 
 ```bash
-$ composer update
+$ composer require audunru/fiken-api-php-client
 ```
 
 # Usage
@@ -29,7 +35,7 @@ Test authentication:
 use audunru\FikenClient\FikenClient;
 
 $client = new FikenClient();
-$client->authenticate('username', 'password');
+$client->authenticate('username', 'password'); // The Fiken API uses basic authentication
 
 $client->user();
 ```
@@ -47,7 +53,7 @@ $client->companies();
 
 Get bank accounts, accounts, products and other resources that belong to a company.
 
-In order to get these resources, you need to set
+In order to get these resources, you need to get a company first.
 
 ```php
 use audunru\FikenClient\FikenClient;

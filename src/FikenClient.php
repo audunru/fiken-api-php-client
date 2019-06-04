@@ -10,18 +10,7 @@ class FikenClient
 {
     use ConnectsToFiken;
 
-    private $guzzle;
-    private $username;
-    private $password;
     public $company;
-
-    public function authenticate(string $username, string $password): FikenClient
-    {
-        $this->username = $username;
-        $this->password = $password;
-
-        return $this;
-    }
 
     public function company(string $organizationNumber): FikenCompany
     {

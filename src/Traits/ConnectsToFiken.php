@@ -2,16 +2,29 @@
 
 namespace audunru\FikenClient\Traits;
 
+use audunru\FikenClient\FikenClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
 trait ConnectsToFiken
 {
+    private $guzzle;
+    private $username;
+    private $password;
+
     public function __construct()
     {
         $this->guzzle = new Client([
             'base_uri' => 'https://fiken.no/api/v1/',
         ]);
+    }
+
+    public function authenticate(string $username, string $password): FikenClient
+    {
+        $this->username = $username;
+        $this->password = $password;
+
+        return $this;
     }
 
     public function get(string $path = ''): array

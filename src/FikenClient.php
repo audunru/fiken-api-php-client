@@ -3,12 +3,12 @@
 namespace audunru\FikenClient;
 
 use audunru\FikenClient\Models\FikenCompany;
-use audunru\FikenClient\Traits\FetchesFromFiken;
+use audunru\FikenClient\Traits\ConnectsToFiken;
 use Illuminate\Support\Collection;
 
 class FikenClient
 {
-    use FetchesFromFiken;
+    use ConnectsToFiken;
 
     private $guzzle;
     private $username;

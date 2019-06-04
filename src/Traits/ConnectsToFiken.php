@@ -5,7 +5,7 @@ namespace audunru\FikenClient\Traits;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
-trait FetchesFromFiken
+trait ConnectsToFiken
 {
     public function __construct()
     {

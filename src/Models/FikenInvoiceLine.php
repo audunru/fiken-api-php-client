@@ -18,7 +18,7 @@ class FikenInvoiceLine extends FikenBaseModel
         return $this;
     }
 
-    public function get(): array
+    public function toArray(): array
     {
         return [
             'netAmount' => $this->netAmount,

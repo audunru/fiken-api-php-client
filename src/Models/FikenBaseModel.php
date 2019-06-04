@@ -44,9 +44,13 @@ abstract class FikenBaseModel implements Arrayable
     /**
      * Get all of the models from the database.
      */
-    public static function all(FikenClient $client): Collection
+    public static function all(FikenClient $client, array $replace = null): Collection
     {
         $link = $client->company->getRelationshipLink(static::$rel);
+
+        collect($replace)->each(function ($to, $from) use (&$link) {
+            $link = str_replace($from, $to, $link);
+        });
         $json = $client->get($link);
 
         return collect($json['_embedded'][static::$rel])->map(function ($data) use ($client) {
@@ -72,6 +76,11 @@ abstract class FikenBaseModel implements Arrayable
     public function getRelationshipLink(string $rel)
     {
         return $this->attributes['_links'][$rel]['href'];
+    }
+
+    public function link()
+    {
+        return $this->getRelationshipLink('self');
     }
 
     /**

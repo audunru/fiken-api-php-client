@@ -17,7 +17,7 @@ class FikenCashSale extends FikenInvoice
         return $this;
     }
 
-    public function get(): array
+    public function toArray(): array
     {
         return [
             'issueDate' => $this->issueDate->format('Y-m-d'),

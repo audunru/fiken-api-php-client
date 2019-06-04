@@ -3,6 +3,7 @@
 namespace audunru\FikenClient\Traits;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 
 trait FetchesFromFiken
 {
@@ -20,10 +21,10 @@ trait FetchesFromFiken
         return json_decode($body, true);
     }
 
-    public function post(string $path, array $payload): array
+    public function post(string $path, array $payload): Response
     {
-        $body = $this->guzzle->post($path, ['auth' => [$this->username, $this->password, 'json' => $payload]])->getBody();
+        $response = $this->guzzle->post($path, ['auth' => [$this->username, $this->password], 'json' => $payload]);
 
-        return json_decode($body, true);
+        return $response;
     }
 }

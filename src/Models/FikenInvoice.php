@@ -3,6 +3,7 @@
 namespace audunru\FikenClient\Models;
 
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Response;
 
 class FikenInvoice extends FikenBaseModel
 {
@@ -38,12 +39,12 @@ class FikenInvoice extends FikenBaseModel
 
     public function addLine(FikenInvoiceLine $line): FikenInvoice
     {
-        $this->lines[] = $line->get();
+        $this->attributes['lines'][] = $line->toArray();
 
         return $this;
     }
 
-    public function get(): array
+    public function toArray(): array
     {
         return [
             'issueDate' => $this->issueDate->format('Y-m-d'),
@@ -57,10 +58,10 @@ class FikenInvoice extends FikenBaseModel
         ];
     }
 
-    public function save(): array
+    public function save(): Response
     {
-        $link = $this->client->company->getLink('https://fiken.no/api/v1/rel/create-invoice-service');
+        $link = $this->client->company->getRelationshipLink('https://fiken.no/api/v1/rel/create-invoice-service');
 
-        return $this->client->post($link, $this->get());
+        return $this->client->post($link, $this->toArray());
     }
 }

@@ -29,15 +29,15 @@ class FikenCompany extends FikenBaseModel
         return FikenProduct::all($this->client);
     }
 
-    public function accounts(): Collection
+    public function accounts(int $year): Collection
     {
-        return FikenAccount::all($this->client);
+        return FikenAccount::all($this->client, ['{year}' => $year]);
     }
 
     /**
      * Get all of the models from the database.
      */
-    public static function all(FikenClient $client): Collection
+    public static function all(FikenClient $client, array $replace = null): Collection
     {
         $entry = $client->get();
         $link = $entry['_links'][static::$rel]['href'];

@@ -7,45 +7,66 @@ use Illuminate\Support\Facades\App;
 
 class FikenCompany extends FikenBaseModel
 {
-    protected static $rel = 'https://fiken.no/api/v1/rel/companies';
-    protected $fillable = [
-        'name',
-        'organizationNumber',
-        '_links',
-    ];
+    protected static $relationship = 'https://fiken.no/api/v1/rel/companies';
 
+    /**
+     * Get contacts.
+     *
+     * @return Collection
+     */
     public function contacts(): Collection
     {
-        return FikenContact::all();
+        return FikenContact::all($this);
     }
 
+    /**
+     * Get bank accounts.
+     *
+     * @return Collection
+     */
     public function bankAccounts(): Collection
     {
-        return FikenBankAccount::all();
+        return FikenBankAccount::all($this);
     }
 
+    /**
+     * Get products.
+     *
+     * @return Collection
+     */
     public function products(): Collection
     {
-        return FikenProduct::all();
+        return FikenProduct::all($this);
     }
 
+    /**
+     * Get accounts.
+     *
+     * @param int $year
+     *
+     * @return Collection
+     */
     public function accounts(int $year): Collection
     {
-        return FikenAccount::all(['{year}' => $year]);
+        return FikenAccount::all($this, ['{year}' => $year]);
     }
 
     /**
      * Get all of the models from the database.
+     *
+     * @param array $replace
+     *
+     * @return Collection
      */
-    public static function all(array $replace = null): Collection
+    public static function all(FikenBaseModel $parent = null, array $replace = null): Collection
     {
         $client = App::make('audunru\FikenClient\FikenClient');
-        $entry = $client->get();
-        $link = $entry['_links'][static::$rel]['href'];
-        $json = $client->get($link);
+        $entry = $client->getResource();
+        $link = $entry['_links'][static::$relationship]['href'];
+        $json = $client->getResource($link);
 
-        return collect($json['_embedded'][static::$rel])->map(function ($data) use ($client) {
-            return new static($data, $client);
+        return collect($json['_embedded'][static::$relationship])->map(function ($data) use ($client) {
+            return static::newFromApi($data);
         });
     }
 }

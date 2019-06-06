@@ -4,12 +4,19 @@ namespace audunru\FikenClient\Models;
 
 class FikenCashSale extends FikenInvoice
 {
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct();
+        parent::__construct($attributes);
         $this->cash = true;
     }
 
+    /**
+     * Set payment account.
+     *
+     * @param FikenAccount $account
+     *
+     * @return FikenCashSale
+     */
     public function paymentAccount(FikenAccount $account): FikenCashSale
     {
         $this->paymentAccount = $account;
@@ -17,15 +24,20 @@ class FikenCashSale extends FikenInvoice
         return $this;
     }
 
-    public function toArray(): array
+    /*
+     * Convert the model instance to an array that can be used to create a new resource
+     *
+     * @return array
+     */
+    public function toNewResourceArray(): array
     {
         return [
-            'issueDate' => $this->issueDate->format('Y-m-d'),
-            'dueDate' => $this->dueDate->format('Y-m-d'),
+            'issueDate' => $this->issueDate,
+            'dueDate' => $this->dueDate,
             'customer' => [
-                'url' => $this->customer->link(),
+                'url' => $this->customer->getLinkToSelf(),
             ],
-            'bankAccountUrl' => $this->bankAccount->link(),
+            'bankAccountUrl' => $this->bankAccount->getLinkToSelf(),
             'invoiceText' => $this->invoiceText,
             'lines' => $this->lines,
             'cash' => $this->cash,

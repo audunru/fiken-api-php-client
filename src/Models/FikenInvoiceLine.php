@@ -4,6 +4,22 @@ namespace audunru\FikenClient\Models;
 
 class FikenInvoiceLine extends FikenBaseModel
 {
+    protected $fillable = [
+        'netAmount',
+        'vatAmount',
+        'grossAmount',
+        'description',
+        'comment',
+        'vatType',
+    ];
+
+    /**
+     * Set income account.
+     *
+     * @param FikenAccount $account
+     *
+     * @return FikenInvoiceLine
+     */
     public function incomeAccount(FikenAccount $account): FikenInvoiceLine
     {
         $this->incomeAccount = $account;
@@ -11,6 +27,13 @@ class FikenInvoiceLine extends FikenBaseModel
         return $this;
     }
 
+    /**
+     * Set product.
+     *
+     * @param FikenProduct $product
+     *
+     * @return FikenInvoiceLine
+     */
     public function product(FikenProduct $product): FikenInvoiceLine
     {
         $this->product = $product;
@@ -18,7 +41,12 @@ class FikenInvoiceLine extends FikenBaseModel
         return $this;
     }
 
-    public function toArray(): array
+    /*
+     * Convert the model instance to an array that can be used to create a new resource
+     *
+     * @return array
+     */
+    public function toNewResourceArray(): array
     {
         return [
             'netAmount' => $this->netAmount,
@@ -27,7 +55,7 @@ class FikenInvoiceLine extends FikenBaseModel
             'description' => $this->description,
             'comment' => $this->comment,
             'vatType' => $this->vatType,
-            'productUrl' => $this->product ? $this->product->link() : null,
+            'productUrl' => $this->product ? $this->product->getLinkToSelf() : null,
             'incomeAccount' =>  $this->incomeAccount ? $this->incomeAccount->code : null,
       ];
     }

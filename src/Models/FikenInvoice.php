@@ -2,27 +2,30 @@
 
 namespace audunru\FikenClient\Models;
 
-use Carbon\Carbon;
-use GuzzleHttp\Psr7\Response;
-
 class FikenInvoice extends FikenBaseModel
 {
-    protected static $rel = 'https://fiken.no/api/v1/rel/invoices';
+    protected static $relationship = 'https://fiken.no/api/v1/rel/invoices';
+    protected static $service = 'https://fiken.no/api/v1/rel/create-invoice-service';
 
-    public function issueDate(Carbon $issueDate): FikenInvoice
-    {
-        $this->issueDate = $issueDate;
+    protected $fillable = [
+        'issueDate',
+        'dueDate',
+    ];
 
-        return $this;
-    }
+    protected $dates = [
+        'issueDate',
+        'dueDate',
+    ];
 
-    public function dueDate(Carbon $dueDate): FikenInvoice
-    {
-        $this->dueDate = $dueDate;
+    protected $dateFormat = 'Y-m-d';
 
-        return $this;
-    }
-
+    /**
+     * Set customer.
+     *
+     * @param FikenContact $customer
+     *
+     * @return FikenInvoice
+     */
     public function customer(FikenContact $customer): FikenInvoice
     {
         $this->customer = $customer;
@@ -30,6 +33,13 @@ class FikenInvoice extends FikenBaseModel
         return $this;
     }
 
+    /**
+     * Set bank account.
+     *
+     * @param FikenBankAccount $bankAccount
+     *
+     * @return FikenInvoice
+     */
     public function bankAccount(FikenBankAccount $bankAccount): FikenInvoice
     {
         $this->bankAccount = $bankAccount;
@@ -37,31 +47,36 @@ class FikenInvoice extends FikenBaseModel
         return $this;
     }
 
+    /**
+     * Add invoice line.
+     *
+     * @param FikenInvoiceLine $line
+     *
+     * @return FikenInvoice
+     */
     public function addLine(FikenInvoiceLine $line): FikenInvoice
     {
-        $this->attributes['lines'][] = $line->toArray();
+        $this->attributes['lines'][] = $line->toNewResourceArray();
 
         return $this;
     }
 
-    public function toArray(): array
+    /*
+     * Convert the model instance to an array that can be used to create a new resource
+     *
+     * @return array
+     */
+    public function toNewResourceArray(): array
     {
         return [
-            'issueDate' => $this->issueDate->format('Y-m-d'),
-            'dueDate' => $this->dueDate->format('Y-m-d'),
+            'issueDate' => $this->issueDate,
+            'dueDate' => $this->dueDate,
             'customer' => [
-                'url' => $this->customer->link(),
+                'url' => is_object($this->customer) ? $this->customer->getLinkToSelf() : $this->customer,
             ],
-            'bankAccountUrl' => $this->bankAccount->link(),
+            'bankAccountUrl' => is_object($this->bankAccount) ? $this->bankAccount->getLinkToSelf() : $this->bankAccountNumber,
             'invoiceText' => $this->invoiceText,
             'lines' => $this->lines,
         ];
-    }
-
-    public function save(): Response
-    {
-        $link = $this->client->company->getRelationshipLink('https://fiken.no/api/v1/rel/create-invoice-service');
-
-        return $this->client->post($link, $this->toArray());
     }
 }

@@ -5,7 +5,8 @@
   "require": {
     "php": "^7.3",
     "illuminate/support": "^5.8",
-    "guzzlehttp/guzzle": "^6.3"
+    "guzzlehttp/guzzle": "^6.3",
+    "illuminate/database": "^5.8"
   },
   "license": "MIT",
   "authors": [

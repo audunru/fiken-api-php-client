@@ -4,7 +4,7 @@ namespace audunru\FikenClient\Traits;
 
 use audunru\FikenClient\FikenClient;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Exception\BadResponseException;
 
 trait ConnectsToFiken
 {
@@ -19,6 +19,14 @@ trait ConnectsToFiken
         ]);
     }
 
+    /**
+     * Set username and password.
+     *
+     * @param string $username
+     * @param string $password
+     *
+     * @return FikenClient
+     */
     public function authenticate(string $username, string $password): FikenClient
     {
         $this->username = $username;
@@ -27,17 +35,72 @@ trait ConnectsToFiken
         return $this;
     }
 
-    public function get(string $path = ''): array
+    /**
+     * Get a resouce from Fiken.
+     *
+     * @param string $link
+     *
+     * @return array
+     */
+    public function getResource(string $link = ''): array
     {
-        $body = $this->guzzle->get($path, ['auth' => [$this->username, $this->password]])->getBody();
+        if (! $this->username || ! $this->password) {
+            throw new \Exception('Username and/or password not set');
+        }
+        try {
+            $response = $this->guzzle->request('GET', $link, ['auth' => [$this->username, $this->password]]);
+            $body = $response->getBody();
 
-        return json_decode($body, true);
+            return json_decode($body, true);
+        } catch (BadResponseException $exception) {
+            $response = $exception->getResponse();
+            $body = $response->getBody();
+
+            throw new \Exception($body->getContents());
+        }
     }
 
-    public function post(string $path, array $payload): Response
+    /**
+     * Post to a Fiken resource.
+     *
+     * @param string $link
+     * @param array  $data
+     * @param bool   $multipart
+     *
+     * @return string
+     */
+    public function postToResource(string $link, array $data = null, bool $multipart = false): string
     {
-        $response = $this->guzzle->post($path, ['auth' => [$this->username, $this->password], 'json' => $payload]);
+        if (! $this->username || ! $this->password) {
+            throw new \Exception('Username and/or password not set');
+        }
+        $payload = ['auth' => [$this->username, $this->password]];
+        if ($multipart) {
+            $payload['multipart'] = $data;
+        } else {
+            $payload['json'] = $data;
+        }
 
-        return $response;
+        try {
+            $response = $this->guzzle->request('POST', $link, $payload);
+            $location = $response->getHeader('Location')[0];
+
+            return $location;
+        } catch (BadResponseException $exception) {
+            $response = $exception->getResponse();
+            $body = $response->getBody();
+
+            throw new \Exception($body->getContents());
+        }
+    }
+
+    private function respondError(string $message, int $statusCode)
+    {
+        return [
+            'error' => [
+                'message' => $message,
+                'statusCode' => $statusCode,
+            ],
+        ];
     }
 }

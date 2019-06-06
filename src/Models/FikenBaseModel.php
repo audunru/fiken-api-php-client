@@ -3,19 +3,63 @@
 namespace audunru\FikenClient\Models;
 
 use ArrayAccess;
-use audunru\FikenClient\Traits\GuardsAttributes;
-use audunru\FikenClient\Traits\HasAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Database\Eloquent\Concerns\GuardsAttributes;
+use Illuminate\Database\Eloquent\Concerns\HasAttributes;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
+use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 use JsonSerializable;
 
 abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
 {
-    use GuardsAttributes, HasAttributes;
+    use GuardsAttributes,
+        HasAttributes,
+        HasTimestamps,
+        HidesAttributes;
 
-    protected static $rel;
+    /**
+     * Relationship link.
+     *
+     * @var string
+     */
+    protected static $relationship;
+
+    /**
+     * Service link.
+     *
+     * @var string
+     */
+    protected static $service;
+
+    /**
+     * Fiken API client.
+     *
+     * @var FikenClient
+     */
+
+    /**
+     * The name of the "created at" column.
+     *
+     * @var string
+     */
+    const CREATED_AT = 'created_at';
+
+    /**
+     * The name of the "updated at" column.
+     *
+     * @var string
+     */
+    const UPDATED_AT = 'updated_at';
+
+    /**
+     * The Fiken API client.
+     *
+     * @var FikenClient
+     */
     protected $client;
 
     public function __construct(array $attributes = [])
@@ -45,31 +89,123 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     }
 
     /**
-     * Get all of the models from the database.
+     * Create a new instance of the given model.
+     *
+     * @param array $attributes
+     *
+     * @return static
      */
-    public static function all(array $replace = null): Collection
+    public static function newInstance(array $attributes = [])
+    {
+        // This method just provides a convenient way for us to generate fresh model
+        // instances of this current model. It is particularly useful during the
+        // hydration of new objects via the Eloquent query builder instances.
+        $model = new static((array) $attributes);
+
+        return $model;
+    }
+
+    /**
+     * Load an existing model.
+     *
+     * @param string $link
+     *
+     * @return static
+     */
+    public static function load(string $link)
     {
         $client = App::make('audunru\FikenClient\FikenClient');
-        $link = $client->company->getRelationshipLink(static::$rel);
+        $json = $client->getResource($link);
+
+        return static::newFromApi($json);
+    }
+
+    /**
+     * Save the model.
+     *
+     * @param FikenBaseModel $parent
+     *
+     * @return FikenBaseModel
+     */
+    public function save(FikenBaseModel $parent = null): FikenBaseModel
+    {
+        $link = $parent ? $parent->getLinkToRelationship(static::$service ?? static::$relationship) : $this->getLinkToSelf();
+
+        $location = $this->client->postToResource($link, $this->toNewResourceArray());
+
+        return static::load($location);
+    }
+
+    /**
+     * Add a child model.
+     *
+     * @param FikenBaseModel $child
+     *
+     * @return FikenBaseModel
+     */
+    public function add(FikenBaseModel $child): FikenBaseModel
+    {
+        return $child->save($this);
+    }
+
+    /**
+     * Create a new model instance that is existing.
+     *
+     * @param array $attributes
+     *
+     * @return static
+     */
+    public static function newFromApi($attributes = [])
+    {
+        $model = static::newInstance([], true);
+        $model->setRawAttributes((array) $attributes);
+
+        return $model;
+    }
+
+    /**
+     * Get all the models from the API.
+     *
+     * @param FikenBaseModel $parent
+     * @param array          $replace
+     *
+     * @return Collection
+     */
+    public static function all(FikenBaseModel $parent, array $replace = []): Collection
+    {
+        $client = App::make('audunru\FikenClient\FikenClient');
+        $link = $parent->getLinkToRelationship(static::$relationship);
 
         collect($replace)->each(function ($to, $from) use (&$link) {
             $link = str_replace($from, $to, $link);
         });
-        $json = $client->get($link);
+        $json = $client->getResource($link);
 
-        return collect($json['_embedded'][static::$rel])->map(function ($data) use ($client) {
-            return new static($data, $client);
+        return collect($json['_embedded'][static::$relationship])->map(function ($data) use ($client) {
+            return static::newFromApi($data);
         });
     }
 
-    public function getRelationshipLink(string $rel)
+    /**
+     * Get a link to a resource this model has a relationship with.
+     *
+     * @param string $relationship
+     *
+     * @return string
+     */
+    public function getLinkToRelationship(string $relationship): string
     {
-        return $this->attributes['_links'][$rel]['href'];
+        return $this->attributes['_links'][$relationship]['href'];
     }
 
-    public function link()
+    /**
+     * Get the link to this models resource.
+     *
+     * @return string
+     */
+    public function getLinkToSelf(): string
     {
-        return $this->getRelationshipLink('self');
+        return $this->getLinkToRelationship('self');
     }
 
     /**
@@ -122,6 +258,27 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      */
     public function setAttribute($key, $value)
     {
+        // First we will check for the presence of a mutator for the set operation
+        // which simply lets the developers tweak the attribute as it is set on
+        // the model, such as "json_encoding" an listing of data for storage.
+        if ($this->hasSetMutator($key)) {
+            return $this->setMutatedAttributeValue($key, $value);
+        }
+        // If an attribute is listed as a "date", we'll convert it from a DateTime
+        // instance into a form proper for storage on the database tables using
+        // the connection grammar's date format. We will auto set the values.
+        elseif ($value && $this->isDateAttribute($key)) {
+            $value = $this->fromDateTime($value);
+        }
+        if ($this->isJsonCastable($key) && ! is_null($value)) {
+            $value = $this->castAttributeAsJson($key, $value);
+        }
+        // If this attribute contains a JSON ->, we'll set the proper value in the
+        // attribute's underlying array. This takes care of properly nesting an
+        // attribute in the array's value in the case of deeply nested items.
+        if (Str::contains($key, '->')) {
+            return $this->fillJsonAttribute($key, $value);
+        }
         $this->attributes[$key] = $value;
 
         return $this;
@@ -138,11 +295,21 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     }
 
     /**
+     * Convert the model instance to an array that can be used to create a new resource.
+     *
+     * @return array
+     */
+    public function toNewResourceArray()
+    {
+        return $this->toArray();
+    }
+
+    /**
      * Convert the model instance to JSON.
      *
      * @param int $options
      *
-     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
+     * @throws Exception
      *
      * @return string
      */
@@ -150,7 +317,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     {
         $json = json_encode($this->jsonSerialize(), $options);
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw JsonEncodingException::forModel($this, json_last_error_msg());
+            throw new \Exception(json_last_error_msg());
         }
 
         return $json;
@@ -241,5 +408,29 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     public function __unset($key)
     {
         $this->offsetUnset($key);
+    }
+
+    /**
+     * Get the value indicating whether the IDs are incrementing.
+     *
+     * @return bool
+     */
+    public function getIncrementing()
+    {
+        return $this->incrementing;
+    }
+
+    /**
+     * Set whether IDs are incrementing.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function setIncrementing($value)
+    {
+        $this->incrementing = $value;
+
+        return $this;
     }
 }

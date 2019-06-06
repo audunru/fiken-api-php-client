@@ -70,3 +70,19 @@ $company->products();
 $company->contacts();
 $company->accounts(2019); // To get accounts, you need to set a year
 ```
+
+Creating a customer:
+
+```php
+use audunru\FikenClient\FikenClient;
+use audunru\FikenClient\Models\FikenContact;
+
+$client = new FikenClient();
+$client->authenticate('username', 'password');
+
+$company = $client->company('123456789'); // 123456789 is the organization number
+
+$customer = new FikenContact(['name' => 'Firstname Lastname', 'customer' => true]);
+
+$company->add($customer);
+```

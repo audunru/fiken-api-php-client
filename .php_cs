@@ -10,6 +10,7 @@ $finder = PhpCsFixer\Finder::create()
 
 return PhpCsFixer\Config::create()
     ->setCacheFile(__DIR__.'/.php_cs.cache')
+    ->setIndent('    ')
     ->setRules([
         '@Symfony' => true,
         'binary_operator_spaces' => ['operators' => ['=>' => null]],

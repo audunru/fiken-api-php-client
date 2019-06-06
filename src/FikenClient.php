@@ -21,44 +21,11 @@ class FikenClient
 
     public function user(): array
     {
-        return $this->get('whoAmI');
+        return $this->getResource('whoAmI');
     }
 
     public function companies(): Collection
     {
         return FikenCompany::all();
-    }
-
-    // TODO: Needs refactoring
-    public function findAttachmentLinkByInvoice(string $invoice): string
-    {
-        $json = $this->get($invoice);
-        $sale = $json['sale'];
-        $json = $this->get($sale);
-
-        return $json['_links']['https://fiken.no/api/v1/rel/attachments']['href'];
-    }
-
-    // TODO: Needs refactoring
-    public function createAttachment(string $link, string $path, string $filename)
-    {
-        return $this->post($link, [
-            'auth' => [$this->username, $this->password],
-            'multipart' => [
-                [
-                    'name'     => 'AttachmentFile',
-                    'contents' => fopen($path, 'rb'),
-                    'filename' => $filename,
-                ],
-                [
-                    'name'     => 'SaleAttachment',
-                    'contents' => json_encode([
-                        'filename' => $filename,
-                        'attachToPayment' => false,
-                        'attachToSale' => true,
-                    ]),
-                ],
-            ],
-        ]);
     }
 }

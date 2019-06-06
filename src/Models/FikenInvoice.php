@@ -72,9 +72,9 @@ class FikenInvoice extends FikenBaseModel
             'issueDate' => $this->issueDate,
             'dueDate' => $this->dueDate,
             'customer' => [
-                'url' => is_object($this->customer) ? $this->customer->getLinkToSelf() : $this->customer,
+                'url' => $this->customer->getLinkToSelf(),
             ],
-            'bankAccountUrl' => is_object($this->bankAccount) ? $this->bankAccount->getLinkToSelf() : $this->bankAccountNumber,
+            'bankAccountUrl' => $this->bankAccount->getLinkToSelf(),
             'invoiceText' => $this->invoiceText,
             'lines' => $this->lines,
         ];

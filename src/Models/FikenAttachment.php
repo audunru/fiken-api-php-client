@@ -6,6 +6,8 @@ class FikenAttachment extends FikenBaseModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/attachments';
 
+    protected static $multipart = true;
+
     protected $fillable = [
         'path',
         'filename',

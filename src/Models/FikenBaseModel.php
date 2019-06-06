@@ -36,6 +36,13 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     protected static $service;
 
     /**
+     * If payload when posting new source is multipart or not.
+     *
+     * @var bool
+     */
+    protected static $multipart = false;
+
+    /**
      * Fiken API client.
      *
      * @var FikenClient
@@ -131,7 +138,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     {
         $link = $parent ? $parent->getLinkToRelationship(static::$service ?? static::$relationship) : $this->getLinkToSelf();
 
-        $location = $this->client->postToResource($link, $this->toNewResourceArray());
+        $location = $this->client->postToResource($link, $this->toNewResourceArray(), static::$multipart);
 
         return static::load($location);
     }

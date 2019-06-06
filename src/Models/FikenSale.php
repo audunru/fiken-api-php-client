@@ -17,18 +17,4 @@ class FikenSale extends FikenBaseModel
     {
         return FikenAttachment::all($this);
     }
-
-    /**
-     * Add an attachment to the sale.
-     *
-     * @param FikenAttachment $attachment
-     *
-     * @return string
-     */
-    public function addAttachment(FikenAttachment $attachment): string
-    {
-        $link = $this->getLinkToRelationship('https://fiken.no/api/v1/rel/attachments');
-
-        return $this->client->postToResource($link, $attachment->toNewResourceArray(), true);
-    }
 }

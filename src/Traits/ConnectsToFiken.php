@@ -93,14 +93,4 @@ trait ConnectsToFiken
             throw new \Exception($body->getContents());
         }
     }
-
-    private function respondError(string $message, int $statusCode)
-    {
-        return [
-            'error' => [
-                'message' => $message,
-                'statusCode' => $statusCode,
-            ],
-        ];
-    }
 }

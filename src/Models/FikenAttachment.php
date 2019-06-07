@@ -2,7 +2,7 @@
 
 namespace audunru\FikenClient\Models;
 
-class FikenAttachment extends FikenBaseModel
+class FikenAttachment extends FikenWritableModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/attachments';
 
@@ -16,11 +16,16 @@ class FikenAttachment extends FikenBaseModel
         'attachToSale',
     ];
 
+    protected $casts = [
+        'attachToPayment' => 'boolean',
+        'attachToSale' => 'boolean',
+    ];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->attachToPayment = false;
-        $this->attachToSale = true;
+        $this->attachToPayment = $attributes['attachToPayment'] ?? false;
+        $this->attachToSale = $attributes['attachToSale'] ?? false;
     }
 
     /*

@@ -4,7 +4,7 @@ namespace audunru\FikenClient\Models;
 
 use Illuminate\Support\Collection;
 
-class FikenSale extends FikenBaseModel
+class FikenSale extends FikenWritableModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/sales';
 
@@ -13,7 +13,7 @@ class FikenSale extends FikenBaseModel
      *
      * @return Collection
      */
-    public function attachments(): Collection
+    public function attachments(): ?Collection
     {
         return FikenAttachment::all($this);
     }

@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * Contains code copied from laravel/framework by Taylor Otwell.
+ *
+ * The MIT License (MIT)
+
+ * Copyright (c) Taylor Otwell
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 namespace audunru\FikenClient\Models;
 
 use ArrayAccess;
@@ -22,34 +36,8 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
         HidesAttributes;
 
     /**
-     * Relationship link.
-     *
-     * @var string
-     */
-    protected static $relationship;
-
-    /**
-     * Service link.
-     *
-     * @var string
-     */
-    protected static $service;
-
-    /**
-     * If payload when posting new source is multipart or not.
-     *
-     * @var bool
-     */
-    protected static $multipart = false;
-
-    /**
-     * Fiken API client.
-     *
-     * @var FikenClient
-     */
-
-    /**
      * The name of the "created at" column.
+     * Note: Included here because this class implements Eloquent interfaces, but it's not used.
      *
      * @var string
      */
@@ -57,22 +45,22 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
 
     /**
      * The name of the "updated at" column.
+     * Note: Included here because this class implements Eloquent interfaces, but it's not used.
      *
      * @var string
      */
     const UPDATED_AT = 'updated_at';
 
     /**
-     * The Fiken API client.
+     * Indicates if the model exists.
      *
-     * @var FikenClient
+     * @var bool
      */
-    protected $client;
+    public $exists = false;
 
     public function __construct(array $attributes = [])
     {
         $this->fill($attributes);
-        $this->client = App::make('audunru\FikenClient\FikenClient');
     }
 
     /*
@@ -128,34 +116,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     }
 
     /**
-     * Save the model.
-     *
-     * @param FikenBaseModel $parent
-     *
-     * @return FikenBaseModel
-     */
-    public function save(FikenBaseModel $parent = null): FikenBaseModel
-    {
-        $link = $parent ? $parent->getLinkToRelationship(static::$service ?? static::$relationship) : $this->getLinkToSelf();
-
-        $location = $this->client->postToResource($link, $this->toNewResourceArray(), static::$multipart);
-
-        return static::load($location);
-    }
-
-    /**
-     * Add a child model.
-     *
-     * @param FikenBaseModel $child
-     *
-     * @return FikenBaseModel
-     */
-    public function add(FikenBaseModel $child): FikenBaseModel
-    {
-        return $child->save($this);
-    }
-
-    /**
      * Create a new model instance that is existing.
      *
      * @param array $attributes
@@ -166,6 +126,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     {
         $model = static::newInstance([], true);
         $model->setRawAttributes((array) $attributes);
+        $model->exists = true;
 
         return $model;
     }
@@ -178,10 +139,14 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      *
      * @return Collection
      */
-    public static function all(FikenBaseModel $parent, array $replace = []): Collection
+    public static function all(FikenBaseModel $parent, array $replace = []): ?Collection
     {
         $client = App::make('audunru\FikenClient\FikenClient');
         $link = $parent->getLinkToRelationship(static::$relationship);
+
+        if (! $link) {
+            return null;
+        }
 
         collect($replace)->each(function ($to, $from) use (&$link) {
             $link = str_replace($from, $to, $link);
@@ -200,9 +165,9 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      *
      * @return string
      */
-    public function getLinkToRelationship(string $relationship): string
+    public function getLinkToRelationship(string $relationship): ?string
     {
-        return $this->attributes['_links'][$relationship]['href'];
+        return $this->attributes['_links'][$relationship]['href'] ?? null;
     }
 
     /**
@@ -210,7 +175,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      *
      * @return string
      */
-    public function getLinkToSelf(): string
+    public function getLinkToSelf(): ?string
     {
         return $this->getLinkToRelationship('self');
     }

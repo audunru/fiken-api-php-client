@@ -2,7 +2,7 @@
 
 namespace audunru\FikenClient\Models;
 
-class FikenContact extends FikenBaseModel
+class FikenContact extends FikenWritableModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/contacts';
 
@@ -17,5 +17,11 @@ class FikenContact extends FikenBaseModel
         'currency',
         'memberNumber',
         'language',
+    ];
+
+    protected $casts = [
+        'customer' => 'boolean',
+        'supplier' => 'boolean',
+        'memberNumber' => 'integer',
     ];
 }

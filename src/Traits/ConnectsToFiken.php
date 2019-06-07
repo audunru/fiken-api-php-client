@@ -8,14 +8,31 @@ use GuzzleHttp\Exception\BadResponseException;
 
 trait ConnectsToFiken
 {
+    /**
+     * The Guzzle HTTP client.
+     *
+     * @var Client
+     */
     private $guzzle;
+
+    /**
+     * Fiken username.
+     *
+     * @var string
+     */
     private $username;
+
+    /*
+     * Fiken password.
+     *
+     * @var string
+     */
     private $password;
 
     public function __construct()
     {
         $this->guzzle = new Client([
-            'base_uri' => 'https://fiken.no/api/v1/',
+            'base_uri' => static::BASE_URI,
         ]);
     }
 
@@ -61,7 +78,7 @@ trait ConnectsToFiken
     }
 
     /**
-     * Post to a Fiken resource.
+     * Create a new Fiken resource.
      *
      * @param string $link
      * @param array  $data
@@ -69,13 +86,14 @@ trait ConnectsToFiken
      *
      * @return string
      */
-    public function postToResource(string $link, array $data = null, bool $multipart = false): string
+    public function createResource(string $link, array $data = null, bool $multipart = false): string
     {
         if (! $this->username || ! $this->password) {
             throw new \Exception('Username and/or password not set');
         }
         $payload = ['auth' => [$this->username, $this->password]];
         if ($multipart) {
+            // Payload is multipart (i.e. file upload)
             $payload['multipart'] = $data;
         } else {
             $payload['json'] = $data;
@@ -83,6 +101,7 @@ trait ConnectsToFiken
 
         try {
             $response = $this->guzzle->request('POST', $link, $payload);
+            // Location header contains a URL to the newly created resource
             $location = $response->getHeader('Location')[0];
 
             return $location;

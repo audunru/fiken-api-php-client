@@ -4,6 +4,10 @@ namespace audunru\FikenClient\Models;
 
 class FikenCashSale extends FikenInvoice
 {
+    protected $casts = [
+        'cash' => 'boolean',
+    ];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

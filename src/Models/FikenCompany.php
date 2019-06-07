@@ -5,7 +5,7 @@ namespace audunru\FikenClient\Models;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 
-class FikenCompany extends FikenBaseModel
+class FikenCompany extends FikenWritableModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/companies';
 
@@ -14,7 +14,7 @@ class FikenCompany extends FikenBaseModel
      *
      * @return Collection
      */
-    public function contacts(): Collection
+    public function contacts(): ?Collection
     {
         return FikenContact::all($this);
     }
@@ -24,7 +24,7 @@ class FikenCompany extends FikenBaseModel
      *
      * @return Collection
      */
-    public function bankAccounts(): Collection
+    public function bankAccounts(): ?Collection
     {
         return FikenBankAccount::all($this);
     }
@@ -34,7 +34,7 @@ class FikenCompany extends FikenBaseModel
      *
      * @return Collection
      */
-    public function products(): Collection
+    public function products(): ?Collection
     {
         return FikenProduct::all($this);
     }
@@ -46,7 +46,7 @@ class FikenCompany extends FikenBaseModel
      *
      * @return Collection
      */
-    public function accounts(int $year): Collection
+    public function accounts(int $year): ?Collection
     {
         return FikenAccount::all($this, ['{year}' => $year]);
     }

@@ -2,7 +2,7 @@
 
 namespace audunru\FikenClient\Models;
 
-class FikenInvoice extends FikenBaseModel
+class FikenInvoice extends FikenWritableModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/invoices';
     protected static $service = 'https://fiken.no/api/v1/rel/create-invoice-service';

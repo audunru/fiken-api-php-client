@@ -13,6 +13,12 @@ class FikenInvoiceLine extends FikenBaseModel
         'vatType',
     ];
 
+    protected $casts = [
+        'netAmount' => 'integer',
+        'vatAmount' => 'integer',
+        'grossAmount' => 'integer',
+    ];
+
     /**
      * Set income account.
      *

@@ -2,7 +2,9 @@
 
 Fiken.no is an online accounting system aimed at making accounting easy for small businesses.
 
-The current goal of this package is to be able to create invoices and cash sales through the Fiken API.
+You can use this client to retrieve resources (companies, products, accounts, etc) from Fiken, or create new resources (eg. a customer). You can also create invoices and cash sales.
+
+Currently it's meant to be used within a Laravel project, but the goal is to be able to use it without Laravel as well.
 
 You can use the Fiken API with demo accounts for free, otherwise there's a monthly fee per company.
 
@@ -37,9 +39,15 @@ $ composer require audunru/fiken-api-php-client
 use audunru\FikenClient\FikenClient;
 
 $client = new FikenClient();
-$client->authenticate('username', 'password'); // The Fiken API uses basic authentication
 
-$client->user();
+// The Fiken API uses basic authentication
+// According to their documentation, you should create a separate user for accessing the API
+$client->authenticate('username', 'password');
+
+// $user is a FikenUser object
+$user = $client->user();
+
+echo $user->name; // Art Vandelay
 ```
 
 ## Companies
@@ -50,7 +58,12 @@ use audunru\FikenClient\FikenClient;
 $client = new FikenClient();
 $client->authenticate('username', 'password');
 
-$client->companies();
+// $companies is a Collection, so you can use Laravel Collection methods to filter or get etc.
+// See https://laravel.com/docs/5.8/collections
+$companies = $client->companies();
+$company = $companies->first();
+
+echo $company->name; // Vandelay Industries
 ```
 
 ## Bank accounts, products and other resources that belong to a company.
@@ -63,12 +76,19 @@ use audunru\FikenClient\FikenClient;
 $client = new FikenClient();
 $client->authenticate('username', 'password');
 
+// $company is a FikenCompany object
 $company = $client->company('123456789'); // 123456789 is the organization number
 
-$company->bankAccounts();
-$company->products();
-$company->contacts();
-$company->accounts(2019); // To get accounts, you need to set a year
+echo $company->name; // Vandelay Industries
+
+// These are all collections, so the Laravel Collection methods can be used on them
+$bankAccounts = $company->bankAccounts();
+$products = $company->products();
+$contacts = $company->contacts();
+$accounts = $company->accounts(2019); // To get accounts, you need to set a year
+
+// $product is a FikenProduct object
+$product = $products->firstWhere('name', 'Latex');
 ```
 
 Creating a customer:
@@ -80,9 +100,51 @@ use audunru\FikenClient\Models\FikenContact;
 $client = new FikenClient();
 $client->authenticate('username', 'password');
 
-$company = $client->company('123456789'); // 123456789 is the organization number
+$company = $client->company('123456789');
 
-$customer = new FikenContact(['name' => 'Firstname Lastname', 'customer' => true]);
+$customer = new FikenContact(['name' => 'Kel Varnsen', 'customer' => true]);
 
-$company->add($customer);
+// $saved is a new FikenCustomer object
+$saved = $company->add($customer);
+```
+
+Creating an invoice:
+
+```php
+use audunru\FikenClient\FikenClient;
+use audunru\FikenClient\Models\FikenInvoice;
+use audunru\FikenClient\Models\FikenInvoiceLine;
+
+$client = new FikenClient();
+$client->authenticate('username', 'password');
+
+$company = $client->company('123456789');
+
+// Create a new invoice object
+$invoice = new FikenInvoice(['issueDate' => '2019-01-01', 'dueDate' => '2019-01-15']);
+
+// Find an existing customer of this company and add it to the invoice
+$customer = $company->contacts()->firstWhere('name', 'Kel Varnsen');
+$invoice->customer($customer);
+
+// Find a bank account and add it to the invoice
+$bankAccount = $company->bankAccounts()->firstWhere('number', '12341234999');
+$invoice->bankAccount($bankAccount);
+
+// Set invoice text
+$invoice->invoiceText = 'Payment for import and export services';
+
+// Find a product
+$product = $company->products()->firstWhere('name', 'Chips');
+
+// Create a new invoice line
+$line = new FikenInvoiceLine(['netAmount' => 8000, 'vatAmount' => 2000, 'grossAmount' => 10000]);
+// Add the product to the invoice line
+$line->product($product);
+
+// Add the invoice line to the invoice
+$invoice->addLine($line);
+
+// $saved is a new FikenInvoice object
+$saved = $company->add($invoice);
 ```

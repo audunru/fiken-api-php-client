@@ -10,6 +10,7 @@ class FikenInvoice extends FikenWritableModel
     protected $fillable = [
         'issueDate',
         'dueDate',
+        'invoiceText',
     ];
 
     protected $dates = [
@@ -72,9 +73,9 @@ class FikenInvoice extends FikenWritableModel
             'issueDate' => $this->issueDate,
             'dueDate' => $this->dueDate,
             'customer' => [
-                'url' => $this->customer->getLinkToSelf(),
+                'url' => $this->customer ? $this->customer->getLinkToSelf() : null,
             ],
-            'bankAccountUrl' => $this->bankAccount->getLinkToSelf(),
+            'bankAccountUrl' => $this->bankAccount ? $this->bankAccount->getLinkToSelf() : null,
             'invoiceText' => $this->invoiceText,
             'lines' => $this->lines,
         ];

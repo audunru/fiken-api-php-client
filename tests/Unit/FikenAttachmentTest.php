@@ -19,6 +19,7 @@ class FikenAttachmentTest extends TestCase
             'comment' => 'These pretzels are making me thirsty',
             'attachToPayment' => true,
             'attachToSale' => true,
+            'notFillable' => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(
@@ -42,6 +43,9 @@ class FikenAttachmentTest extends TestCase
         );
         $this->assertTrue(
             $attachment->attachToSale
+        );
+        $this->assertNull(
+            $attachment->notFillable
         );
     }
 

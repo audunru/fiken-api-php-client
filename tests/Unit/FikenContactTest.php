@@ -19,6 +19,7 @@ class FikenContactTest extends TestCase
             'currency' => 'NOK',
             'memberNumber' => 10000,
             'language' => 'NORWEGIAN',
+            'notFillable' => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(
@@ -58,6 +59,9 @@ class FikenContactTest extends TestCase
         $this->assertEquals(
             'NORWEGIAN',
             $contact->language
+        );
+        $this->assertNull(
+            $contact->notFillable
         );
     }
 

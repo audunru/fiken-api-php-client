@@ -16,6 +16,7 @@ class FikenInvoiceLineTest extends TestCase
             'description'=> 'Latex',
             'comment'=> 'It was supposed to be the summer of George!',
             'vatType'=> 'HIGH',
+            'notFillable' => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(
@@ -45,6 +46,9 @@ class FikenInvoiceLineTest extends TestCase
         $this->assertEquals(
             'HIGH',
             $invoiceLine->vatType
+        );
+        $this->assertNull(
+            $invoiceLine->notFillable
         );
     }
 

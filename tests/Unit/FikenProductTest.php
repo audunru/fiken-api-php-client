@@ -16,6 +16,7 @@ class FikenProductTest extends TestCase
             'vatType' => 'HIGH',
             'active' => true,
             'productNumber' => '101',
+            'notFillable' => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(
@@ -44,6 +45,9 @@ class FikenProductTest extends TestCase
         $this->assertEquals(
             '101',
             $product->productNumber
+        );
+        $this->assertNull(
+            $product->notFillable
         );
     }
 

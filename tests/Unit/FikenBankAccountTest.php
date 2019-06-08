@@ -12,6 +12,7 @@ class FikenBankAccountTest extends TestCase
         $bankAccount = new FikenBankAccount([
             'name' => 'Bank of Alaska',
             'bankAccountNumber' => '900900900',
+            'notFillable' => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(
@@ -25,6 +26,9 @@ class FikenBankAccountTest extends TestCase
         $this->assertEquals(
             '900900900',
             $bankAccount->bankAccountNumber
+        );
+        $this->assertNull(
+            $bankAccount->notFillable
         );
     }
 

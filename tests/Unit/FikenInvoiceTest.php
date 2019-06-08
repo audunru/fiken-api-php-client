@@ -1,0 +1,74 @@
+<?php
+
+namespace audunru\FikenClient\Tests\Unit;
+
+use audunru\FikenClient\Models\FikenInvoice;
+use audunru\FikenClient\Tests\TestCase;
+use Carbon\Carbon;
+
+class FikenInvoiceTest extends TestCase
+{
+    public function test_it_creates_a_invoice()
+    {
+        $invoice = new FikenInvoice([
+            'issueDate' => new Carbon('2020-01-01'),
+            'dueDate' => new Carbon('2020-01-15'),
+            'invoiceText' => 'Payment for import and export services',
+            'notFillable' => 'The thing that should not be',
+        ]);
+
+        $this->assertInstanceOf(
+            FikenInvoice::class,
+            $invoice
+        );
+        $this->assertEquals(
+            '2020-01-01',
+            $invoice->issueDate
+        );
+        $this->assertEquals(
+            '2020-01-15',
+            $invoice->dueDate
+        );
+        $this->assertEquals(
+            'Payment for import and export services',
+            $invoice->invoiceText
+        );
+        $this->assertNull(
+            $invoice->notFillable
+        );
+    }
+
+    public function test_it_checks_the_contents_of_the_new_resource_array()
+    {
+        $invoice = new FikenInvoice([
+            'issueDate' => new Carbon('2020-01-01'),
+            'dueDate' => new Carbon('2020-01-15'),
+            'invoiceText' => 'Payment for import and export services',
+        ]);
+
+        $subset = [
+            'issueDate' => '2020-01-01',
+            'dueDate' => '2020-01-15',
+            'customer' => [
+                'url' => null,
+            ],
+            'bankAccountUrl' => null,
+            'invoiceText' => 'Payment for import and export services',
+            'lines' => null,
+        ];
+
+        $this->assertArraySubset($subset, $invoice->toNewResourceArray());
+    }
+
+    public function test_it_checks_that_new_resource_does_not_have_link_to_self()
+    {
+        $invoice = new FikenInvoice();
+        $this->assertNull($invoice->getLinkToSelf());
+    }
+
+    public function test_it_checks_that_new_resource_does_not_have_relationship_link()
+    {
+        $invoice = new FikenInvoice();
+        $this->assertNull($invoice->getLinkToRelationship('https://fiken.no/api/v1/rel/some-type-of-resource'));
+    }
+}

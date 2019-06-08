@@ -39,13 +39,13 @@ class FikenCashSale extends FikenInvoice
             'issueDate' => $this->issueDate,
             'dueDate' => $this->dueDate,
             'customer' => [
-                'url' => $this->customer->getLinkToSelf(),
+                'url' => $this->customer ? $this->customer->getLinkToSelf() : null,
             ],
-            'bankAccountUrl' => $this->bankAccount->getLinkToSelf(),
+            'bankAccountUrl' => $this->bankAccount ? $this->bankAccount->getLinkToSelf() : null,
             'invoiceText' => $this->invoiceText,
             'lines' => $this->lines,
             'cash' => $this->cash,
-            'paymentAccount' => $this->paymentAccount->code,
+            'paymentAccount' => $this->paymentAccount ? $this->paymentAccount->code : null,
         ];
     }
 }

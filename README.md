@@ -143,7 +143,7 @@ $line = new FikenInvoiceLine(['netAmount' => 8000, 'vatAmount' => 2000, 'grossAm
 $line->product($product);
 
 // Add the invoice line to the invoice
-$invoice->addLine($line);
+$invoice->add($line);
 
 // $saved is a new FikenInvoice object
 $saved = $company->add($invoice);

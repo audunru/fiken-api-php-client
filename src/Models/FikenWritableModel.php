@@ -50,7 +50,7 @@ abstract class FikenWritableModel extends FikenBaseModel
      *
      * @return FikenBaseModel
      */
-    public function add(FikenWritableModel $child): FikenBaseModel
+    public function add(FikenBaseModel $child): FikenBaseModel
     {
         return $child->save($this);
     }

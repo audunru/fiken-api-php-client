@@ -55,11 +55,15 @@ class FikenInvoice extends FikenWritableModel
      *
      * @return FikenInvoice
      */
-    public function addLine(FikenInvoiceLine $line): FikenInvoice
+    public function add(FikenBaseModel $line): FikenBaseModel
     {
-        $this->attributes['lines'][] = $line->toNewResourceArray();
+        if ($line instanceof FikenInvoiceLine) {
+            $this->attributes['lines'][] = $line->toNewResourceArray();
 
-        return $this;
+            return $this;
+        } else {
+            return parent::add($line);
+        }
     }
 
     /*

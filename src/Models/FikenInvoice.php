@@ -51,7 +51,7 @@ class FikenInvoice extends FikenWritableModel
     /**
      * Add invoice line.
      *
-     * @param FikenInvoiceLine $line
+     * @param FikenBaseModel $line
      *
      * @return FikenInvoice
      */

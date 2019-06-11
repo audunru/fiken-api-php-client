@@ -17,6 +17,7 @@
 namespace audunru\FikenClient\Models;
 
 use ArrayAccess;
+use Exception;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Database\Eloquent\Concerns\GuardsAttributes;
@@ -289,7 +290,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     {
         $json = json_encode($this->jsonSerialize(), $options);
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new \Exception(json_last_error_msg());
+            throw new Exception(json_last_error_msg());
         }
 
         return $json;

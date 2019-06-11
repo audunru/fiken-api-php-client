@@ -2,7 +2,11 @@
 
 namespace audunru\FikenClient\Traits;
 
+use audunru\FikenClient\Exceptions\AuthenticationFailedException;
+use audunru\FikenClient\Exceptions\InvalidContentException;
+use audunru\FikenClient\Exceptions\ModelNotFoundException;
 use audunru\FikenClient\FikenClient;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 
@@ -62,7 +66,7 @@ trait ConnectsToFiken
     public function getResource(string $link = ''): array
     {
         if (! $this->username || ! $this->password) {
-            throw new \Exception('Username and/or password not set');
+            throw new AuthenticationFailedException('Username and/or password not set');
         }
         try {
             $response = $this->guzzle->request('GET', $link, ['auth' => [$this->username, $this->password]]);
@@ -73,7 +77,11 @@ trait ConnectsToFiken
             $response = $exception->getResponse();
             $body = $response->getBody();
 
-            throw new \Exception($body->getContents());
+            if (404 === $exception->getCode()) {
+                throw new ModelNotFoundException("404 Not Found: {$link}");
+            } else {
+                throw new Exception($body->getContents(), $exception->getCode());
+            }
         }
     }
 
@@ -89,7 +97,7 @@ trait ConnectsToFiken
     public function createResource(string $link, array $data = null, bool $multipart = false): string
     {
         if (! $this->username || ! $this->password) {
-            throw new \Exception('Username and/or password not set');
+            throw new AuthenticationFailedException('Username and/or password not set');
         }
         $payload = ['auth' => [$this->username, $this->password]];
         if ($multipart) {
@@ -109,7 +117,11 @@ trait ConnectsToFiken
             $response = $exception->getResponse();
             $body = $response->getBody();
 
-            throw new \Exception($body->getContents());
+            if (400 === $exception->getCode()) {
+                throw new InvalidContentException($body->getContents());
+            } else {
+                throw new Exception($body->getContents(), $exception->getCode());
+            }
         }
     }
 }

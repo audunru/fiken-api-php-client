@@ -33,8 +33,10 @@ trait ConnectsToFiken
      */
     private $password;
 
-    public function __construct()
+    public function __construct(array $options = [])
     {
+        $this->username = $options['username'] ?? null;
+        $this->password = $options['password'] ?? null;
         $this->guzzle = new Client([
             'base_uri' => static::BASE_URI,
         ]);

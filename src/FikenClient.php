@@ -32,7 +32,7 @@ class FikenClient
      *
      * @return FikenCompany
      */
-    public function company(string $organizationNumber): FikenCompany
+    public function setCompany(string $organizationNumber): FikenCompany
     {
         $this->company = $this->companies()->firstWhere('organizationNumber', $organizationNumber);
 

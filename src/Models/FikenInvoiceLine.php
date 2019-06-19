@@ -20,13 +20,23 @@ class FikenInvoiceLine extends FikenBaseModel
     ];
 
     /**
+     * Get product.
+     *
+     * @return FikenProduct
+     */
+    public function product(): ?FikenProduct
+    {
+        return FikenProduct::load($this->product);
+    }
+
+    /**
      * Set income account.
      *
      * @param FikenAccount $account
      *
      * @return FikenInvoiceLine
      */
-    public function incomeAccount(FikenAccount $account): FikenInvoiceLine
+    public function setIncomeAccount(FikenAccount $account): FikenInvoiceLine
     {
         $this->incomeAccount = $account;
 
@@ -40,7 +50,7 @@ class FikenInvoiceLine extends FikenBaseModel
      *
      * @return FikenInvoiceLine
      */
-    public function product(FikenProduct $product): FikenInvoiceLine
+    public function setProduct(FikenProduct $product): FikenInvoiceLine
     {
         $this->product = $product;
 

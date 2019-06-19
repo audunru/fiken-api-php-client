@@ -10,13 +10,15 @@ class FikenCompany extends FikenWritableModel
     protected static $relationship = 'https://fiken.no/api/v1/rel/companies';
 
     /**
-     * Get contacts.
+     * Get accounts.
+     *
+     * @param int $year
      *
      * @return Collection
      */
-    public function contacts(): ?Collection
+    public function accounts(int $year): ?Collection
     {
-        return FikenContact::all($this);
+        return FikenAccount::all($this, ['{year}' => $year]);
     }
 
     /**
@@ -30,6 +32,36 @@ class FikenCompany extends FikenWritableModel
     }
 
     /**
+     * Get contacts.
+     *
+     * @return Collection
+     */
+    public function contacts(): ?Collection
+    {
+        return FikenContact::all($this);
+    }
+
+    /**
+     * Get invoices.
+     *
+     * @return Collection
+     */
+    public function invoices(): ?Collection
+    {
+        return FikenInvoice::all($this);
+    }
+
+    /**
+     * Get credit notes.
+     *
+     * @return Collection
+     */
+    public function creditNotes(): ?Collection
+    {
+        return FikenCreditNote::all($this);
+    }
+
+    /**
      * Get products.
      *
      * @return Collection
@@ -40,15 +72,23 @@ class FikenCompany extends FikenWritableModel
     }
 
     /**
-     * Get accounts.
-     *
-     * @param int $year
+     * Get sales.
      *
      * @return Collection
      */
-    public function accounts(int $year): ?Collection
+    public function sales(): ?Collection
     {
-        return FikenAccount::all($this, ['{year}' => $year]);
+        return FikenSale::all($this);
+    }
+
+    /**
+     * Get purchases.
+     *
+     * @return Collection
+     */
+    public function purchases(): ?Collection
+    {
+        return FikenPurchase::all($this);
     }
 
     /**

@@ -2,11 +2,19 @@
 
 namespace audunru\FikenClient\Models;
 
-use Illuminate\Support\Collection;
-
-class FikenSale extends FikenWritableModel
+class FikenPurchase extends FikenWritableModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/sales';
+    protected static $relationship = 'https://fiken.no/api/v1/rel/purchases';
+
+    protected $dates = [
+        'date',
+    ];
+
+    protected $dateFormat = 'Y-m-d';
+
+    protected $casts = [
+        'paid' => 'boolean',
+    ];
 
     /**
      * Get payments.
@@ -26,15 +34,5 @@ class FikenSale extends FikenWritableModel
     public function attachments(): ?Collection
     {
         return FikenAttachment::all($this);
-    }
-
-    /**
-     * Get customer.
-     *
-     * @return FikenContact
-     */
-    public function customer(): ?FikenContact
-    {
-        return FikenContact::load($this->customer);
     }
 }

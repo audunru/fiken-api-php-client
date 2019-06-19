@@ -77,7 +77,7 @@ $client = new FikenClient();
 $client->authenticate('username', 'password');
 
 // $company is a FikenCompany object
-$company = $client->company('123456789'); // 123456789 is the organization number
+$company = $client->setCompany('123456789'); // 123456789 is the organization number
 
 echo $company->name; // Vandelay Industries
 
@@ -100,7 +100,7 @@ use audunru\FikenClient\Models\FikenContact;
 $client = new FikenClient();
 $client->authenticate('username', 'password');
 
-$company = $client->company('123456789');
+$company = $client->setCompany('123456789');
 
 $customer = new FikenContact(['name' => 'Kel Varnsen', 'customer' => true]);
 
@@ -118,18 +118,18 @@ use audunru\FikenClient\Models\FikenInvoiceLine;
 $client = new FikenClient();
 $client->authenticate('username', 'password');
 
-$company = $client->company('123456789');
+$company = $client->setCompany('123456789');
 
 // Create a new invoice object
 $invoice = new FikenInvoice(['issueDate' => '2019-01-01', 'dueDate' => '2019-01-15']);
 
-// Find an existing customer of this company and add it to the invoice
+// Find an existing customer of this company and set it on the invoice
 $customer = $company->contacts()->firstWhere('name', 'Kel Varnsen');
-$invoice->customer($customer);
+$invoice->setCustomer($customer);
 
-// Find a bank account and add it to the invoice
+// Find a bank account and set it on the invoice
 $bankAccount = $company->bankAccounts()->firstWhere('number', '12341234999');
-$invoice->bankAccount($bankAccount);
+$invoice->setBankAccount($bankAccount);
 
 // Set invoice text
 $invoice->invoiceText = 'Payment for import and export services';
@@ -139,12 +139,13 @@ $product = $company->products()->firstWhere('name', 'Chips');
 
 // Create a new invoice line
 $line = new FikenInvoiceLine(['netAmount' => 8000, 'vatAmount' => 2000, 'grossAmount' => 10000]);
-// Add the product to the invoice line
-$line->product($product);
+// Set product on the invoice line
+$line->setProduct($product);
 
 // Add the invoice line to the invoice
 $invoice->add($line);
 
-// $saved is a new FikenInvoice object
+// Add the invoice to the company
 $saved = $company->add($invoice);
+// $saved is a new FikenInvoice object
 ```

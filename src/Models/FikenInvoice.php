@@ -2,9 +2,12 @@
 
 namespace audunru\FikenClient\Models;
 
+use Illuminate\Support\Collection;
+
 class FikenInvoice extends FikenWritableModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/invoices';
+
     protected static $service = 'https://fiken.no/api/v1/rel/create-invoice-service';
 
     protected $fillable = [
@@ -21,13 +24,45 @@ class FikenInvoice extends FikenWritableModel
     protected $dateFormat = 'Y-m-d';
 
     /**
+     * Get sale.
+     *
+     * @return FikenSale
+     */
+    public function sale(): ?FikenSale
+    {
+        return FikenSale::load($this->sale);
+    }
+
+    /**
+     * Get customer.
+     *
+     * @return FikenContact
+     */
+    public function customer(): ?FikenContact
+    {
+        return FikenContact::load($this->customer);
+    }
+
+    /**
+     * Get invoice lines.
+     *
+     * @return Collection
+     */
+    public function lines(): ?Collection
+    {
+        return collect($this->lines)->map(function ($line) {
+            return FikenInvoiceLine::newFromApi($line);
+        });
+    }
+
+    /**
      * Set customer.
      *
      * @param FikenContact $customer
      *
      * @return FikenInvoice
      */
-    public function customer(FikenContact $customer): FikenInvoice
+    public function setCustomer(FikenContact $customer): FikenInvoice
     {
         $this->customer = $customer;
 
@@ -41,7 +76,7 @@ class FikenInvoice extends FikenWritableModel
      *
      * @return FikenInvoice
      */
-    public function bankAccount(FikenBankAccount $bankAccount): FikenInvoice
+    public function setBankAccount(FikenBankAccount $bankAccount): FikenInvoice
     {
         $this->bankAccount = $bankAccount;
 

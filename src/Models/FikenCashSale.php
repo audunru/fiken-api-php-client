@@ -21,7 +21,7 @@ class FikenCashSale extends FikenInvoice
      *
      * @return FikenCashSale
      */
-    public function paymentAccount(FikenAccount $account): FikenCashSale
+    public function setPaymentAccount(FikenAccount $account): FikenCashSale
     {
         $this->paymentAccount = $account;
 

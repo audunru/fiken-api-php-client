@@ -5,9 +5,12 @@ namespace audunru\FikenClient\Tests\Unit;
 use audunru\FikenClient\Models\FikenCashSale;
 use audunru\FikenClient\Tests\TestCase;
 use Carbon\Carbon;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class FikenCashSaleTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     public function test_it_creates_a_cash_sale()
     {
         $cashSale = new FikenCashSale([

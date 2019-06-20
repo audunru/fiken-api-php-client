@@ -9,6 +9,7 @@ use audunru\FikenClient\FikenClient;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ConnectException;
 
 trait ConnectsToFiken
 {
@@ -75,6 +76,8 @@ trait ConnectsToFiken
             $body = $response->getBody();
 
             return json_decode($body, true);
+        } catch (ConnectException $exception) {
+            throw new Exception('Network error');
         } catch (BadResponseException $exception) {
             $response = $exception->getResponse();
             $body = $response->getBody();
@@ -115,6 +118,49 @@ trait ConnectsToFiken
             $location = $response->getHeader('Location')[0];
 
             return $location;
+        } catch (ConnectException $exception) {
+            throw new Exception('Network error');
+        } catch (BadResponseException $exception) {
+            $response = $exception->getResponse();
+            $body = $response->getBody();
+
+            if (400 === $exception->getCode()) {
+                throw new InvalidContentException($body->getContents());
+            } else {
+                throw new Exception($body->getContents(), $exception->getCode());
+            }
+        }
+    }
+
+    /**
+     * Update a Fiken resource.
+     *
+     * @param string $link
+     * @param array  $data
+     * @param bool   $multipart
+     *
+     * @return string
+     */
+    public function updateResource(string $link, array $data = null, bool $multipart = false): ?string
+    {
+        if (! $this->username || ! $this->password) {
+            throw new AuthenticationFailedException('Username and/or password not set');
+        }
+        $payload = ['auth' => [$this->username, $this->password]];
+        if ($multipart) {
+            // Payload is multipart (i.e. file upload)
+            $payload['multipart'] = $data;
+        } else {
+            $payload['json'] = $data;
+        }
+
+        try {
+            $response = $this->guzzle->request('PUT', $link, $payload);
+
+            // Fiken returns an empty body on successful updates, so we just return
+            return null;
+        } catch (ConnectException $exception) {
+            throw new Exception('Network error');
         } catch (BadResponseException $exception) {
             $response = $exception->getResponse();
             $body = $response->getBody();

@@ -4,9 +4,12 @@ namespace audunru\FikenClient\Tests\Unit;
 
 use audunru\FikenClient\Models\FikenInvoiceLine;
 use audunru\FikenClient\Tests\TestCase;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class FikenInvoiceLineTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     public function test_it_creates_an_invoice_line()
     {
         $invoiceLine = new FikenInvoiceLine([

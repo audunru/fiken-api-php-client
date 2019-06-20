@@ -23,4 +23,13 @@
             <directory suffix=".php">src/</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_DEBUG" value="false"/>
+    </php>
+    <groups>
+        <exclude>
+            <group>dangerous</group>
+        </exclude>
+    </groups>
 </phpunit>

@@ -4,10 +4,13 @@ namespace audunru\FikenClient\Tests\Unit;
 
 use audunru\FikenClient\Models\FikenAttachment;
 use audunru\FikenClient\Tests\TestCase;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use org\bovigo\vfs\vfsStream;
 
 class FikenAttachmentTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     public function test_it_creates_an_attachment()
     {
         $root = vfsStream::setup();

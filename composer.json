@@ -35,6 +35,13 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^8.3",
-    "mikey179/vfsstream": "^1.6"
+    "mikey179/vfsstream": "^1.6",
+    "dms/phpunit-arraysubset-asserts": "dev-master",
+    "orchestra/testbench": "^3.8"
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env.testing') || copy('.env.example', '.env.testing');\""
+    ]
   }
 }

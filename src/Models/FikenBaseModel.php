@@ -17,6 +17,7 @@
 namespace audunru\FikenClient\Models;
 
 use ArrayAccess;
+use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Traits\HasHalLinks;
 use Exception;
 use Illuminate\Contracts\Support\Arrayable;
@@ -112,7 +113,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      */
     public static function load(string $link)
     {
-        $client = App::make('audunru\FikenClient\FikenClient');
+        $client = App::make(FikenClient::class);
         $json = $client->getResource($link);
 
         return static::newFromApi($json);
@@ -144,7 +145,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      */
     public static function all(FikenBaseModel $parent, array $replace = []): ?Collection
     {
-        $client = App::make('audunru\FikenClient\FikenClient');
+        $client = App::make(FikenClient::class);
         $link = $parent->getLinkToRelationship(static::$relationship);
 
         if (! $link) {

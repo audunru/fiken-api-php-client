@@ -2,6 +2,7 @@
 
 namespace audunru\FikenClient\Models;
 
+use audunru\FikenClient\FikenClient;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 
@@ -100,7 +101,7 @@ class FikenCompany extends FikenWritableModel
      */
     public static function all(FikenBaseModel $parent = null, array $replace = null): Collection
     {
-        $client = App::make('audunru\FikenClient\FikenClient');
+        $client = App::make(FikenClient::class);
         $entry = $client->getResource();
         $link = $entry['_links'][static::$relationship]['href'];
         $json = $client->getResource($link);

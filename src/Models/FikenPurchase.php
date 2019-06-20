@@ -2,6 +2,8 @@
 
 namespace audunru\FikenClient\Models;
 
+use Illuminate\Support\Collection;
+
 class FikenPurchase extends FikenWritableModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/purchases';

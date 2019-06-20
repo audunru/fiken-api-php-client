@@ -5,9 +5,12 @@ namespace audunru\FikenClient\Tests\Unit;
 use audunru\FikenClient\Models\FikenInvoice;
 use audunru\FikenClient\Tests\TestCase;
 use Carbon\Carbon;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class FikenInvoiceTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     public function test_it_creates_a_invoice()
     {
         $invoice = new FikenInvoice([

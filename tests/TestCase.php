@@ -2,28 +2,21 @@
 
 namespace audunru\FikenClient\Tests;
 
-use Illuminate\Container\Container as Container;
-use Illuminate\Support\Facades\Facade as Facade;
-use PHPUnit\Framework\TestCase as BaseTestCase;
+use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    public function __construct()
+    protected function getPackageProviders($app)
     {
-        parent::__construct();
+        return ['audunru\FikenClient\FikenClientServiceProvider'];
+    }
 
-        /**
-         * Setup a new app instance container.
-         *
-         * @var Illuminate\Container\Container
-         */
-        $app = new Container();
-        $app->singleton('app', 'Illuminate\Container\Container');
-        $app->singleton('audunru\FikenClient\FikenClient');
-
-        /*
-        * Set $app as FacadeApplication handler
-        */
-        Facade::setFacadeApplication($app);
+    protected function getEnvironmentSetUp($app)
+    {
+        // make sure, our .env file is loaded
+        $app->useEnvironmentPath(__DIR__.'/..');
+        $app->bootstrapWith([LoadEnvironmentVariables::class]);
+        parent::getEnvironmentSetUp($app);
     }
 }

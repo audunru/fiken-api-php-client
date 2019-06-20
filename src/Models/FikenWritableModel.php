@@ -2,6 +2,7 @@
 
 namespace audunru\FikenClient\Models;
 
+use audunru\FikenClient\FikenClient;
 use Illuminate\Support\Facades\App;
 
 abstract class FikenWritableModel extends FikenBaseModel
@@ -34,13 +35,20 @@ abstract class FikenWritableModel extends FikenBaseModel
      *
      * @return FikenBaseModel
      */
-    public function save(FikenWritableModel $parent = null): FikenBaseModel
+    public function save(FikenWritableModel $parent = null): ?FikenBaseModel
     {
         $link = $parent ? $parent->getLinkToRelationship(static::$service ?? static::$relationship) : $this->getLinkToSelf();
-        $client = App::make('audunru\FikenClient\FikenClient');
-        $location = $client->createResource($link, $this->toNewResourceArray(), static::$multipart);
+        $client = App::make(FikenClient::class);
+        // TODO: Refactor this along with updateResource and createResource
+        if ($this->exists) {
+            $response = $client->updateResource($link, $this->toNewResourceArray(), static::$multipart);
 
-        return static::load($location);
+            return $response;
+        } else {
+            $location = $client->createResource($link, $this->toNewResourceArray(), static::$multipart);
+
+            return static::load($location);
+        }
     }
 
     /**

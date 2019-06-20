@@ -11,6 +11,6 @@ class FikenClientServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('audunru\FikenClient\FikenClient');
+        $this->app->singleton(FikenClient::class);
     }
 }

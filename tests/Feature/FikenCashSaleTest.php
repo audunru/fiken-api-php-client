@@ -28,7 +28,7 @@ class FikenCashSaleTest extends TestCase
         );
         $customer = $company->contacts()->first();
         $bankAccount = $company->bankAccounts()->first();
-        $paymentAccount = $company->accounts(2019)->first();
+        $paymentAccount = $company->accounts(2019)->firstWhere('code', '1920:10001');
 
         $cashSale
           ->setCustomer($customer)

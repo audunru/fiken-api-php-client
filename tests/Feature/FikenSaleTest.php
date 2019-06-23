@@ -5,14 +5,49 @@ namespace audunru\FikenClient\Tests\Feature;
 use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\FikenAttachment;
 use audunru\FikenClient\Models\FikenContact;
+use audunru\FikenClient\Models\FikenOrderLine;
 use audunru\FikenClient\Models\FikenPayment;
 use audunru\FikenClient\Models\FikenSale;
 use audunru\FikenClient\Tests\TestCase;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 
 class FikenSaleTest extends TestCase
 {
+    /**
+     * @group dangerous
+     */
+    public function test_it_can_create_a_sale()
+    {
+        $client = App::make(FikenClient::class);
+
+        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
+        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+
+        $sale = new FikenSale([
+          'date' => Carbon::now(),
+          'paymentDate' => Carbon::now(),
+          'kind' => 'CASH_SALE',
+          'identifier' => '12345',
+        ]);
+
+        $paymentAccount = $company->accounts(2019)->firstWhere('code', '1920:10001');
+        $sale->setPaymentAccount($paymentAccount);
+
+        $line = new FikenOrderLine([
+            'netPrice' => 8000,
+            'vat' => 2000,
+            'vatType' => 'HIGH',
+            'description' => 'Chips',
+        ]);
+        $sale->add($line);
+
+        $saved = $company->add($sale);
+
+        $this->assertInstanceOf(FikenSale::class, $saved);
+    }
+
     /**
      * @group dangerous
      */

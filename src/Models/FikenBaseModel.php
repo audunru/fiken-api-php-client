@@ -62,8 +62,16 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      */
     public $exists = false;
 
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    protected $dateFormat;
+
     public function __construct(array $attributes = [])
     {
+        $this->dateFormat = 'Y-m-d';
         $this->fill($attributes);
     }
 

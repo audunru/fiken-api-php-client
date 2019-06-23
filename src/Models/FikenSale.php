@@ -28,8 +28,6 @@ class FikenSale extends FikenWritableModel
         'paid' => 'boolean',
     ];
 
-    protected $dateFormat = 'Y-m-d';
-
     /**
      * Get payments.
      *

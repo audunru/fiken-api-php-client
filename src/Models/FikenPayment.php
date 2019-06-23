@@ -9,7 +9,6 @@ class FikenPayment extends FikenWritableModel
     protected $dates = [
         'date',
     ];
-    protected $dateFormat = 'Y-m-d';
 
     protected $casts = [
         'amount' => 'integer',

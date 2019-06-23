@@ -21,8 +21,6 @@ class FikenInvoice extends FikenWritableModel
         'dueDate',
     ];
 
-    protected $dateFormat = 'Y-m-d';
-
     /**
      * Get sale.
      *

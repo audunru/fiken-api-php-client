@@ -12,8 +12,6 @@ class FikenPurchase extends FikenWritableModel
         'date',
     ];
 
-    protected $dateFormat = 'Y-m-d';
-
     protected $casts = [
         'paid' => 'boolean',
     ];

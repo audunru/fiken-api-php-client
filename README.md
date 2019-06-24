@@ -157,7 +157,7 @@ $saved = $company->add($invoice);
 Run tests:
 
 ```bash
-vendor/bin/phpunit
+composer test
 ```
 
 The tests in the directory `tests\Feature` connect to the Fiken API. Before running these tests, you will have to set a username, password and organization number in the file `.env.testing`.
@@ -167,5 +167,5 @@ WARNING: Create a dummy account in Fiken and use that to run your tests, otherwi
 Tests that connect to the Fiken API have to be run with this command:
 
 ```
-vendor/bin/phpunit --group dangerous
+composer test -- --group dangerous
 ```

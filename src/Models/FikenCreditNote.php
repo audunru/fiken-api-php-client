@@ -19,7 +19,7 @@ class FikenCreditNote extends FikenWritableModel
     /**
      * Get customer.
      *
-     * @return FikenContact
+     * @return FikenContact|null
      */
     public function customer(): ?FikenContact
     {
@@ -29,7 +29,7 @@ class FikenCreditNote extends FikenWritableModel
     /**
      * Get invoice.
      *
-     * @return FikenInvoice
+     * @return FikenInvoice|null
      */
     public function invoice(): ?FikenInvoice
     {

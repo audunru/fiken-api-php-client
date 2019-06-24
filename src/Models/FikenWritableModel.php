@@ -33,7 +33,7 @@ abstract class FikenWritableModel extends FikenBaseModel
      *
      * @param FikenBaseModel $parent
      *
-     * @return FikenBaseModel
+     * @return FikenBaseModel|null
      */
     public function save(FikenWritableModel $parent = null): ?FikenBaseModel
     {

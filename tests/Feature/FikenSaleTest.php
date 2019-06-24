@@ -76,7 +76,7 @@ class FikenSaleTest extends TestCase
         $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
 
         $sales = $company->sales();
-        $sale = $sales->first();
+        $sale = $sales->where('kind', 'INVOICE')->where('paid', true)->first();
         $payments = $sale->payments();
         $payment = $payments->first();
 
@@ -95,7 +95,7 @@ class FikenSaleTest extends TestCase
         $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
 
         $sales = $company->sales();
-        $sale = $sales->first();
+        $sale = $sales->where('kind', 'INVOICE')->first();
         $attachments = $sale->attachments();
         $attachment = $attachments->first();
 
@@ -114,7 +114,7 @@ class FikenSaleTest extends TestCase
         $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
 
         $sales = $company->sales();
-        $sale = $sales->first();
+        $sale = $sales->where('kind', 'INVOICE')->first();
         $customer = $sale->customer();
 
         $this->assertInstanceOf(FikenContact::class, $customer);

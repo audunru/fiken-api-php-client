@@ -6,6 +6,7 @@ use audunru\FikenClient\FikenClient;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 
+// TODO: Company should not extend Writable
 class FikenCompany extends FikenWritableModel
 {
     protected static $relationship = 'https://fiken.no/api/v1/rel/companies';
@@ -15,7 +16,7 @@ class FikenCompany extends FikenWritableModel
      *
      * @param int $year
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function accounts(int $year): ?Collection
     {
@@ -25,7 +26,7 @@ class FikenCompany extends FikenWritableModel
     /**
      * Get bank accounts.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function bankAccounts(): ?Collection
     {
@@ -35,7 +36,7 @@ class FikenCompany extends FikenWritableModel
     /**
      * Get contacts.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function contacts(): ?Collection
     {
@@ -45,7 +46,7 @@ class FikenCompany extends FikenWritableModel
     /**
      * Get invoices.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function invoices(): ?Collection
     {
@@ -55,7 +56,7 @@ class FikenCompany extends FikenWritableModel
     /**
      * Get credit notes.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function creditNotes(): ?Collection
     {
@@ -65,7 +66,7 @@ class FikenCompany extends FikenWritableModel
     /**
      * Get products.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function products(): ?Collection
     {
@@ -75,7 +76,7 @@ class FikenCompany extends FikenWritableModel
     /**
      * Get sales.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function sales(): ?Collection
     {
@@ -85,7 +86,7 @@ class FikenCompany extends FikenWritableModel
     /**
      * Get purchases.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function purchases(): ?Collection
     {

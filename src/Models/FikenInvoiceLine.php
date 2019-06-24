@@ -22,7 +22,7 @@ class FikenInvoiceLine extends FikenBaseModel
     /**
      * Get product.
      *
-     * @return FikenProduct
+     * @return FikenProduct|null
      */
     public function product(): ?FikenProduct
     {

@@ -149,7 +149,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      * @param FikenBaseModel $parent
      * @param array          $replace
      *
-     * @return Collection
+     * @return Collection|null
      */
     public static function all(FikenBaseModel $parent, array $replace = []): ?Collection
     {

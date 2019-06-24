@@ -19,7 +19,7 @@ class FikenPurchase extends FikenWritableModel
     /**
      * Get payments.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function payments(): ?Collection
     {
@@ -29,7 +29,7 @@ class FikenPurchase extends FikenWritableModel
     /**
      * Get attachments.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function attachments(): ?Collection
     {

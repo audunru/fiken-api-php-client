@@ -85,6 +85,7 @@ trait ConnectsToFiken
             if (404 === $exception->getCode()) {
                 throw new ModelNotFoundException("404 Not Found: {$link}");
             } else {
+                // TODO: Get nicely formatted error message from Fiken here
                 throw new Exception($body->getContents(), $exception->getCode());
             }
         }
@@ -139,7 +140,7 @@ trait ConnectsToFiken
      * @param array  $data
      * @param bool   $multipart
      *
-     * @return string
+     * @return string|null
      */
     public function updateResource(string $link, array $data = null, bool $multipart = false): ?string
     {

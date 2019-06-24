@@ -24,7 +24,7 @@ class FikenInvoice extends FikenWritableModel
     /**
      * Get sale.
      *
-     * @return FikenSale
+     * @return FikenSale|null
      */
     public function sale(): ?FikenSale
     {
@@ -34,7 +34,7 @@ class FikenInvoice extends FikenWritableModel
     /**
      * Get customer.
      *
-     * @return FikenContact
+     * @return FikenContact|null
      */
     public function customer(): ?FikenContact
     {
@@ -44,7 +44,7 @@ class FikenInvoice extends FikenWritableModel
     /**
      * Get invoice lines.
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function lines(): ?Collection
     {

@@ -20,7 +20,9 @@ class FikenContact extends FikenWritableModel
     ];
 
     protected $casts = [
+        'customerNumber' => 'integer',
         'customer' => 'boolean',
+        'supplierNumber' => 'integer',
         'supplier' => 'boolean',
         'memberNumber' => 'integer',
     ];

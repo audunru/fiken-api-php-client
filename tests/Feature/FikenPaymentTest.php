@@ -25,9 +25,11 @@ class FikenPaymentTest extends TestCase
 
         $payment = new FikenPayment([
           'date' => Carbon::now(),
-          'account' => '1920:10001',
           'amount' => 10000,
         ]);
+
+        $account = $company->accounts(2019)->firstWhere('code', '1920:10001');
+        $payment->setAccount($account);
 
         $saved = $sale->add($payment);
 

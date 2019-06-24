@@ -16,7 +16,34 @@ class FikenPayment extends FikenWritableModel
 
     protected $fillable = [
         'date',
-        'account',
         'amount',
     ];
+
+    /**
+     * Set income account.
+     *
+     * @param FikenAccount $account
+     *
+     * @return FikenPayment
+     */
+    public function setAccount(FikenAccount $account): FikenPayment
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+
+    /*
+     * Convert the model instance to an array that can be used to create a new resource
+     *
+     * @return array
+     */
+    public function toNewResourceArray(): array
+    {
+        return [
+            'date' => $this->date,
+            'account' =>  $this->account ? $this->account->code : null,
+            'amount' => $this->amount,
+      ];
+    }
 }

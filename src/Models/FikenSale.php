@@ -2,11 +2,17 @@
 
 namespace audunru\FikenClient\Models;
 
+use audunru\FikenClient\Traits\HasChildren;
+use audunru\FikenClient\Traits\IsWritable;
 use Illuminate\Support\Collection;
 
-class FikenSale extends FikenWritableModel
+class FikenSale extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/sales';
+    use IsWritable, HasChildren {
+        HasChildren::add as addChild;
+    }
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/sales';
 
     protected $fillable = [
         'date',
@@ -35,7 +41,9 @@ class FikenSale extends FikenWritableModel
      */
     public function payments(): ?Collection
     {
-        return FikenPayment::all($this);
+        return $this->getEmbeddedResources(FikenPayment::getRelation())->map(function ($resource) {
+            return FikenPayment::newFromApi($resource);
+        });
     }
 
     /**
@@ -84,7 +92,7 @@ class FikenSale extends FikenWritableModel
 
             return $this;
         } else {
-            return parent::add($line);
+            return $this->addChild($line);
         }
     }
 

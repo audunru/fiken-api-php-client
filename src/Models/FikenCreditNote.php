@@ -2,9 +2,13 @@
 
 namespace audunru\FikenClient\Models;
 
-class FikenCreditNote extends FikenWritableModel
+use audunru\FikenClient\Traits\IsWritable;
+
+class FikenCreditNote extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/credit-notes';
+    use IsWritable;
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/credit-notes';
 
     protected $casts = [
         'creditNoteNumber' => 'integer',

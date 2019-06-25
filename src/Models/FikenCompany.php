@@ -3,13 +3,15 @@
 namespace audunru\FikenClient\Models;
 
 use audunru\FikenClient\FikenClient;
+use audunru\FikenClient\Traits\HasChildren;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 
-// TODO: Company should not extend Writable
-class FikenCompany extends FikenWritableModel
+class FikenCompany extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/companies';
+    use HasChildren;
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/companies';
 
     /**
      * Get accounts.
@@ -104,10 +106,10 @@ class FikenCompany extends FikenWritableModel
     {
         $client = App::make(FikenClient::class);
         $entry = $client->getResource();
-        $link = $entry['_links'][static::$relationship]['href'];
+        $link = $entry['_links'][static::$relation]['href'];
         $json = $client->getResource($link);
 
-        return collect($json['_embedded'][static::$relationship])->map(function ($data) use ($client) {
+        return collect($json['_embedded'][static::$relation])->map(function ($data) use ($client) {
             return static::newFromApi($data);
         });
     }

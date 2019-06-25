@@ -2,7 +2,9 @@
 
 namespace audunru\FikenClient\Exceptions;
 
-class ModelNotFoundException extends FikenClientException
+use Exception;
+
+class ModelNotFoundException extends Exception
 {
     public function __construct(string $message = '')
     {

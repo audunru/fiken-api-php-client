@@ -2,9 +2,13 @@
 
 namespace audunru\FikenClient\Models;
 
-class FikenContact extends FikenWritableModel
+use audunru\FikenClient\Traits\IsWritable;
+
+class FikenContact extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/contacts';
+    use IsWritable;
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/contacts';
 
     protected $fillable = [
         'name',

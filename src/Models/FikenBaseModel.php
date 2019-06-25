@@ -18,7 +18,7 @@ namespace audunru\FikenClient\Models;
 
 use ArrayAccess;
 use audunru\FikenClient\FikenClient;
-use audunru\FikenClient\Traits\HasHalLinks;
+use audunru\FikenClient\Traits\HasLinks;
 use Exception;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -37,7 +37,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
         HasAttributes,
         HasTimestamps,
         HidesAttributes,
-        HasHalLinks;
+        HasLinks;
 
     /**
      * The name of the "created at" column.
@@ -68,6 +68,27 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      * @var string
      */
     protected $dateFormat;
+
+    /**
+     * Relation link.
+     *
+     * @var string
+     */
+    protected static $relation;
+
+    /**
+     * Service link.
+     *
+     * @var string
+     */
+    protected static $service;
+
+    /**
+     * If payload when creating a new resource is multipart (i.e. file upload) or not.
+     *
+     * @var bool
+     */
+    protected static $multipart = false;
 
     public function __construct(array $attributes = [])
     {
@@ -154,7 +175,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     public static function all(FikenBaseModel $parent, array $replace = []): ?Collection
     {
         $client = App::make(FikenClient::class);
-        $link = $parent->getLinkToRelationship(static::$relationship);
+        $link = $parent->getLinkToRelation(static::$relation);
 
         if (! $link) {
             return null;
@@ -165,8 +186,8 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
         });
         $json = $client->getResource($link);
 
-        if (isset($json['_embedded']) && isset($json['_embedded'][static::$relationship])) {
-            return collect($json['_embedded'][static::$relationship])->map(function ($data) use ($client) {
+        if (isset($json['_embedded']) && isset($json['_embedded'][static::$relation])) {
+            return collect($json['_embedded'][static::$relation])->map(function ($data) use ($client) {
                 return static::newFromApi($data);
             });
         }

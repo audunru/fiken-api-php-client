@@ -62,6 +62,6 @@ class FikenContactTest extends TestCase
 
         $updated = $contact->save();
 
-        $this->assertNull($updated);
+        $this->assertEquals('Duffman', $updated->name);
     }
 }

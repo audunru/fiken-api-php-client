@@ -4,8 +4,8 @@ namespace audunru\FikenClient\Exceptions;
 
 class InvalidContentException extends FikenClientException
 {
-    public function __construct(string $message = '')
+    public function __construct(string $json = '')
     {
-        parent::__construct($message, 422);
+        parent::__construct($json, 422);
     }
 }

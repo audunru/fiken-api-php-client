@@ -8,11 +8,11 @@ class FikenClientException extends Exception
 {
     protected $error = [];
 
-    public function __construct(string $message = '', int $code = 0)
+    public function __construct(string $json = '', int $code = 0)
     {
-        $this->error = json_decode($message, true)[0];
+        $this->error = json_decode($json, true)[0];
 
-        parent::__construct($message, $code);
+        parent::__construct($json, $code);
     }
 
     public function __toString(): string

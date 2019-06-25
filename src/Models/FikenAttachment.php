@@ -2,9 +2,13 @@
 
 namespace audunru\FikenClient\Models;
 
-class FikenAttachment extends FikenWritableModel
+use audunru\FikenClient\Traits\IsWritable;
+
+class FikenAttachment extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/attachments';
+    use IsWritable;
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/attachments';
 
     protected static $multipart = true;
 

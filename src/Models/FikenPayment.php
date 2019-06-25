@@ -2,9 +2,13 @@
 
 namespace audunru\FikenClient\Models;
 
-class FikenPayment extends FikenWritableModel
+use audunru\FikenClient\Traits\IsWritable;
+
+class FikenPayment extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/payments';
+    use IsWritable;
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/payments';
 
     protected $dates = [
         'date',

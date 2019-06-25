@@ -67,6 +67,6 @@ class FikenProductTest extends TestCase
 
         $updated = $product->save();
 
-        $this->assertNull($updated);
+        $this->assertEquals('Chips', $updated->name);
     }
 }

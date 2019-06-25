@@ -2,7 +2,9 @@
 
 namespace audunru\FikenClient\Exceptions;
 
-class AuthenticationFailedException extends FikenClientException
+use Exception;
+
+class AuthenticationFailedException extends Exception
 {
     public function __construct(string $message = '')
     {

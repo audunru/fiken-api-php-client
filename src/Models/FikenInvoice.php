@@ -2,11 +2,14 @@
 
 namespace audunru\FikenClient\Models;
 
+use audunru\FikenClient\Traits\IsWritable;
 use Illuminate\Support\Collection;
 
-class FikenInvoice extends FikenWritableModel
+class FikenInvoice extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/invoices';
+    use IsWritable;
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/invoices';
 
     protected static $service = 'https://fiken.no/api/v1/rel/create-invoice-service';
 

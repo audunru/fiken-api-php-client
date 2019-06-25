@@ -71,9 +71,9 @@ class FikenContactTest extends TestCase
         $this->assertNull($contact->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relationship_link()
+    public function test_it_checks_that_new_resource_does_not_have_relation_link()
     {
         $contact = new FikenContact();
-        $this->assertNull($contact->getLinkToRelationship('https://fiken.no/api/v1/rel/some-type-of-resource'));
+        $this->assertNull($contact->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));
     }
 }

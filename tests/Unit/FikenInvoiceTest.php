@@ -69,9 +69,9 @@ class FikenInvoiceTest extends TestCase
         $this->assertNull($invoice->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relationship_link()
+    public function test_it_checks_that_new_resource_does_not_have_relation_link()
     {
         $invoice = new FikenInvoice();
-        $this->assertNull($invoice->getLinkToRelationship('https://fiken.no/api/v1/rel/some-type-of-resource'));
+        $this->assertNull($invoice->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));
     }
 }

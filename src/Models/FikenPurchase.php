@@ -2,11 +2,14 @@
 
 namespace audunru\FikenClient\Models;
 
+use audunru\FikenClient\Traits\IsWritable;
 use Illuminate\Support\Collection;
 
-class FikenPurchase extends FikenWritableModel
+class FikenPurchase extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/purchases';
+    use IsWritable;
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/purchases';
 
     protected $dates = [
         'date',
@@ -23,7 +26,9 @@ class FikenPurchase extends FikenWritableModel
      */
     public function payments(): ?Collection
     {
-        return FikenPayment::all($this);
+        return $this->getEmbeddedResources(FikenPayment::getRelation())->map(function ($resource) {
+            return FikenPayment::newFromApi($resource);
+        });
     }
 
     /**

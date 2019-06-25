@@ -2,9 +2,13 @@
 
 namespace audunru\FikenClient\Models;
 
-class FikenBankAccount extends FikenWritableModel
+use audunru\FikenClient\Traits\IsWritable;
+
+class FikenBankAccount extends FikenBaseModel
 {
-    protected static $relationship = 'https://fiken.no/api/v1/rel/bank-accounts';
+    use IsWritable;
+
+    protected static $relation = 'https://fiken.no/api/v1/rel/bank-accounts';
 
     protected $fillable = [
         'name',

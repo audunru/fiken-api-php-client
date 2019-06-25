@@ -39,9 +39,9 @@ class FikenPaymentTest extends TestCase
         $this->assertNull($payment->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relationship_link()
+    public function test_it_checks_that_new_resource_does_not_have_relation_link()
     {
         $payment = new FikenPayment();
-        $this->assertNull($payment->getLinkToRelationship('https://fiken.no/api/v1/rel/some-type-of-resource'));
+        $this->assertNull($payment->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));
     }
 }

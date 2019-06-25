@@ -13,9 +13,9 @@ class FikenSaleTest extends TestCase
         $this->assertNull($sale->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relationship_link()
+    public function test_it_checks_that_new_resource_does_not_have_relation_link()
     {
         $sale = new FikenSale();
-        $this->assertNull($sale->getLinkToRelationship('https://fiken.no/api/v1/rel/some-type-of-resource'));
+        $this->assertNull($sale->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));
     }
 }

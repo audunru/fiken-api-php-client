@@ -2,8 +2,8 @@
 
 namespace audunru\FikenClient\Traits;
 
+use audunru\FikenClient\FikenBaseModel;
 use audunru\FikenClient\FikenClient;
-use audunru\FikenClient\Models\FikenBaseModel;
 use Illuminate\Support\Facades\App;
 
 trait HasChildren

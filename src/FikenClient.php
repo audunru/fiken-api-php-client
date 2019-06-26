@@ -2,8 +2,8 @@
 
 namespace audunru\FikenClient;
 
-use audunru\FikenClient\Models\FikenCompany;
-use audunru\FikenClient\Models\FikenUser;
+use audunru\FikenClient\Models\Company;
+use audunru\FikenClient\Models\User;
 use audunru\FikenClient\Traits\ConnectsToFiken;
 use Illuminate\Support\Collection;
 
@@ -21,7 +21,7 @@ class FikenClient
     /**
      * The active company.
      *
-     * @var FikenCompany
+     * @var Company
      */
     protected $company;
 
@@ -30,9 +30,9 @@ class FikenClient
      *
      * @param string $organizationNumber
      *
-     * @return FikenCompany
+     * @return Company
      */
-    public function setCompany(string $organizationNumber): FikenCompany
+    public function setCompany(string $organizationNumber): Company
     {
         $this->company = $this->companies()->firstWhere('organizationNumber', $organizationNumber);
 
@@ -42,11 +42,11 @@ class FikenClient
     /**
      * Get details about current user.
      *
-     * @return FikenUser
+     * @return User
      */
-    public function user(): FikenUser
+    public function user(): User
     {
-        return FikenUser::load('https://fiken.no/api/v1/whoAmI');
+        return User::load('https://fiken.no/api/v1/whoAmI');
     }
 
     /**
@@ -56,6 +56,6 @@ class FikenClient
      */
     public function companies(): Collection
     {
-        return FikenCompany::all();
+        return Company::all();
     }
 }

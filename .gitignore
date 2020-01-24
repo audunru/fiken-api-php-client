@@ -3,3 +3,4 @@
 composer.lock
 .env.testing
 .coveralls.yml
+/build/

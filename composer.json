@@ -12,6 +12,19 @@
       "email": "audun@rundberg.no"
     }
   ],
+  "require": {
+    "php": "^7.3",
+    "guzzlehttp/guzzle": "^6.3",
+    "illuminate/database": "^6.0",
+    "illuminate/support": "^6.0"
+  },
+  "require-dev": {
+    "dms/phpunit-arraysubset-asserts": "^0.1.0",
+    "mikey179/vfsstream": "^1.6",
+    "php-coveralls/php-coveralls": "^2.2",
+    "phpunit/phpunit": "^8.5",
+    "symfony/dotenv": "^5.0"
+  },
   "config": {
     "sort-packages": true
   },
@@ -27,24 +40,15 @@
       "audunru\\FikenClient\\Tests\\": "tests/"
     }
   },
-  "require": {
-    "guzzlehttp/guzzle": "^6.3",
-    "illuminate/database": "^6.0",
-    "illuminate/support": "^6.0",
-    "php": "^7.3"
-  },
-  "require-dev": {
-    "dms/phpunit-arraysubset-asserts": "dev-master",
-    "mikey179/vfsstream": "^1.6",
-    "phpunit/phpunit": "^8.3",
-    "symfony/dotenv": "^5.0"
-  },
   "scripts": {
     "post-root-package-install": [
       "@php -r \"file_exists('.env.testing') || copy('.env.example', '.env.testing');\""
     ],
     "test": [
       "vendor/bin/phpunit"
+    ],
+    "test-with-coverage": [
+      "vendor/bin/phpunit --coverage-clover build/logs/clover.xml"
     ]
   }
 }

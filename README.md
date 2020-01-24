@@ -1,5 +1,8 @@
 # Fiken API PHP Client
 
+[![Coverage Status](https://coveralls.io/repos/github/audunru/fiken-api-php-client/badge.svg?branch=master)](https://coveralls.io/github/audunru/fiken-api-php-client?branch=master)
+[![StyleCI](https://github.styleci.io/repos/189643149/shield?branch=master)](https://github.styleci.io/repos/189643149)
+
 Fiken.no is an online accounting system aimed at making accounting easy for small businesses.
 
 You can use this package to retrieve resources (companies, products, accounts, etc) from Fiken, or create new resources (eg. a customer or a product). You can also create invoices and cash sales.
@@ -170,4 +173,11 @@ Tests that connect to the Fiken API have to be run with this command:
 
 ```
 composer test -- --group dangerous
+```
+
+Run tests and generate coverage reports:
+
+```bash
+composer test-with-coverage
+php vendor/bin/php-coveralls
 ```

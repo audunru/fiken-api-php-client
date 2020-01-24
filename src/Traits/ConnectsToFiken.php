@@ -7,6 +7,7 @@ use audunru\FikenClient\Exceptions\FikenClientException;
 use audunru\FikenClient\Exceptions\InvalidContentException;
 use audunru\FikenClient\Exceptions\ModelNotFoundException;
 use audunru\FikenClient\FikenClient;
+use audunru\FikenClient\Settings;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
@@ -22,46 +23,28 @@ trait ConnectsToFiken
      */
     private $guzzle;
 
-    /**
-     * Fiken username.
-     *
-     * @var string
-     */
-    private $username;
-
-    /*
-     * Fiken password.
-     *
-     * @var string
-     */
-    private $password;
-
     public function __construct(array $options = [])
     {
-        $this->username = $options['username'] ?? null;
-        $this->password = $options['password'] ?? null;
+        Settings::setUsername($options['username'] ?? Settings::$username);
+        Settings::setPassword($options['password'] ?? Settings::$password);
         $this->guzzle = new Client([
-            'base_uri' => static::BASE_URI,
+            'base_uri' => Settings::$baseUri,
         ]);
     }
 
     /**
      * Set username and password.
-     *
-     * @return FikenClient
      */
     public function authenticate(string $username, string $password): FikenClient
     {
-        $this->username = $username;
-        $this->password = $password;
+        Settings::setUsername($username);
+        Settings::setPassword($password);
 
         return $this;
     }
 
     /**
      * Get a resouce from Fiken.
-     *
-     * @return array
      */
     public function getResource(string $link = ''): array
     {
@@ -74,8 +57,6 @@ trait ConnectsToFiken
      * Create a new Fiken resource.
      *
      * @param array $data
-     *
-     * @return string
      */
     public function createResource(string $link, array $data = null, bool $multipart = false): string
     {
@@ -109,15 +90,13 @@ trait ConnectsToFiken
 
     /**
      * Send a GET, POST or PUT request to Fiken.
-     *
-     * @return Response
      */
     private function connectToFiken(string $link, string $method = 'GET', array $payload = []): Response
     {
-        if (! $this->username || ! $this->password) {
+        if (! Settings::$username || ! Settings::$password) {
             throw new AuthenticationFailedException('Username and/or password not set');
         }
-        $auth = ['auth' => [$this->username, $this->password]];
+        $auth = ['auth' => [Settings::$username, Settings::$password]];
         try {
             return $this->guzzle->request($method, $link, array_merge($auth, $payload));
         } catch (ConnectException $exception) {

@@ -12,13 +12,6 @@ class FikenClient
     use ConnectsToFiken;
 
     /**
-     * The entry point for all Fiken API requests.
-     *
-     * @var string
-     */
-    const BASE_URI = 'https://fiken.no/api/v1/';
-
-    /**
      * The active company.
      *
      * @var Company
@@ -27,8 +20,6 @@ class FikenClient
 
     /**
      * Set company by organization number.
-     *
-     * @return Company
      */
     public function setCompany(string $organizationNumber): Company
     {
@@ -39,8 +30,6 @@ class FikenClient
 
     /**
      * Get details about current user.
-     *
-     * @return User
      */
     public function user(): User
     {
@@ -49,8 +38,6 @@ class FikenClient
 
     /**
      * Get all companies the current user can access.
-     *
-     * @return Collection
      */
     public function companies(): Collection
     {

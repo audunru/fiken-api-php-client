@@ -4,8 +4,6 @@ Fiken.no is an online accounting system aimed at making accounting easy for smal
 
 You can use this package to retrieve resources (companies, products, accounts, etc) from Fiken, or create new resources (eg. a customer or a product). You can also create invoices and cash sales.
 
-Currently it's meant to be used within a Laravel project (and therefore requires Laravel), but the goal is to be able to use it without Laravel as well.
-
 You can use the Fiken API with demo accounts for free, otherwise there's a monthly fee per company.
 
 [Fiken API official documentation](https://fiken.no/api/doc/)

@@ -3,18 +3,15 @@
 namespace audunru\FikenClient\Traits;
 
 use audunru\FikenClient\FikenClient;
-use Illuminate\Support\Facades\App;
 
 trait IsWritable
 {
     /**
      * Save this resource.
-     *
-     * @return self
      */
     public function save(): self
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
         if (true === $this->exists) {
             $link = $this->getLinkToSelf();
             $location = $client->updateResource($link, $this->toNewResourceArray(), $this->multipart);
@@ -28,8 +25,6 @@ trait IsWritable
 
     /**
      * Update the model in the database.
-     *
-     * @return self
      */
     public function update(array $attributes = []): self
     {

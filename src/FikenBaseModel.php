@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use JsonSerializable;
 
@@ -141,7 +140,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      */
     public static function load(string $link)
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
         $json = $client->getResource($link);
 
         return static::newFromApi($json);
@@ -165,12 +164,10 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
 
     /**
      * Get all the models from the API.
-     *
-     * @return Collection|null
      */
     public static function all(FikenBaseModel $parent, array $replace = []): ?Collection
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
         $link = $parent->getLinkToRelation(static::$relation);
 
         if (! $link) {

@@ -6,7 +6,6 @@ use audunru\FikenClient\FikenBaseModel;
 use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Traits\HasChildren;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 
 class Company extends FikenBaseModel
 {
@@ -16,8 +15,6 @@ class Company extends FikenBaseModel
 
     /**
      * Get accounts.
-     *
-     * @return Collection|null
      */
     public function accounts(int $year): ?Collection
     {
@@ -26,8 +23,6 @@ class Company extends FikenBaseModel
 
     /**
      * Get bank accounts.
-     *
-     * @return Collection|null
      */
     public function bankAccounts(): ?Collection
     {
@@ -36,8 +31,6 @@ class Company extends FikenBaseModel
 
     /**
      * Get contacts.
-     *
-     * @return Collection|null
      */
     public function contacts(): ?Collection
     {
@@ -46,8 +39,6 @@ class Company extends FikenBaseModel
 
     /**
      * Get invoices.
-     *
-     * @return Collection|null
      */
     public function invoices(): ?Collection
     {
@@ -56,8 +47,6 @@ class Company extends FikenBaseModel
 
     /**
      * Get credit notes.
-     *
-     * @return Collection|null
      */
     public function creditNotes(): ?Collection
     {
@@ -66,8 +55,6 @@ class Company extends FikenBaseModel
 
     /**
      * Get products.
-     *
-     * @return Collection|null
      */
     public function products(): ?Collection
     {
@@ -76,8 +63,6 @@ class Company extends FikenBaseModel
 
     /**
      * Get sales.
-     *
-     * @return Collection|null
      */
     public function sales(): ?Collection
     {
@@ -86,8 +71,6 @@ class Company extends FikenBaseModel
 
     /**
      * Get purchases.
-     *
-     * @return Collection|null
      */
     public function purchases(): ?Collection
     {
@@ -98,12 +81,10 @@ class Company extends FikenBaseModel
      * Get all of the models from the database.
      *
      * @param array $replace
-     *
-     * @return Collection
      */
     public static function all(FikenBaseModel $parent = null, array $replace = null): Collection
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
         $entry = $client->getResource();
         $link = $entry['_links'][static::$relation]['href'];
         $json = $client->getResource($link);

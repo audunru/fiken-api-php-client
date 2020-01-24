@@ -2,24 +2,18 @@
 
 namespace audunru\FikenClient\Tests\Feature;
 
-use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\BankAccount;
-use audunru\FikenClient\Tests\TestCase;
+use audunru\FikenClient\Tests\ClientTestCase;
 use Illuminate\Support\Collection;
 
-class BankAccountTest extends TestCase
+class BankAccountTest extends ClientTestCase
 {
     /**
      * @group dangerous
      */
     public function test_it_can_retrieve_bank_accounts()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $bankAccounts = $company->bankAccounts();
+        $bankAccounts = $this->company->bankAccounts();
         $bankAccount = $bankAccounts->first();
 
         $this->assertInstanceOf(Collection::class, $bankAccounts);

@@ -2,28 +2,22 @@
 
 namespace audunru\FikenClient\Tests\Feature;
 
-use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Attachment;
 use audunru\FikenClient\Models\Contact;
 use audunru\FikenClient\Models\OrderLine;
 use audunru\FikenClient\Models\Payment;
 use audunru\FikenClient\Models\Sale;
-use audunru\FikenClient\Tests\TestCase;
+use audunru\FikenClient\Tests\ClientTestCase;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-class SaleTest extends TestCase
+class SaleTest extends ClientTestCase
 {
     /**
      * @group dangerous
      */
     public function test_it_can_create_a_sale()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
         $sale = new Sale([
             'date'        => Carbon::now(),
             'paymentDate' => Carbon::now(),
@@ -31,7 +25,7 @@ class SaleTest extends TestCase
             'identifier'  => '12345',
         ]);
 
-        $paymentAccount = $company->accounts(2019)->firstWhere('code', '1920:10001');
+        $paymentAccount = $this->company->accounts(2019)->firstWhere('code', '1920:10001');
         $sale->setPaymentAccount($paymentAccount);
 
         $line = new OrderLine([
@@ -42,7 +36,7 @@ class SaleTest extends TestCase
         ]);
         $sale->add($line);
 
-        $saved = $company->add($sale);
+        $saved = $this->company->add($sale);
 
         $this->assertInstanceOf(Sale::class, $saved);
     }
@@ -52,12 +46,7 @@ class SaleTest extends TestCase
      */
     public function test_it_can_retrieve_sales()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $sales = $company->sales();
+        $sales = $this->company->sales();
         $sale = $sales->first();
 
         $this->assertInstanceOf(Collection::class, $sales);
@@ -69,12 +58,7 @@ class SaleTest extends TestCase
      */
     public function test_sale_has_payments()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $sales = $company->sales();
+        $sales = $this->company->sales();
         $sale = $sales->where('kind', 'INVOICE')->where('paid', true)->first();
         $payments = $sale->payments();
         $payment = $payments->first();
@@ -88,12 +72,7 @@ class SaleTest extends TestCase
      */
     public function test_sale_has_attachments()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $sales = $company->sales();
+        $sales = $this->company->sales();
         $sale = $sales->where('kind', 'INVOICE')->first();
         $attachments = $sale->attachments();
         $attachment = $attachments->first();
@@ -107,12 +86,7 @@ class SaleTest extends TestCase
      */
     public function test_sale_has_customer()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $sales = $company->sales();
+        $sales = $this->company->sales();
         $sale = $sales->where('kind', 'INVOICE')->first();
         $customer = $sale->customer();
 

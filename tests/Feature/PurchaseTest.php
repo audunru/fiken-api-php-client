@@ -2,25 +2,19 @@
 
 namespace audunru\FikenClient\Tests\Feature;
 
-use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Payment;
 use audunru\FikenClient\Models\Purchase;
-use audunru\FikenClient\Tests\TestCase;
+use audunru\FikenClient\Tests\ClientTestCase;
 use Illuminate\Support\Collection;
 
-class PurchaseTest extends TestCase
+class PurchaseTest extends ClientTestCase
 {
     /**
      * @group dangerous
      */
     public function test_it_can_retrieve_purchases()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $purchases = $company->purchases();
+        $purchases = $this->company->purchases();
         $purchase = $purchases->first();
 
         $this->assertInstanceOf(Collection::class, $purchases);
@@ -32,12 +26,7 @@ class PurchaseTest extends TestCase
      */
     public function test_purchase_has_payments()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $purchases = $company->purchases();
+        $purchases = $this->company->purchases();
         $purchase = $purchases->first();
         $payments = $purchase->payments();
         $payment = $payments->first();

@@ -2,39 +2,33 @@
 
 namespace audunru\FikenClient\Tests\Feature;
 
-use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\CashSale;
 use audunru\FikenClient\Models\InvoiceLine;
-use audunru\FikenClient\Tests\TestCase;
+use audunru\FikenClient\Tests\ClientTestCase;
 use Carbon\Carbon;
 
-class CashSaleTest extends TestCase
+class CashSaleTest extends ClientTestCase
 {
     /**
      * @group dangerous
      */
     public function test_it_can_create_a_cash_sale()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
         $cashSale = new CashSale([
             'issueDate'   => Carbon::now(),
             'dueDate'     => Carbon::now(),
             'invoiceText' => 'Payment for import/export services', ]
         );
-        $customer = $company->contacts()->first();
-        $bankAccount = $company->bankAccounts()->first();
-        $paymentAccount = $company->accounts(2019)->firstWhere('code', '1920:10001');
+        $customer = $this->company->contacts()->first();
+        $bankAccount = $this->company->bankAccounts()->first();
+        $paymentAccount = $this->company->accounts(2019)->firstWhere('code', '1920:10001');
 
         $cashSale
           ->setCustomer($customer)
           ->setBankAccount($bankAccount)
           ->setPaymentAccount($paymentAccount);
 
-        $product = $company->products()->firstWhere('vatType', 'HIGH');
+        $product = $this->company->products()->firstWhere('vatType', 'HIGH');
         $line = new InvoiceLine([
             'netAmount'   => 8000,
             'vatAmount'   => 2000,
@@ -44,7 +38,7 @@ class CashSaleTest extends TestCase
         $line->setProduct($product);
         $cashSale->add($line);
 
-        $saved = $company->add($cashSale);
+        $saved = $this->company->add($cashSale);
 
         $this->assertInstanceOf(CashSale::class, $saved);
         $this->assertEquals('Payment for import/export services', $saved->invoiceText);

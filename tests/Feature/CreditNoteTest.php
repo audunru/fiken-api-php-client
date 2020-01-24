@@ -2,26 +2,20 @@
 
 namespace audunru\FikenClient\Tests\Feature;
 
-use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Contact;
 use audunru\FikenClient\Models\CreditNote;
 use audunru\FikenClient\Models\Invoice;
-use audunru\FikenClient\Tests\TestCase;
+use audunru\FikenClient\Tests\ClientTestCase;
 use Illuminate\Support\Collection;
 
-class CreditNoteTest extends TestCase
+class CreditNoteTest extends ClientTestCase
 {
     /**
      * @group dangerous
      */
     public function test_it_can_retrieve_credit_notes()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $creditNotes = $company->creditNotes();
+        $creditNotes = $this->company->creditNotes();
         $creditNote = $creditNotes->first();
 
         $this->assertInstanceOf(Collection::class, $creditNotes);
@@ -33,12 +27,7 @@ class CreditNoteTest extends TestCase
      */
     public function test_credit_note_has_customer()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $creditNotes = $company->creditNotes();
+        $creditNotes = $this->company->creditNotes();
         $creditNote = $creditNotes->first();
         $customer = $creditNote->customer();
 
@@ -50,12 +39,7 @@ class CreditNoteTest extends TestCase
      */
     public function test_credit_note_has_invoice()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $creditNotes = $company->creditNotes();
+        $creditNotes = $this->company->creditNotes();
         $creditNote = $creditNotes->first();
         $invoice = $creditNote->invoice();
 

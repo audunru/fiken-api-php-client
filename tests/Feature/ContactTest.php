@@ -2,24 +2,18 @@
 
 namespace audunru\FikenClient\Tests\Feature;
 
-use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Contact;
-use audunru\FikenClient\Tests\TestCase;
+use audunru\FikenClient\Tests\ClientTestCase;
 use Illuminate\Support\Collection;
 
-class ContactTest extends TestCase
+class ContactTest extends ClientTestCase
 {
     /**
      * @group dangerous
      */
     public function test_it_can_retrieve_contacts()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $contacts = $company->contacts();
+        $contacts = $this->company->contacts();
         $contact = $contacts->first();
 
         $this->assertInstanceOf(Collection::class, $contacts);
@@ -31,15 +25,10 @@ class ContactTest extends TestCase
      */
     public function test_it_can_create_a_customer()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
         $contact = new Contact([
             'name'     => 'Art Vandelay',
             'customer' => true, ]);
-        $saved = $company->add($contact);
+        $saved = $this->company->add($contact);
 
         $this->assertInstanceOf(Contact::class, $saved);
         $this->assertEquals('Art Vandelay', $contact->name);
@@ -50,12 +39,7 @@ class ContactTest extends TestCase
      */
     public function test_it_can_update_a_contact()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $contact = $company->contacts()->first();
+        $contact = $this->company->contacts()->first();
 
         $contact->name = 'Duffman';
 

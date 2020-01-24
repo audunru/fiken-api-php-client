@@ -35,6 +35,6 @@ class CompanyTest extends TestCase
         $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
         $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
         $this->assertInstanceOf(Company::class, $company);
-        $this->assertEquals(env('FIKEN_TEST_ORGANIZATION_NUMBER'), $company->organizationNumber);
+        $this->assertEquals($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER'], $company->organizationNumber);
     }
 }

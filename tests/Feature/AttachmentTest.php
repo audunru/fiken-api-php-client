@@ -2,24 +2,18 @@
 
 namespace audunru\FikenClient\Tests\Feature;
 
-use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Attachment;
-use audunru\FikenClient\Tests\TestCase;
+use audunru\FikenClient\Tests\ClientTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class AttachmentTest extends TestCase
+class AttachmentTest extends ClientTestCase
 {
     /**
      * @group dangerous
      */
     public function test_it_can_add_attachment_to_invoice()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $invoices = $company->invoices();
+        $invoices = $this->company->invoices();
         $invoice = $invoices->first();
         $sale = $invoice->sale();
 
@@ -43,12 +37,7 @@ class AttachmentTest extends TestCase
     // TODO: Getting error from Fiken, perhaps they are not ready yet
  /*   public function test_it_can_add_attachment_to_purchase()
     {
-        $client = new FikenClient();
-
-        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
-        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
-
-        $purchases = $company->purchases();
+        $purchases = $this->company->purchases();
         $purchase = $purchases->first();
 
         $root = vfsStream::setup();

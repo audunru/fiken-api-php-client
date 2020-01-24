@@ -20,6 +20,7 @@ return PhpCsFixer\Config::create()
         'not_operator_with_successor_space' => true,
         'ordered_imports' => true,
         'phpdoc_order' => true,
+        'self_accessor' => true,
     ])
     ->setFinder($finder)
 ;

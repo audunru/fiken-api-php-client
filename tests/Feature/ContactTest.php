@@ -38,8 +38,8 @@ class ContactTest extends TestCase
         $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
 
         $contact = new Contact([
-          'name' => 'Art Vandelay',
-          'customer' => true, ]);
+            'name'     => 'Art Vandelay',
+            'customer' => true, ]);
         $saved = $company->add($contact);
 
         $this->assertInstanceOf(Contact::class, $saved);

@@ -9,8 +9,6 @@ trait HasLinks
     /**
      * Get embedded resources.
      *
-     * @param string $relation
-     *
      * @return Collection|null
      */
     public function getEmbeddedResources(string $relation): ?Collection
@@ -20,8 +18,6 @@ trait HasLinks
 
     /**
      * Get a link to a resource this model has a relation with.
-     *
-     * @param string $relation
      *
      * @return string|null
      */

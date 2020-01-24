@@ -28,8 +28,6 @@ class FikenClient
     /**
      * Set company by organization number.
      *
-     * @param string $organizationNumber
-     *
      * @return Company
      */
     public function setCompany(string $organizationNumber): Company

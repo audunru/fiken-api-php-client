@@ -38,10 +38,10 @@ class ProductTest extends TestCase
         $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
 
         $product = new Product([
-          'name' => 'Latex',
-          'incomeAccount' => 3000,
-          'vatType' => 'HIGH',
-          'active' => true, ]);
+            'name'          => 'Latex',
+            'incomeAccount' => 3000,
+            'vatType'       => 'HIGH',
+            'active'        => true, ]);
         $saved = $company->add($product);
 
         $this->assertInstanceOf(Product::class, $saved);

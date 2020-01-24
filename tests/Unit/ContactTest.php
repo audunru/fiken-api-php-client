@@ -10,16 +10,16 @@ class ContactTest extends TestCase
     public function test_it_creates_a_contact()
     {
         $contact = new Contact([
-            'name' => 'Art Vandelay',
-            'email' => 'art@vandelayindustries.com',
+            'name'                   => 'Art Vandelay',
+            'email'                  => 'art@vandelayindustries.com',
             'organizationIdentifier' => '123987123',
-            'phoneNumber' => '+47 900 90 123',
-            'customer' => true,
-            'supplier' => true,
-            'currency' => 'NOK',
-            'memberNumber' => 10000,
-            'language' => 'NORWEGIAN',
-            'notFillable' => 'The thing that should not be',
+            'phoneNumber'            => '+47 900 90 123',
+            'customer'               => true,
+            'supplier'               => true,
+            'currency'               => 'NOK',
+            'memberNumber'           => 10000,
+            'language'               => 'NORWEGIAN',
+            'notFillable'            => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(

@@ -24,8 +24,8 @@ class PaymentTest extends TestCase
         $sale = $sales->first();
 
         $payment = new Payment([
-          'date' => Carbon::now(),
-          'amount' => 10000,
+            'date'   => Carbon::now(),
+            'amount' => 10000,
         ]);
 
         $account = $company->accounts(2019)->firstWhere('code', '1920:10001');

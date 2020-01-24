@@ -10,9 +10,9 @@ class BankAccountTest extends TestCase
     public function test_it_creates_a_bank_account()
     {
         $bankAccount = new BankAccount([
-            'name' => 'Bank of Alaska',
+            'name'              => 'Bank of Alaska',
             'bankAccountNumber' => '900900900',
-            'notFillable' => 'The thing that should not be',
+            'notFillable'       => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(

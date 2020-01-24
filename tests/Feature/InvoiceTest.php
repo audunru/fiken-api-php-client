@@ -42,8 +42,8 @@ class InvoiceTest extends TestCase
         $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
 
         $invoice = new Invoice([
-            'issueDate' => Carbon::now(),
-            'dueDate' => Carbon::now(),
+            'issueDate'   => Carbon::now(),
+            'dueDate'     => Carbon::now(),
             'invoiceText' => 'Payment for import/export services', ]
         );
         $customer = $company->contacts()->first();
@@ -55,10 +55,10 @@ class InvoiceTest extends TestCase
 
         $product = $company->products()->firstWhere('vatType', 'HIGH');
         $line = new InvoiceLine([
-            'netAmount' => 8000,
-            'vatAmount' => 2000,
+            'netAmount'   => 8000,
+            'vatAmount'   => 2000,
             'grossAmount' => 10000,
-            'comment' => 'Chips',
+            'comment'     => 'Chips',
         ]);
         $line->setProduct($product);
         $invoice->add($line);

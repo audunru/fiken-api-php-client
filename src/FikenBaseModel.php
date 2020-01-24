@@ -32,10 +32,14 @@ use JsonSerializable;
 
 abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
 {
-    use GuardsAttributes,
-        HasAttributes,
-        HasTimestamps,
-        HidesAttributes,
+    use GuardsAttributes;
+    use
+        HasAttributes;
+    use
+        HasTimestamps;
+    use
+        HidesAttributes;
+    use
         HasLinks;
 
     /**
@@ -118,8 +122,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     /**
      * Create a new instance of the given model.
      *
-     * @param array $attributes
-     *
      * @return static
      */
     public static function newInstance(array $attributes = [])
@@ -134,8 +136,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
 
     /**
      * Load an existing model.
-     *
-     * @param string $link
      *
      * @return static
      */
@@ -165,9 +165,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
 
     /**
      * Get all the models from the API.
-     *
-     * @param FikenBaseModel $parent
-     * @param array          $replace
      *
      * @return Collection|null
      */

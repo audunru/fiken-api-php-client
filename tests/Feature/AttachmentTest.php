@@ -28,8 +28,8 @@ class AttachmentTest extends TestCase
         $file = vfsStream::newFile('test.pdf')->at($root);
 
         $attachment = new Attachment([
-            'path' => vfsStream::url('root/test.pdf'),
-            'filename' => 'Awesome PDF.pdf',
+            'path'         => vfsStream::url('root/test.pdf'),
+            'filename'     => 'Awesome PDF.pdf',
             'attachToSale' => true,
         ]);
 

@@ -11,8 +11,6 @@ trait HasChildren
     /**
      * Create a new resource as a child.
      *
-     * @param FikenBaseModel $child
-     *
      * @return FikenBaseModel
      */
     public function add(FikenBaseModel $child): FikenBaseModel

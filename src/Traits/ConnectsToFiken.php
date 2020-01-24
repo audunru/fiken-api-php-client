@@ -48,9 +48,6 @@ trait ConnectsToFiken
     /**
      * Set username and password.
      *
-     * @param string $username
-     * @param string $password
-     *
      * @return FikenClient
      */
     public function authenticate(string $username, string $password): FikenClient
@@ -64,8 +61,6 @@ trait ConnectsToFiken
     /**
      * Get a resouce from Fiken.
      *
-     * @param string $link
-     *
      * @return array
      */
     public function getResource(string $link = ''): array
@@ -78,9 +73,7 @@ trait ConnectsToFiken
     /**
      * Create a new Fiken resource.
      *
-     * @param string $link
-     * @param array  $data
-     * @param bool   $multipart
+     * @param array $data
      *
      * @return string
      */
@@ -100,8 +93,7 @@ trait ConnectsToFiken
     /**
      * Update a Fiken resource.
      *
-     * @param string $link
-     * @param array  $data
+     * @param array $data
      *
      * @return string|null
      */
@@ -117,10 +109,6 @@ trait ConnectsToFiken
 
     /**
      * Send a GET, POST or PUT request to Fiken.
-     *
-     * @param string $link
-     * @param string $method
-     * @param array  $payload
      *
      * @return Response
      */

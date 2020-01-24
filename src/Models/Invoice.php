@@ -60,8 +60,6 @@ class Invoice extends FikenBaseModel
     /**
      * Set customer.
      *
-     * @param Contact $customer
-     *
      * @return Invoice
      */
     public function setCustomer(Contact $customer): Invoice
@@ -74,8 +72,6 @@ class Invoice extends FikenBaseModel
     /**
      * Set bank account.
      *
-     * @param BankAccount $bankAccount
-     *
      * @return Invoice
      */
     public function setBankAccount(BankAccount $bankAccount): Invoice
@@ -87,8 +83,6 @@ class Invoice extends FikenBaseModel
 
     /**
      * Add invoice line.
-     *
-     * @param FikenBaseModel $line
      *
      * @return Invoice
      */
@@ -112,13 +106,13 @@ class Invoice extends FikenBaseModel
     {
         return [
             'issueDate' => $this->issueDate,
-            'dueDate' => $this->dueDate,
-            'customer' => [
+            'dueDate'   => $this->dueDate,
+            'customer'  => [
                 'url' => $this->customer ? $this->customer->getLinkToSelf() : null,
             ],
             'bankAccountUrl' => $this->bankAccount ? $this->bankAccount->getLinkToSelf() : null,
-            'invoiceText' => $this->invoiceText,
-            'lines' => $this->lines,
+            'invoiceText'    => $this->invoiceText,
+            'lines'          => $this->lines,
         ];
     }
 }

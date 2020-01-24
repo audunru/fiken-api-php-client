@@ -17,8 +17,6 @@ class Company extends FikenBaseModel
     /**
      * Get accounts.
      *
-     * @param int $year
-     *
      * @return Collection|null
      */
     public function accounts(int $year): ?Collection

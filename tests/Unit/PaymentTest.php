@@ -11,9 +11,9 @@ class PaymentTest extends TestCase
     public function test_it_creates_a_payment()
     {
         $payment = new Payment([
-          'date' => new Carbon('2020-01-01'),
-          'amount' => 10000,
-          'notFillable' => 'The thing that should not be',
+            'date'        => new Carbon('2020-01-01'),
+            'amount'      => 10000,
+            'notFillable' => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(

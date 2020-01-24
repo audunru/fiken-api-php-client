@@ -14,8 +14,8 @@ class InvoiceTest extends TestCase
     public function test_it_creates_a_invoice()
     {
         $invoice = new Invoice([
-            'issueDate' => new Carbon('2020-01-01'),
-            'dueDate' => new Carbon('2020-01-15'),
+            'issueDate'   => new Carbon('2020-01-01'),
+            'dueDate'     => new Carbon('2020-01-15'),
             'invoiceText' => 'Payment for import and export services',
             'notFillable' => 'The thing that should not be',
         ]);
@@ -44,20 +44,20 @@ class InvoiceTest extends TestCase
     public function test_it_checks_the_contents_of_the_new_resource_array()
     {
         $invoice = new Invoice([
-            'issueDate' => new Carbon('2020-01-01'),
-            'dueDate' => new Carbon('2020-01-15'),
+            'issueDate'   => new Carbon('2020-01-01'),
+            'dueDate'     => new Carbon('2020-01-15'),
             'invoiceText' => 'Payment for import and export services',
         ]);
 
         $subset = [
             'issueDate' => '2020-01-01',
-            'dueDate' => '2020-01-15',
-            'customer' => [
+            'dueDate'   => '2020-01-15',
+            'customer'  => [
                 'url' => null,
             ],
             'bankAccountUrl' => null,
-            'invoiceText' => 'Payment for import and export services',
-            'lines' => null,
+            'invoiceText'    => 'Payment for import and export services',
+            'lines'          => null,
         ];
 
         $this->assertArraySubset($subset, $invoice->toNewResourceArray());

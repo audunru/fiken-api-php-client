@@ -29,8 +29,6 @@ trait IsWritable
     /**
      * Update the model in the database.
      *
-     * @param array $attributes
-     *
      * @return self
      */
     public function update(array $attributes = []): self

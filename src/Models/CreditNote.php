@@ -13,12 +13,12 @@ class CreditNote extends FikenBaseModel
 
     protected $casts = [
         'creditNoteNumber' => 'integer',
-        'net' => 'integer',
-        'vat' => 'integer',
-        'gross' => 'integer',
-        'netInNok' => 'integer',
-        'vatInNok' => 'integer',
-        'grossInNok' => 'integer',
+        'net'              => 'integer',
+        'vat'              => 'integer',
+        'gross'            => 'integer',
+        'netInNok'         => 'integer',
+        'vatInNok'         => 'integer',
+        'grossInNok'       => 'integer',
     ];
 
     /**

@@ -26,19 +26,19 @@ class SaleTest extends TestCase
         $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
 
         $sale = new Sale([
-          'date' => Carbon::now(),
-          'paymentDate' => Carbon::now(),
-          'kind' => 'CASH_SALE',
-          'identifier' => '12345',
+            'date'        => Carbon::now(),
+            'paymentDate' => Carbon::now(),
+            'kind'        => 'CASH_SALE',
+            'identifier'  => '12345',
         ]);
 
         $paymentAccount = $company->accounts(2019)->firstWhere('code', '1920:10001');
         $sale->setPaymentAccount($paymentAccount);
 
         $line = new OrderLine([
-            'netPrice' => 8000,
-            'vat' => 2000,
-            'vatType' => 'HIGH',
+            'netPrice'    => 8000,
+            'vat'         => 2000,
+            'vatType'     => 'HIGH',
             'description' => 'Chips',
         ]);
         $sale->add($line);

@@ -10,13 +10,13 @@ class ProductTest extends TestCase
     public function test_it_creates_a_product()
     {
         $product = new Product([
-            'name' => 'Chips',
-            'unitPrice' => 10000,
+            'name'          => 'Chips',
+            'unitPrice'     => 10000,
             'incomeAccount' => '3000',
-            'vatType' => 'HIGH',
-            'active' => true,
+            'vatType'       => 'HIGH',
+            'active'        => true,
             'productNumber' => '101',
-            'notFillable' => 'The thing that should not be',
+            'notFillable'   => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(

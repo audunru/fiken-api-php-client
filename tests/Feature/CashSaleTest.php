@@ -22,8 +22,8 @@ class CashSaleTest extends TestCase
         $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
 
         $cashSale = new CashSale([
-            'issueDate' => Carbon::now(),
-            'dueDate' => Carbon::now(),
+            'issueDate'   => Carbon::now(),
+            'dueDate'     => Carbon::now(),
             'invoiceText' => 'Payment for import/export services', ]
         );
         $customer = $company->contacts()->first();
@@ -37,10 +37,10 @@ class CashSaleTest extends TestCase
 
         $product = $company->products()->firstWhere('vatType', 'HIGH');
         $line = new InvoiceLine([
-            'netAmount' => 8000,
-            'vatAmount' => 2000,
+            'netAmount'   => 8000,
+            'vatAmount'   => 2000,
             'grossAmount' => 10000,
-            'comment' => 'Chips',
+            'comment'     => 'Chips',
         ]);
         $line->setProduct($product);
         $cashSale->add($line);

@@ -13,12 +13,12 @@ class InvoiceLineTest extends TestCase
     public function test_it_creates_an_invoice_line()
     {
         $invoiceLine = new InvoiceLine([
-            'netAmount'=> 8000,
-            'vatAmount'=> 2000,
-            'grossAmount'=> 10000,
-            'description'=> 'Latex',
-            'comment'=> 'It was supposed to be the summer of George!',
-            'vatType'=> 'HIGH',
+            'netAmount'   => 8000,
+            'vatAmount'   => 2000,
+            'grossAmount' => 10000,
+            'description' => 'Latex',
+            'comment'     => 'It was supposed to be the summer of George!',
+            'vatType'     => 'HIGH',
             'notFillable' => 'The thing that should not be',
         ]);
 
@@ -58,23 +58,23 @@ class InvoiceLineTest extends TestCase
     public function test_it_checks_the_contents_of_the_new_resource_array()
     {
         $invoiceLine = new InvoiceLine([
-            'netAmount'=> 8000,
-            'vatAmount'=> 2000,
+            'netAmount'  => 8000,
+            'vatAmount'  => 2000,
             'grossAmount'=> 10000,
             'description'=> 'Latex',
-            'comment'=> 'It was supposed to be the summer of George!',
-            'vatType'=> 'HIGH',
+            'comment'    => 'It was supposed to be the summer of George!',
+            'vatType'    => 'HIGH',
         ]);
 
         $subset = [
-            'netAmount' => 8000,
-            'vatAmount' => 2000,
-            'grossAmount' => 10000,
-            'description' => 'Latex',
-            'comment' => 'It was supposed to be the summer of George!',
-            'vatType' => 'HIGH',
-            'productUrl' => null,
-            'incomeAccount' =>  null,
+            'netAmount'     => 8000,
+            'vatAmount'     => 2000,
+            'grossAmount'   => 10000,
+            'description'   => 'Latex',
+            'comment'       => 'It was supposed to be the summer of George!',
+            'vatType'       => 'HIGH',
+            'productUrl'    => null,
+            'incomeAccount' => null,
         ];
 
         $this->assertArraySubset($subset, $invoiceLine->toNewResourceArray());

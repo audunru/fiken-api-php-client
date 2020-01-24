@@ -10,7 +10,6 @@ use audunru\FikenClient\Models\Sale;
 use audunru\FikenClient\Tests\TestCase;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 
 class InvoiceTest extends TestCase
 {
@@ -19,10 +18,10 @@ class InvoiceTest extends TestCase
      */
     public function test_it_can_retrieve_invoices()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $invoices = $company->invoices();
         $invoice = $invoices->first();
@@ -36,10 +35,10 @@ class InvoiceTest extends TestCase
      */
     public function test_it_can_create_an_invoice()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $invoice = new Invoice([
             'issueDate'   => Carbon::now(),
@@ -77,10 +76,10 @@ class InvoiceTest extends TestCase
      */
     public function test_invoice_has_sale()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $invoices = $company->invoices();
         $invoice = $invoices->first();
@@ -94,10 +93,10 @@ class InvoiceTest extends TestCase
      */
     public function test_invoice_has_customer()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $invoices = $company->invoices();
         $invoice = $invoices->first();
@@ -111,10 +110,10 @@ class InvoiceTest extends TestCase
      */
     public function test_invoice_has_lines()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $invoices = $company->invoices();
         $invoice = $invoices->first();

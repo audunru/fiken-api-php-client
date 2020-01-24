@@ -7,7 +7,6 @@ use audunru\FikenClient\Models\CashSale;
 use audunru\FikenClient\Models\InvoiceLine;
 use audunru\FikenClient\Tests\TestCase;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
 
 class CashSaleTest extends TestCase
 {
@@ -16,10 +15,10 @@ class CashSaleTest extends TestCase
      */
     public function test_it_can_create_a_cash_sale()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $cashSale = new CashSale([
             'issueDate'   => Carbon::now(),

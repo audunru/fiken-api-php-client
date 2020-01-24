@@ -5,7 +5,6 @@ namespace audunru\FikenClient\Tests\Feature;
 use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Product;
 use audunru\FikenClient\Tests\TestCase;
-use Illuminate\Support\Facades\App;
 
 class InvoiceLineTest extends TestCase
 {
@@ -14,10 +13,10 @@ class InvoiceLineTest extends TestCase
      */
     public function test_invoice_line_has_product()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $invoices = $company->invoices();
         $invoice = $invoices->first();

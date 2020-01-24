@@ -7,7 +7,6 @@ use audunru\FikenClient\Models\Payment;
 use audunru\FikenClient\Models\Purchase;
 use audunru\FikenClient\Tests\TestCase;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 
 class PurchaseTest extends TestCase
 {
@@ -16,10 +15,10 @@ class PurchaseTest extends TestCase
      */
     public function test_it_can_retrieve_purchases()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $purchases = $company->purchases();
         $purchase = $purchases->first();
@@ -33,10 +32,10 @@ class PurchaseTest extends TestCase
      */
     public function test_purchase_has_payments()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $purchases = $company->purchases();
         $purchase = $purchases->first();

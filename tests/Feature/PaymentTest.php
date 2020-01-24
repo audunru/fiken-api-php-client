@@ -6,7 +6,6 @@ use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Payment;
 use audunru\FikenClient\Tests\TestCase;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
 
 class PaymentTest extends TestCase
 {
@@ -15,10 +14,10 @@ class PaymentTest extends TestCase
      */
     public function test_it_can_add_payment_to_sale()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $sales = $company->sales();
         $sale = $sales->first();
@@ -43,10 +42,10 @@ class PaymentTest extends TestCase
 /*
     public function test_it_can_add_payment_to_purchase()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $purchases = $company->purchases();
         $purchase = $purchases->first();

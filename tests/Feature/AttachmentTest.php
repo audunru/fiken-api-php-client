@@ -5,7 +5,6 @@ namespace audunru\FikenClient\Tests\Feature;
 use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Attachment;
 use audunru\FikenClient\Tests\TestCase;
-use Illuminate\Support\Facades\App;
 use org\bovigo\vfs\vfsStream;
 
 class AttachmentTest extends TestCase
@@ -15,10 +14,10 @@ class AttachmentTest extends TestCase
      */
     public function test_it_can_add_attachment_to_invoice()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $invoices = $company->invoices();
         $invoice = $invoices->first();
@@ -44,10 +43,10 @@ class AttachmentTest extends TestCase
     // TODO: Getting error from Fiken, perhaps they are not ready yet
  /*   public function test_it_can_add_attachment_to_purchase()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $purchases = $company->purchases();
         $purchase = $purchases->first();

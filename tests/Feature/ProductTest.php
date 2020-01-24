@@ -6,7 +6,6 @@ use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Product;
 use audunru\FikenClient\Tests\TestCase;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 
 class ProductTest extends TestCase
 {
@@ -15,10 +14,10 @@ class ProductTest extends TestCase
      */
     public function test_it_can_retrieve_products()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $products = $company->products();
         $product = $products->first();
@@ -32,10 +31,10 @@ class ProductTest extends TestCase
      */
     public function test_it_can_create_a_product()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $product = new Product([
             'name'          => 'Latex',
@@ -56,10 +55,10 @@ class ProductTest extends TestCase
      */
     public function test_it_can_update_a_product()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $product = $company->products()->first();
 

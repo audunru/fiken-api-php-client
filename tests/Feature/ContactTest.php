@@ -6,7 +6,6 @@ use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Contact;
 use audunru\FikenClient\Tests\TestCase;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 
 class ContactTest extends TestCase
 {
@@ -15,10 +14,10 @@ class ContactTest extends TestCase
      */
     public function test_it_can_retrieve_contacts()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $contacts = $company->contacts();
         $contact = $contacts->first();
@@ -32,10 +31,10 @@ class ContactTest extends TestCase
      */
     public function test_it_can_create_a_customer()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $contact = new Contact([
             'name'     => 'Art Vandelay',
@@ -51,10 +50,10 @@ class ContactTest extends TestCase
      */
     public function test_it_can_update_a_contact()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $contact = $company->contacts()->first();
 

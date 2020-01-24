@@ -6,7 +6,6 @@ use audunru\FikenClient\FikenClient;
 use audunru\FikenClient\Models\Account;
 use audunru\FikenClient\Tests\TestCase;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 
 class AccountTest extends TestCase
 {
@@ -15,10 +14,10 @@ class AccountTest extends TestCase
      */
     public function test_it_can_retrieve_accounts()
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
 
-        $client->authenticate(env('FIKEN_TEST_USERNAME'), env('FIKEN_TEST_PASSWORD'));
-        $company = $client->setCompany(env('FIKEN_TEST_ORGANIZATION_NUMBER'));
+        $client->authenticate($_ENV['FIKEN_TEST_USERNAME'], $_ENV['FIKEN_TEST_PASSWORD']);
+        $company = $client->setCompany($_ENV['FIKEN_TEST_ORGANIZATION_NUMBER']);
 
         $accounts = $company->accounts(2019);
         $account = $accounts->first();

@@ -16,20 +16,16 @@ class OrderLine extends FikenBaseModel
     ];
 
     protected $casts = [
-        'netPrice' => 'integer',
-        'vat' => 'integer',
+        'netPrice'           => 'integer',
+        'vat'                => 'integer',
         'netPriceInCurrency' => 'integer',
-        'vatInCurrency' => 'integer',
+        'vatInCurrency'      => 'integer',
     ];
 
     /**
      * Set income account.
-     *
-     * @param Account $account
-     *
-     * @return OrderLine
      */
-    public function setAccount(Account $account): OrderLine
+    public function setAccount(Account $account): self
     {
         $this->account = $account;
 
@@ -44,13 +40,13 @@ class OrderLine extends FikenBaseModel
     public function toNewResourceArray(): array
     {
         return [
-            'description' => $this->description,
-            'netPrice' => $this->netPrice,
-            'vat' => $this->vat,
-            'account' =>  $this->account ? $this->account->code : null,
-            'vatType' => $this->vatType,
+            'description'        => $this->description,
+            'netPrice'           => $this->netPrice,
+            'vat'                => $this->vat,
+            'account'            => $this->account ? $this->account->code : null,
+            'vatType'            => $this->vatType,
             'netPriceInCurrency' => $this->netPriceInCurrency,
-            'vatInCurrency' => $this->vatInCurrency,
-      ];
+            'vatInCurrency'      => $this->vatInCurrency,
+        ];
     }
 }

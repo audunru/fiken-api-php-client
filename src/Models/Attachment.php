@@ -23,7 +23,7 @@ class Attachment extends FikenBaseModel
 
     protected $casts = [
         'attachToPayment' => 'boolean',
-        'attachToSale' => 'boolean',
+        'attachToSale'    => 'boolean',
     ];
 
     public function __construct(array $attributes = [])
@@ -49,10 +49,10 @@ class Attachment extends FikenBaseModel
             [
                 'name'     => 'SaleAttachment',
                 'contents' => json_encode([
-                    'filename' => $this->filename,
-                    'comment' => $this->comment,
+                    'filename'        => $this->filename,
+                    'comment'         => $this->comment,
                     'attachToPayment' => $this->attachToPayment,
-                    'attachToSale' => $this->attachToSale,
+                    'attachToSale'    => $this->attachToSale,
                 ]),
             ],
         ];

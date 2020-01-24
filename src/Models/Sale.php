@@ -37,8 +37,6 @@ class Sale extends FikenBaseModel
 
     /**
      * Get payments.
-     *
-     * @return Collection|null
      */
     public function payments(): ?Collection
     {
@@ -49,8 +47,6 @@ class Sale extends FikenBaseModel
 
     /**
      * Get attachments.
-     *
-     * @return Collection|null
      */
     public function attachments(): ?Collection
     {
@@ -59,8 +55,6 @@ class Sale extends FikenBaseModel
 
     /**
      * Get customer.
-     *
-     * @return Contact|null
      */
     public function customer(): ?Contact
     {
@@ -69,8 +63,6 @@ class Sale extends FikenBaseModel
 
     /**
      * Get invoice lines.
-     *
-     * @return Collection|null
      */
     public function lines(): ?Collection
     {
@@ -81,8 +73,6 @@ class Sale extends FikenBaseModel
 
     /**
      * Add invoice line.
-     *
-     * @param FikenBaseModel $line
      *
      * @return Invoice
      */
@@ -99,12 +89,8 @@ class Sale extends FikenBaseModel
 
     /**
      * Set payment account.
-     *
-     * @param Account $account
-     *
-     * @return Sale
      */
-    public function setPaymentAccount(Account $account): Sale
+    public function setPaymentAccount(Account $account): self
     {
         $this->paymentAccount = $account;
 
@@ -119,17 +105,17 @@ class Sale extends FikenBaseModel
     public function toNewResourceArray(): array
     {
         return [
-            'date' => $this->date,
-            'kind' => $this->kind,
-            'identifier' => $this->identifier,
-            'paid' => $this->paid,
-            'identifier' => $this->identifier,
-            'lines' => $this->lines,
-            'customer' => $this->customer ? $this->customer->getLinkToSelf() : null,
-            'dueDate' => $this->dueDate,
-            'kid' => $this->kid,
+            'date'           => $this->date,
+            'kind'           => $this->kind,
+            'identifier'     => $this->identifier,
+            'paid'           => $this->paid,
+            'identifier'     => $this->identifier,
+            'lines'          => $this->lines,
+            'customer'       => $this->customer ? $this->customer->getLinkToSelf() : null,
+            'dueDate'        => $this->dueDate,
+            'kid'            => $this->kid,
             'paymentAccount' => $this->paymentAccount ? $this->paymentAccount->code : null,
-            'paymentDate' => $this->paymentDate,
+            'paymentDate'    => $this->paymentDate,
         ];
     }
 }

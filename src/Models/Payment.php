@@ -26,12 +26,8 @@ class Payment extends FikenBaseModel
 
     /**
      * Set income account.
-     *
-     * @param Account $account
-     *
-     * @return Payment
      */
-    public function setAccount(Account $account): Payment
+    public function setAccount(Account $account): self
     {
         $this->account = $account;
 
@@ -46,9 +42,9 @@ class Payment extends FikenBaseModel
     public function toNewResourceArray(): array
     {
         return [
-            'date' => $this->date,
-            'account' =>  $this->account ? $this->account->code : null,
-            'amount' => $this->amount,
-      ];
+            'date'    => $this->date,
+            'account' => $this->account ? $this->account->code : null,
+            'amount'  => $this->amount,
+        ];
     }
 }

@@ -14,8 +14,8 @@ class CashSaleTest extends TestCase
     public function test_it_creates_a_cash_sale()
     {
         $cashSale = new CashSale([
-            'issueDate' => new Carbon('2020-01-01'),
-            'dueDate' => new Carbon('2020-01-01'),
+            'issueDate'   => new Carbon('2020-01-01'),
+            'dueDate'     => new Carbon('2020-01-01'),
             'invoiceText' => 'Payment for import and export services',
             'notFillable' => 'The thing that should not be',
         ]);
@@ -47,21 +47,21 @@ class CashSaleTest extends TestCase
     public function test_it_checks_the_contents_of_the_new_resource_array()
     {
         $cashSale = new CashSale([
-            'issueDate' => new Carbon('2020-01-01'),
-            'dueDate' => new Carbon('2020-01-01'),
+            'issueDate'   => new Carbon('2020-01-01'),
+            'dueDate'     => new Carbon('2020-01-01'),
             'invoiceText' => 'Payment for import and export services',
         ]);
 
         $subset = [
             'issueDate' => '2020-01-01',
-            'dueDate' => '2020-01-01',
-            'customer' => [
+            'dueDate'   => '2020-01-01',
+            'customer'  => [
                 'url' => null,
             ],
             'bankAccountUrl' => null,
-            'invoiceText' => 'Payment for import and export services',
-            'lines' => null,
-            'cash' => true,
+            'invoiceText'    => 'Payment for import and export services',
+            'lines'          => null,
+            'cash'           => true,
             'paymentAccount' => null,
         ];
 

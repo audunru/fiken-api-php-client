@@ -16,12 +16,8 @@ class CashSale extends Invoice
 
     /**
      * Set payment account.
-     *
-     * @param Account $account
-     *
-     * @return CashSale
      */
-    public function setPaymentAccount(Account $account): CashSale
+    public function setPaymentAccount(Account $account): self
     {
         $this->paymentAccount = $account;
 
@@ -37,14 +33,14 @@ class CashSale extends Invoice
     {
         return [
             'issueDate' => $this->issueDate,
-            'dueDate' => $this->dueDate,
-            'customer' => [
+            'dueDate'   => $this->dueDate,
+            'customer'  => [
                 'url' => $this->customer ? $this->customer->getLinkToSelf() : null,
             ],
             'bankAccountUrl' => $this->bankAccount ? $this->bankAccount->getLinkToSelf() : null,
-            'invoiceText' => $this->invoiceText,
-            'lines' => $this->lines,
-            'cash' => $this->cash,
+            'invoiceText'    => $this->invoiceText,
+            'lines'          => $this->lines,
+            'cash'           => $this->cash,
             'paymentAccount' => $this->paymentAccount ? $this->paymentAccount->code : null,
         ];
     }

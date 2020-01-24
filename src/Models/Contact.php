@@ -26,9 +26,9 @@ class Contact extends FikenBaseModel
 
     protected $casts = [
         'customerNumber' => 'integer',
-        'customer' => 'boolean',
+        'customer'       => 'boolean',
         'supplierNumber' => 'integer',
-        'supplier' => 'boolean',
-        'memberNumber' => 'integer',
+        'supplier'       => 'boolean',
+        'memberNumber'   => 'integer',
     ];
 }

@@ -22,6 +22,6 @@ class Product extends FikenBaseModel
 
     protected $casts = [
         'unitPrice' => 'integer',
-        'active' => 'boolean',
+        'active'    => 'boolean',
     ];
 }

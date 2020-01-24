@@ -16,15 +16,13 @@ class InvoiceLine extends FikenBaseModel
     ];
 
     protected $casts = [
-        'netAmount' => 'integer',
-        'vatAmount' => 'integer',
+        'netAmount'   => 'integer',
+        'vatAmount'   => 'integer',
         'grossAmount' => 'integer',
     ];
 
     /**
      * Get product.
-     *
-     * @return Product|null
      */
     public function product(): ?Product
     {
@@ -33,12 +31,8 @@ class InvoiceLine extends FikenBaseModel
 
     /**
      * Set income account.
-     *
-     * @param Account $account
-     *
-     * @return InvoiceLine
      */
-    public function setIncomeAccount(Account $account): InvoiceLine
+    public function setIncomeAccount(Account $account): self
     {
         $this->incomeAccount = $account;
 
@@ -47,12 +41,8 @@ class InvoiceLine extends FikenBaseModel
 
     /**
      * Set product.
-     *
-     * @param Product $product
-     *
-     * @return InvoiceLine
      */
-    public function setProduct(Product $product): InvoiceLine
+    public function setProduct(Product $product): self
     {
         $this->product = $product;
 
@@ -67,14 +57,14 @@ class InvoiceLine extends FikenBaseModel
     public function toNewResourceArray(): array
     {
         return [
-            'netAmount' => $this->netAmount,
-            'vatAmount' => $this->vatAmount,
-            'grossAmount' => $this->grossAmount,
-            'description' => $this->description,
-            'comment' => $this->comment,
-            'vatType' => $this->vatType,
-            'productUrl' => $this->product ? $this->product->getLinkToSelf() : null,
-            'incomeAccount' =>  $this->incomeAccount ? $this->incomeAccount->code : null,
-      ];
+            'netAmount'     => $this->netAmount,
+            'vatAmount'     => $this->vatAmount,
+            'grossAmount'   => $this->grossAmount,
+            'description'   => $this->description,
+            'comment'       => $this->comment,
+            'vatType'       => $this->vatType,
+            'productUrl'    => $this->product ? $this->product->getLinkToSelf() : null,
+            'incomeAccount' => $this->incomeAccount ? $this->incomeAccount->code : null,
+        ];
     }
 }

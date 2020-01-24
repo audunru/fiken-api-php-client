@@ -13,18 +13,16 @@ class CreditNote extends FikenBaseModel
 
     protected $casts = [
         'creditNoteNumber' => 'integer',
-        'net' => 'integer',
-        'vat' => 'integer',
-        'gross' => 'integer',
-        'netInNok' => 'integer',
-        'vatInNok' => 'integer',
-        'grossInNok' => 'integer',
+        'net'              => 'integer',
+        'vat'              => 'integer',
+        'gross'            => 'integer',
+        'netInNok'         => 'integer',
+        'vatInNok'         => 'integer',
+        'grossInNok'       => 'integer',
     ];
 
     /**
      * Get customer.
-     *
-     * @return Contact|null
      */
     public function customer(): ?Contact
     {
@@ -33,8 +31,6 @@ class CreditNote extends FikenBaseModel
 
     /**
      * Get invoice.
-     *
-     * @return Invoice|null
      */
     public function invoice(): ?Invoice
     {

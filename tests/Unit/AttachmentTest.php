@@ -17,12 +17,12 @@ class AttachmentTest extends TestCase
         $file = vfsStream::newFile('test.pdf')->at($root);
 
         $attachment = new Attachment([
-            'path' => vfsStream::url('root/test.pdf'),
-            'filename' => 'Awesome PDF.pdf',
-            'comment' => 'These pretzels are making me thirsty',
+            'path'            => vfsStream::url('root/test.pdf'),
+            'filename'        => 'Awesome PDF.pdf',
+            'comment'         => 'These pretzels are making me thirsty',
             'attachToPayment' => true,
-            'attachToSale' => true,
-            'notFillable' => 'The thing that should not be',
+            'attachToSale'    => true,
+            'notFillable'     => 'The thing that should not be',
         ]);
 
         $this->assertInstanceOf(
@@ -58,11 +58,11 @@ class AttachmentTest extends TestCase
         $file = vfsStream::newFile('test.pdf')->at($root);
 
         $attachment = new Attachment([
-            'path' => vfsStream::url('root/test.pdf'),
-            'filename' => 'Awesome PDF.pdf',
-            'comment' => 'These pretzels are making me thirsty',
+            'path'            => vfsStream::url('root/test.pdf'),
+            'filename'        => 'Awesome PDF.pdf',
+            'comment'         => 'These pretzels are making me thirsty',
             'attachToPayment' => true,
-            'attachToSale' => true,
+            'attachToSale'    => true,
         ]);
 
         $subset = [

@@ -4,13 +4,13 @@
  * Contains code copied from laravel/framework by Taylor Otwell.
  *
  * The MIT License (MIT)
-
+ *
  * Copyright (c) Taylor Otwell
-
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
+ *
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
@@ -26,16 +26,19 @@ use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use JsonSerializable;
 
 abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
 {
-    use GuardsAttributes,
-        HasAttributes,
-        HasTimestamps,
-        HidesAttributes,
+    use GuardsAttributes;
+    use
+        HasAttributes;
+    use
+        HasTimestamps;
+    use
+        HidesAttributes;
+    use
         HasLinks;
 
     /**
@@ -118,8 +121,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     /**
      * Create a new instance of the given model.
      *
-     * @param array $attributes
-     *
      * @return static
      */
     public static function newInstance(array $attributes = [])
@@ -135,13 +136,11 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     /**
      * Load an existing model.
      *
-     * @param string $link
-     *
      * @return static
      */
     public static function load(string $link)
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
         $json = $client->getResource($link);
 
         return static::newFromApi($json);
@@ -165,15 +164,10 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
 
     /**
      * Get all the models from the API.
-     *
-     * @param FikenBaseModel $parent
-     * @param array          $replace
-     *
-     * @return Collection|null
      */
-    public static function all(FikenBaseModel $parent, array $replace = []): ?Collection
+    public static function all(self $parent, array $replace = []): ?Collection
     {
-        $client = App::make(FikenClient::class);
+        $client = new FikenClient();
         $link = $parent->getLinkToRelation(static::$relation);
 
         if (! $link) {

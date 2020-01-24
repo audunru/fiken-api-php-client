@@ -30,27 +30,4 @@ class AttachmentTest extends ClientTestCase
 
         $this->assertInstanceOf(Attachment::class, $saved);
     }
-
-    /*
-     * @group dangerous
-     */
-    // TODO: Getting error from Fiken, perhaps they are not ready yet
- /*   public function test_it_can_add_attachment_to_purchase()
-    {
-        $purchases = $this->company->purchases();
-        $purchase = $purchases->first();
-
-        $root = vfsStream::setup();
-        $file = vfsStream::newFile('test.pdf')->at($root);
-
-        $attachment = new Attachment([
-            'path' => vfsStream::url('root/test.pdf'),
-            'filename' => 'Awesome PDF.pdf',
-            'attachToPayment' => true,
-        ]);
-
-        $saved = $purchase->add($attachment);
-
-        $this->assertInstanceOf(Attachment::class, $saved);
-    }*/
 }

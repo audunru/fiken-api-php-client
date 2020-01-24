@@ -70,14 +70,6 @@ class Company extends FikenBaseModel
     }
 
     /**
-     * Get purchases.
-     */
-    public function purchases(): ?Collection
-    {
-        return Purchase::all($this);
-    }
-
-    /**
      * Get all of the models from the database.
      *
      * @param array $replace

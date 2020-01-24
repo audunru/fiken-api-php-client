@@ -26,10 +26,8 @@ class Payment extends FikenBaseModel
 
     /**
      * Set income account.
-     *
-     * @return Payment
      */
-    public function setAccount(Account $account): Payment
+    public function setAccount(Account $account): self
     {
         $this->account = $account;
 

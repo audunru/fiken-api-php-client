@@ -24,10 +24,8 @@ class OrderLine extends FikenBaseModel
 
     /**
      * Set income account.
-     *
-     * @return OrderLine
      */
-    public function setAccount(Account $account): OrderLine
+    public function setAccount(Account $account): self
     {
         $this->account = $account;
 

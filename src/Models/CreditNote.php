@@ -23,8 +23,6 @@ class CreditNote extends FikenBaseModel
 
     /**
      * Get customer.
-     *
-     * @return Contact|null
      */
     public function customer(): ?Contact
     {
@@ -33,8 +31,6 @@ class CreditNote extends FikenBaseModel
 
     /**
      * Get invoice.
-     *
-     * @return Invoice|null
      */
     public function invoice(): ?Invoice
     {

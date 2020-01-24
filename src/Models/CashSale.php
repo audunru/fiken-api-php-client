@@ -16,10 +16,8 @@ class CashSale extends Invoice
 
     /**
      * Set payment account.
-     *
-     * @return CashSale
      */
-    public function setPaymentAccount(Account $account): CashSale
+    public function setPaymentAccount(Account $account): self
     {
         $this->paymentAccount = $account;
 

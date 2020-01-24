@@ -27,8 +27,6 @@ class Invoice extends FikenBaseModel
 
     /**
      * Get sale.
-     *
-     * @return Sale|null
      */
     public function sale(): ?Sale
     {
@@ -37,8 +35,6 @@ class Invoice extends FikenBaseModel
 
     /**
      * Get customer.
-     *
-     * @return Contact|null
      */
     public function customer(): ?Contact
     {
@@ -47,8 +43,6 @@ class Invoice extends FikenBaseModel
 
     /**
      * Get invoice lines.
-     *
-     * @return Collection|null
      */
     public function lines(): ?Collection
     {
@@ -59,10 +53,8 @@ class Invoice extends FikenBaseModel
 
     /**
      * Set customer.
-     *
-     * @return Invoice
      */
-    public function setCustomer(Contact $customer): Invoice
+    public function setCustomer(Contact $customer): self
     {
         $this->customer = $customer;
 
@@ -71,10 +63,8 @@ class Invoice extends FikenBaseModel
 
     /**
      * Set bank account.
-     *
-     * @return Invoice
      */
-    public function setBankAccount(BankAccount $bankAccount): Invoice
+    public function setBankAccount(BankAccount $bankAccount): self
     {
         $this->bankAccount = $bankAccount;
 

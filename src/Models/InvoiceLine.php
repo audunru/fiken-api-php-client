@@ -23,8 +23,6 @@ class InvoiceLine extends FikenBaseModel
 
     /**
      * Get product.
-     *
-     * @return Product|null
      */
     public function product(): ?Product
     {
@@ -33,10 +31,8 @@ class InvoiceLine extends FikenBaseModel
 
     /**
      * Set income account.
-     *
-     * @return InvoiceLine
      */
-    public function setIncomeAccount(Account $account): InvoiceLine
+    public function setIncomeAccount(Account $account): self
     {
         $this->incomeAccount = $account;
 
@@ -45,10 +41,8 @@ class InvoiceLine extends FikenBaseModel
 
     /**
      * Set product.
-     *
-     * @return InvoiceLine
      */
-    public function setProduct(Product $product): InvoiceLine
+    public function setProduct(Product $product): self
     {
         $this->product = $product;
 

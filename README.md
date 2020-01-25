@@ -19,19 +19,6 @@ Please create a demo account in Fiken (it's free) and use that when integrating 
 
 # Installation
 
-The package is not published on packagist.org yet, so for now you need to add the following to your `composer.json` before you can install it:
-
-```json
-  "repositories": [
-    {
-      "url": "https://github.com/audunru/fiken-api-php-client.git",
-      "type": "git"
-    }
-  ]
-```
-
-Afterwards, run this command:
-
 ```bash
 composer require audunru/fiken-api-php-client
 ```

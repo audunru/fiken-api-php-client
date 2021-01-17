@@ -178,9 +178,9 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
             $link = str_replace($from, $to, $link);
         });
 
-        $query = http_build_query($wheres, "", "&", PHP_QUERY_RFC3986);
+        $query = http_build_query($wheres, '', '&', PHP_QUERY_RFC3986);
 
-        $json = $client->getResource($link . "?" . $query);
+        $json = $client->getResource($link.'?'.$query);
 
         if (isset($json['_embedded']) && isset($json['_embedded'][static::$relation])) {
             return collect($json['_embedded'][static::$relation])->map(function ($data) {

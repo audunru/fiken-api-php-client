@@ -64,9 +64,9 @@ class Company extends FikenBaseModel
     /**
      * Get sales.
      */
-    public function sales(): ?Collection
+    public function sales(array $wheres = []): ?Collection
     {
-        return Sale::all($this);
+        return Sale::all($this, [], $wheres);
     }
 
     /**
@@ -74,7 +74,7 @@ class Company extends FikenBaseModel
      *
      * @param array $replace
      */
-    public static function all(FikenBaseModel $parent = null, array $replace = null): Collection
+    public static function all(FikenBaseModel $parent = null, array $replace = null, array $wheres = null): Collection
     {
         $client = new FikenClient();
         $entry = $client->getResource();

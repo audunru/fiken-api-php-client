@@ -165,7 +165,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     /**
      * Get all the models from the API.
      */
-    public static function all(self $parent, array $replace = []): ?Collection
+    public static function all(self $parent, array $replace = [], array $wheres = []): ?Collection
     {
         $client = new FikenClient();
         $link = $parent->getLinkToRelation(static::$relation);
@@ -177,7 +177,10 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
         collect($replace)->each(function ($to, $from) use (&$link) {
             $link = str_replace($from, $to, $link);
         });
-        $json = $client->getResource($link);
+
+        $query = http_build_query($wheres, '', '&', PHP_QUERY_RFC3986);
+
+        $json = $client->getResource($link.'?'.$query);
 
         if (isset($json['_embedded']) && isset($json['_embedded'][static::$relation])) {
             return collect($json['_embedded'][static::$relation])->map(function ($data) {

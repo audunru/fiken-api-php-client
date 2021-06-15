@@ -29,6 +29,9 @@ trait ConnectsToFiken
         Settings::setPassword($options['password'] ?? Settings::$password);
         $this->guzzle = new Client([
             'base_uri' => Settings::$baseUri,
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
         ]);
     }
 
@@ -107,6 +110,8 @@ trait ConnectsToFiken
 
             if (400 === $exception->getCode()) {
                 throw new InvalidContentException($body->getContents());
+            } elseif (401 === $exception->getCode()) {
+                throw new AuthenticationFailedException('Wrong username and/or password');
             } elseif (404 === $exception->getCode()) {
                 throw new ModelNotFoundException("404 Not Found: {$link}");
             } else {

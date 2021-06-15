@@ -29,9 +29,6 @@ trait ConnectsToFiken
         Settings::setPassword($options['password'] ?? Settings::$password);
         $this->guzzle = new Client([
             'base_uri' => Settings::$baseUri,
-            'headers' => [
-                'Accept' => 'application/json',
-            ],
         ]);
     }
 

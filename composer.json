@@ -15,15 +15,15 @@
   "require": {
     "php": "^7.3|^8.0",
     "guzzlehttp/guzzle": "^6.3|^7.0.1",
-    "illuminate/database": "^6.0|^7.0|^8.0",
-    "illuminate/support": "^6.0|^7.0|^8.0"
+    "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
+    "illuminate/support": "^6.0|^7.0|^8.0|^9.0"
   },
   "require-dev": {
-    "dms/phpunit-arraysubset-asserts": "^0.2.0",
+    "dms/phpunit-arraysubset-asserts": "^0.4.0",
     "mikey179/vfsstream": "^1.6",
     "php-coveralls/php-coveralls": "^2.2",
     "phpunit/phpunit": "^9.0",
-    "symfony/dotenv": "^5.0"
+    "symfony/dotenv": "^6.0"
   },
   "config": {
     "sort-packages": true

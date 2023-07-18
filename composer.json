@@ -42,7 +42,7 @@
         }
     },
     "scripts": {
-        "post-root-package-install": [
+        "post-install-cmd": [
             "@php -r \"file_exists('.env.testing') || copy('.env.example', '.env.testing');\""
         ],
         "test": [

@@ -12,7 +12,7 @@ class CashSaleTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_create_a_cash_sale()
+    public function testItCanCreateACashSale()
     {
         $cashSale = new CashSale([
             'issueDate'   => Carbon::now(),

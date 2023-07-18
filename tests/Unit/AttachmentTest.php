@@ -11,7 +11,7 @@ class AttachmentTest extends TestCase
 {
     use ArraySubsetAsserts;
 
-    public function test_it_creates_an_attachment()
+    public function testItCreatesAnAttachment()
     {
         $root = vfsStream::setup();
         $file = vfsStream::newFile('test.pdf')->at($root);
@@ -52,7 +52,7 @@ class AttachmentTest extends TestCase
         );
     }
 
-    public function test_it_checks_the_contents_of_the_new_resource_array()
+    public function testItChecksTheContentsOfTheNewResourceArray()
     {
         $root = vfsStream::setup();
         $file = vfsStream::newFile('test.pdf')->at($root);
@@ -79,13 +79,13 @@ class AttachmentTest extends TestCase
         $this->assertArraySubset($subset, $attachment->toNewResourceArray());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_link_to_self()
+    public function testItChecksThatNewResourceDoesNotHaveLinkToSelf()
     {
         $attachment = new Attachment();
         $this->assertNull($attachment->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relation_link()
+    public function testItChecksThatNewResourceDoesNotHaveRelationLink()
     {
         $attachment = new Attachment();
         $this->assertNull($attachment->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));

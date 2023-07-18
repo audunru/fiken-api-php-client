@@ -11,12 +11,9 @@ class Payment extends FikenBaseModel
 
     protected static $relation = 'https://fiken.no/api/v1/rel/payments';
 
-    protected $dates = [
-        'date',
-    ];
-
     protected $casts = [
         'amount' => 'integer',
+        'date'   => 'date',
     ];
 
     protected $fillable = [

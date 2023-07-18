@@ -20,9 +20,9 @@ class Invoice extends FikenBaseModel
         'invoiceText',
     ];
 
-    protected $dates = [
-        'issueDate',
-        'dueDate',
+    protected $casts = [
+        'issueDate' => 'date',
+        'dueDate'   => 'date',
     ];
 
     /**

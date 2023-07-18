@@ -16,7 +16,7 @@ class SaleTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_create_a_sale()
+    public function testItCanCreateASale()
     {
         $sale = new Sale([
             'date'        => Carbon::now(),
@@ -44,7 +44,7 @@ class SaleTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_retrieve_sales()
+    public function testItCanRetrieveSales()
     {
         $sales = $this->company->sales();
         $sale = $sales->first();
@@ -56,7 +56,7 @@ class SaleTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_sale_has_payments()
+    public function testSaleHasPayments()
     {
         $sales = $this->company->sales();
         $sale = $sales->where('kind', 'INVOICE')->where('paid', true)->first();
@@ -70,7 +70,7 @@ class SaleTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_sale_has_attachments()
+    public function testSaleHasAttachments()
     {
         $sales = $this->company->sales();
         $sale = $sales->where('kind', 'INVOICE')->first();
@@ -84,7 +84,7 @@ class SaleTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_sale_has_customer()
+    public function testSaleHasCustomer()
     {
         $sales = $this->company->sales();
         $sale = $sales->where('kind', 'INVOICE')->first();

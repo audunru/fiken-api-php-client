@@ -11,7 +11,7 @@ class AccountTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_retrieve_accounts()
+    public function testItCanRetrieveAccounts()
     {
         $accounts = $this->company->accounts(2019);
         $account = $accounts->first();

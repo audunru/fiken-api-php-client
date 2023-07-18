@@ -11,7 +11,7 @@ class ProductTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_retrieve_products()
+    public function testItCanRetrieveProducts()
     {
         $products = $this->company->products();
         $product = $products->first();
@@ -23,7 +23,7 @@ class ProductTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_create_a_product()
+    public function testItCanCreateAProduct()
     {
         $product = new Product([
             'name'          => 'Latex',
@@ -42,7 +42,7 @@ class ProductTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_update_a_product()
+    public function testItCanUpdateAProduct()
     {
         $product = $this->company->products()->first();
 

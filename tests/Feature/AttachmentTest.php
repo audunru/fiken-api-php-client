@@ -11,7 +11,7 @@ class AttachmentTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_add_attachment_to_invoice()
+    public function testItCanAddAttachmentToInvoice()
     {
         $invoices = $this->company->invoices();
         $invoice = $invoices->first();

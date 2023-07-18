@@ -7,7 +7,7 @@ use audunru\FikenClient\Tests\TestCase;
 
 class BankAccountTest extends TestCase
 {
-    public function test_it_creates_a_bank_account()
+    public function testItCreatesABankAccount()
     {
         $bankAccount = new BankAccount([
             'name'              => 'Bank of Alaska',
@@ -32,13 +32,13 @@ class BankAccountTest extends TestCase
         );
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_link_to_self()
+    public function testItChecksThatNewResourceDoesNotHaveLinkToSelf()
     {
         $bankAccount = new BankAccount();
         $this->assertNull($bankAccount->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relation_link()
+    public function testItChecksThatNewResourceDoesNotHaveRelationLink()
     {
         $bankAccount = new BankAccount();
         $this->assertNull($bankAccount->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));

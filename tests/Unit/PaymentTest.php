@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class PaymentTest extends TestCase
 {
-    public function test_it_creates_a_payment()
+    public function testItCreatesAPayment()
     {
         $payment = new Payment([
             'date'        => new Carbon('2020-01-01'),
@@ -33,13 +33,13 @@ class PaymentTest extends TestCase
         );
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_link_to_self()
+    public function testItChecksThatNewResourceDoesNotHaveLinkToSelf()
     {
         $payment = new Payment();
         $this->assertNull($payment->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relation_link()
+    public function testItChecksThatNewResourceDoesNotHaveRelationLink()
     {
         $payment = new Payment();
         $this->assertNull($payment->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));

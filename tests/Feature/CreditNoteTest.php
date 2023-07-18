@@ -13,7 +13,7 @@ class CreditNoteTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_retrieve_credit_notes()
+    public function testItCanRetrieveCreditNotes()
     {
         $creditNotes = $this->company->creditNotes();
         $creditNote = $creditNotes->first();
@@ -25,7 +25,7 @@ class CreditNoteTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_credit_note_has_customer()
+    public function testCreditNoteHasCustomer()
     {
         $creditNotes = $this->company->creditNotes();
         $creditNote = $creditNotes->first();
@@ -37,7 +37,7 @@ class CreditNoteTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_credit_note_has_invoice()
+    public function testCreditNoteHasInvoice()
     {
         $creditNotes = $this->company->creditNotes();
         $creditNote = $creditNotes->first();

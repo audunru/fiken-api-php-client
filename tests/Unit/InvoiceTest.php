@@ -11,7 +11,7 @@ class InvoiceTest extends TestCase
 {
     use ArraySubsetAsserts;
 
-    public function test_it_creates_a_invoice()
+    public function testItCreatesAInvoice()
     {
         $invoice = new Invoice([
             'issueDate'   => new Carbon('2020-01-01'),
@@ -41,7 +41,7 @@ class InvoiceTest extends TestCase
         );
     }
 
-    public function test_it_checks_the_contents_of_the_new_resource_array()
+    public function testItChecksTheContentsOfTheNewResourceArray()
     {
         $invoice = new Invoice([
             'issueDate'   => new Carbon('2020-01-01'),
@@ -63,13 +63,13 @@ class InvoiceTest extends TestCase
         $this->assertArraySubset($subset, $invoice->toNewResourceArray());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_link_to_self()
+    public function testItChecksThatNewResourceDoesNotHaveLinkToSelf()
     {
         $invoice = new Invoice();
         $this->assertNull($invoice->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relation_link()
+    public function testItChecksThatNewResourceDoesNotHaveRelationLink()
     {
         $invoice = new Invoice();
         $this->assertNull($invoice->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));

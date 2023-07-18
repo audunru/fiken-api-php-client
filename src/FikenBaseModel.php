@@ -280,8 +280,9 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      *
      * @param int $options
      *
-     * @return string
      * @throws Exception
+     *
+     * @return string
      */
     public function toJson($options = 0)
     {

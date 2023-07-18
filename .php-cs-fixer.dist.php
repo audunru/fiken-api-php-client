@@ -22,7 +22,7 @@ $config
         'linebreak_after_opening_tag'       => true,
         'not_operator_with_successor_space' => true,
         'ordered_imports'                   => true,
-        'phpdoc_order'                      => true,
+        'phpdoc_order'                      => ["order" => ['param', 'return', 'throws']],
         'increment_style'                   => ['style' => 'post'],
         'global_namespace_import'           => [
             'import_classes'   => true,

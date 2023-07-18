@@ -11,7 +11,7 @@ class BankAccountTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_retrieve_bank_accounts()
+    public function testItCanRetrieveBankAccounts()
     {
         $bankAccounts = $this->company->bankAccounts();
         $bankAccount = $bankAccounts->first();

@@ -10,7 +10,7 @@ class InvoiceLineTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_invoice_line_has_product()
+    public function testInvoiceLineHasProduct()
     {
         $invoices = $this->company->invoices();
         $invoice = $invoices->first();

@@ -10,7 +10,7 @@ class InvoiceLineTest extends TestCase
 {
     use ArraySubsetAsserts;
 
-    public function test_it_creates_an_invoice_line()
+    public function testItCreatesAnInvoiceLine()
     {
         $invoiceLine = new InvoiceLine([
             'netAmount'   => 8000,
@@ -55,7 +55,7 @@ class InvoiceLineTest extends TestCase
         );
     }
 
-    public function test_it_checks_the_contents_of_the_new_resource_array()
+    public function testItChecksTheContentsOfTheNewResourceArray()
     {
         $invoiceLine = new InvoiceLine([
             'netAmount'  => 8000,

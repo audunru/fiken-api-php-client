@@ -5,7 +5,9 @@ namespace audunru\FikenClient\Models;
 class CashSale extends Invoice
 {
     protected $casts = [
-        'cash' => 'boolean',
+        'cash'      => 'boolean',
+        'issueDate' => 'date',
+        'dueDate'   => 'date',
     ];
 
     public function __construct(array $attributes = [])

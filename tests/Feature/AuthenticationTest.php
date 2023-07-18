@@ -9,7 +9,7 @@ use audunru\FikenClient\Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    public function test_it_throws_an_exception_when_no_username_or_password_is_set()
+    public function testItThrowsAnExceptionWhenNoUsernameOrPasswordIsSet()
     {
         $client = new FikenClient();
 
@@ -18,7 +18,10 @@ class AuthenticationTest extends TestCase
         $client->user();
     }
 
-    public function test_it_can_authenticate_with_method()
+    /**
+     * @group dangerous
+     */
+    public function testItCanAuthenticateWithMethod()
     {
         $client = new FikenClient();
 

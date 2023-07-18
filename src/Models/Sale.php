@@ -25,14 +25,11 @@ class Sale extends FikenBaseModel
         'paymentDate',
     ];
 
-    protected $dates = [
-        'date',
-        'dueDate',
-        'paymentDate',
-    ];
-
     protected $casts = [
-        'paid' => 'boolean',
+        'paid'        => 'boolean',
+        'date'        => 'date',
+        'dueDate'     => 'date',
+        'paymentDate' => 'date',
     ];
 
     /**

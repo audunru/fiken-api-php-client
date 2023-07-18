@@ -7,7 +7,7 @@ use audunru\FikenClient\Tests\TestCase;
 
 class ContactTest extends TestCase
 {
-    public function test_it_creates_a_contact()
+    public function testItCreatesAContact()
     {
         $contact = new Contact([
             'name'                   => 'Art Vandelay',
@@ -65,13 +65,13 @@ class ContactTest extends TestCase
         );
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_link_to_self()
+    public function testItChecksThatNewResourceDoesNotHaveLinkToSelf()
     {
         $contact = new Contact();
         $this->assertNull($contact->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relation_link()
+    public function testItChecksThatNewResourceDoesNotHaveRelationLink()
     {
         $contact = new Contact();
         $this->assertNull($contact->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));

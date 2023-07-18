@@ -10,7 +10,7 @@ class OrderLineTest extends TestCase
 {
     use ArraySubsetAsserts;
 
-    public function test_it_creates_an_order_line()
+    public function testItCreatesAnOrderLine()
     {
         $orderLine = new OrderLine([
             'description'       => 'These pretzels are making me thirsty',
@@ -54,7 +54,7 @@ class OrderLineTest extends TestCase
         );
     }
 
-    public function test_it_checks_the_contents_of_the_new_resource_array()
+    public function testItChecksTheContentsOfTheNewResourceArray()
     {
         $orderLine = new OrderLine([
             'description'       => 'These pretzels are making me thirsty',

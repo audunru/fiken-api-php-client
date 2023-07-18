@@ -12,7 +12,7 @@ class CompanyTest extends TestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_retrieve_companies()
+    public function testItCanRetrieveCompanies()
     {
         $client = new FikenClient();
 
@@ -28,7 +28,7 @@ class CompanyTest extends TestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_set_a_company()
+    public function testItCanSetACompany()
     {
         $client = new FikenClient();
 

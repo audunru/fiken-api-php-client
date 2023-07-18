@@ -7,7 +7,7 @@ use audunru\FikenClient\Tests\TestCase;
 
 class CompanyTest extends TestCase
 {
-    public function test_it_creates_a_company()
+    public function testItCreatesACompany()
     {
         $company = new Company();
 

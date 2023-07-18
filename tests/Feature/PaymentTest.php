@@ -11,7 +11,7 @@ class PaymentTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_add_payment_to_sale()
+    public function testItCanAddPaymentToSale()
     {
         $sales = $this->company->sales();
         $sale = $sales->first();

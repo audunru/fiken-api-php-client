@@ -32,14 +32,10 @@ use JsonSerializable;
 abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
 {
     use GuardsAttributes;
-    use
-        HasAttributes;
-    use
-        HasTimestamps;
-    use
-        HidesAttributes;
-    use
-        HasLinks;
+    use HasAttributes;
+    use HasTimestamps;
+    use HidesAttributes;
+    use HasLinks;
 
     /**
      * The name of the "created at" column.
@@ -47,7 +43,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      *
      * @var string
      */
-    const CREATED_AT = 'created_at';
+    public const CREATED_AT = 'created_at';
 
     /**
      * The name of the "updated at" column.
@@ -55,7 +51,7 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      *
      * @var string
      */
-    const UPDATED_AT = 'updated_at';
+    public const UPDATED_AT = 'updated_at';
 
     /**
      * Indicates if the model exists.
@@ -195,8 +191,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      * Dynamically retrieve attributes on the model.
      *
      * @param string $key
-     *
-     * @return mixed
      */
     public function __get($key)
     {
@@ -207,8 +201,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      * Get an attribute from the model.
      *
      * @param string $key
-     *
-     * @return mixed
      */
     public function getAttribute($key)
     {
@@ -224,7 +216,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      * Dynamically set attributes on the model.
      *
      * @param string $key
-     * @param mixed  $value
      */
     public function __set($key, $value)
     {
@@ -235,9 +226,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      * Set a given attribute on the model.
      *
      * @param string $key
-     * @param mixed  $value
-     *
-     * @return mixed
      */
     public function setAttribute($key, $value)
     {
@@ -292,9 +280,9 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
      *
      * @param int $options
      *
-     * @return string
-     *
      * @throws Exception
+     *
+     * @return string
      */
     public function toJson($options = 0)
     {
@@ -329,8 +317,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
     /**
      * Determine if the given attribute exists.
      *
-     * @param mixed $offset
-     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -340,10 +326,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
 
     /**
      * Get the value for a given offset.
-     *
-     * @param mixed $offset
-     *
-     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -352,9 +334,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
 
     /**
      * Set the value for a given offset.
-     *
-     * @param mixed $offset
-     * @param mixed $value
      */
     public function offsetSet($offset, $value)
     {
@@ -363,8 +342,6 @@ abstract class FikenBaseModel implements ArrayAccess, Arrayable, Jsonable, JsonS
 
     /**
      * Unset the value for a given offset.
-     *
-     * @param mixed $offset
      */
     public function offsetUnset($offset)
     {

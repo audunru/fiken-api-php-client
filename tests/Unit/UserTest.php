@@ -7,7 +7,7 @@ use audunru\FikenClient\Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    public function test_it_creates_a_user()
+    public function testItCreatesAUser()
     {
         $user = new User();
 

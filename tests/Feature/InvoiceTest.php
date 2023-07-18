@@ -15,7 +15,7 @@ class InvoiceTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_retrieve_invoices()
+    public function testItCanRetrieveInvoices()
     {
         $invoices = $this->company->invoices();
         $invoice = $invoices->first();
@@ -27,7 +27,7 @@ class InvoiceTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_create_an_invoice()
+    public function testItCanCreateAnInvoice()
     {
         $invoice = new Invoice([
             'issueDate'   => Carbon::now(),
@@ -63,7 +63,7 @@ class InvoiceTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_invoice_has_sale()
+    public function testInvoiceHasSale()
     {
         $invoices = $this->company->invoices();
         $invoice = $invoices->first();
@@ -75,7 +75,7 @@ class InvoiceTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_invoice_has_customer()
+    public function testInvoiceHasCustomer()
     {
         $invoices = $this->company->invoices();
         $invoice = $invoices->first();
@@ -87,7 +87,7 @@ class InvoiceTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_invoice_has_lines()
+    public function testInvoiceHasLines()
     {
         $invoices = $this->company->invoices();
         $invoice = $invoices->first();

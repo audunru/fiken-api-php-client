@@ -7,7 +7,7 @@ use audunru\FikenClient\Tests\TestCase;
 
 class CreditNoteTest extends TestCase
 {
-    public function test_it_creates_a_credit_note()
+    public function testItCreatesACreditNote()
     {
         $creditNote = new CreditNote();
 

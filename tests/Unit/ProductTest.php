@@ -7,7 +7,7 @@ use audunru\FikenClient\Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    public function test_it_creates_a_product()
+    public function testItCreatesAProduct()
     {
         $product = new Product([
             'name'          => 'Chips',
@@ -51,13 +51,13 @@ class ProductTest extends TestCase
         );
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_link_to_self()
+    public function testItChecksThatNewResourceDoesNotHaveLinkToSelf()
     {
         $product = new Product();
         $this->assertNull($product->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relation_link()
+    public function testItChecksThatNewResourceDoesNotHaveRelationLink()
     {
         $product = new Product();
         $this->assertNull($product->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));

@@ -11,7 +11,7 @@ class ContactTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_retrieve_contacts()
+    public function testItCanRetrieveContacts()
     {
         $contacts = $this->company->contacts();
         $contact = $contacts->first();
@@ -23,7 +23,7 @@ class ContactTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_create_a_customer()
+    public function testItCanCreateACustomer()
     {
         $contact = new Contact([
             'name'     => 'Art Vandelay',
@@ -37,7 +37,7 @@ class ContactTest extends ClientTestCase
     /**
      * @group dangerous
      */
-    public function test_it_can_update_a_contact()
+    public function testItCanUpdateAContact()
     {
         $contact = $this->company->contacts()->first();
 

@@ -11,7 +11,7 @@ class CashSaleTest extends TestCase
 {
     use ArraySubsetAsserts;
 
-    public function test_it_creates_a_cash_sale()
+    public function testItCreatesACashSale()
     {
         $cashSale = new CashSale([
             'issueDate'   => new Carbon('2020-01-01'),
@@ -44,7 +44,7 @@ class CashSaleTest extends TestCase
         );
     }
 
-    public function test_it_checks_the_contents_of_the_new_resource_array()
+    public function testItChecksTheContentsOfTheNewResourceArray()
     {
         $cashSale = new CashSale([
             'issueDate'   => new Carbon('2020-01-01'),
@@ -68,13 +68,13 @@ class CashSaleTest extends TestCase
         $this->assertArraySubset($subset, $cashSale->toNewResourceArray());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_link_to_self()
+    public function testItChecksThatNewResourceDoesNotHaveLinkToSelf()
     {
         $cashSale = new CashSale();
         $this->assertNull($cashSale->getLinkToSelf());
     }
 
-    public function test_it_checks_that_new_resource_does_not_have_relation_link()
+    public function testItChecksThatNewResourceDoesNotHaveRelationLink()
     {
         $cashSale = new CashSale();
         $this->assertNull($cashSale->getLinkToRelation('https://fiken.no/api/v1/rel/some-type-of-resource'));

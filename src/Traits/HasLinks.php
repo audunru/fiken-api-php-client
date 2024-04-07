@@ -24,8 +24,6 @@ trait HasLinks
 
     /**
      * Get the link to this models resource.
-     *
-     * @return string
      */
     public function getLinkToSelf(): ?string
     {
@@ -34,8 +32,6 @@ trait HasLinks
 
     /**
      * Get this model's service.
-     *
-     * @return string
      */
     public static function getService(): ?string
     {
@@ -44,8 +40,6 @@ trait HasLinks
 
     /**
      * Get this model's relation.
-     *
-     * @return string
      */
     public static function getRelation(): ?string
     {

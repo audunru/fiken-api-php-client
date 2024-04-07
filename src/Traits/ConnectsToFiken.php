@@ -55,10 +55,8 @@ trait ConnectsToFiken
 
     /**
      * Create a new Fiken resource.
-     *
-     * @param array $data
      */
-    public function createResource(string $link, array $data = null, bool $multipart = false): string
+    public function createResource(string $link, ?array $data = null, bool $multipart = false): string
     {
         if (true === $multipart) {
             // This is a file upload
@@ -67,6 +65,7 @@ trait ConnectsToFiken
             $payload = ['json' => $data];
         }
         $response = $this->connectToFiken($link, 'POST', $payload);
+
         // Location header contains a URL to the newly created resource
         return $response->getHeader('Location')[0];
     }
@@ -74,11 +73,9 @@ trait ConnectsToFiken
     /**
      * Update a Fiken resource.
      *
-     * @param array $data
-     *
      * @return string|null
      */
-    public function updateResource(string $link, array $data = null): string
+    public function updateResource(string $link, ?array $data = null): string
     {
         $payload = ['json' => $data];
 

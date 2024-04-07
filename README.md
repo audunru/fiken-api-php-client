@@ -146,6 +146,12 @@ $saved = $company->add($invoice);
 
 ## Testing
 
+Copy .env file, then open it and set your variables:
+
+```bash
+cp .env.example .env.testing
+```
+
 Run tests:
 
 ```bash

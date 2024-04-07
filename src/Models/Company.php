@@ -71,10 +71,8 @@ class Company extends FikenBaseModel
 
     /**
      * Get all of the models from the database.
-     *
-     * @param array $replace
      */
-    public static function all(FikenBaseModel $parent = null, array $replace = null, array $wheres = null): Collection
+    public static function all(?FikenBaseModel $parent = null, ?array $replace = null, ?array $wheres = null): Collection
     {
         $client = new FikenClient();
         $entry = $client->getResource();

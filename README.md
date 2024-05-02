@@ -3,6 +3,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/audunru/fiken-api-php-client/badge.svg?branch=master)](https://coveralls.io/github/audunru/fiken-api-php-client?branch=master)
 [![StyleCI](https://github.styleci.io/repos/189643149/shield?branch=master)](https://github.styleci.io/repos/189643149)
 
+2024 update: [Fiken has released a v2 of their API]([url](https://api.fiken.no/api/v2/docs/)). Please use this API directly. This package only works with the now deprecated v1 API.
+
 Fiken.no is an online accounting system aimed at making accounting easy for small businesses.
 
 You can use this package to retrieve resources (companies, products, accounts, etc) from Fiken, or create new resources (eg. a customer or a product). You can also create invoices and cash sales.
